@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 1350"
+font-family="'PingFang SC','Microsoft YaHei','Noto Sans CJK SC','Helvetica Neue',Arial,sans-serif">
+<defs>
+  <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#2f78c8"/>
+  </marker>
+  <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#ef4f45"/>
+  </marker>
+  <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#f0a31a"/>
+  </marker>
+</defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+
+<text x="836.0" y="38" font-size="31" fill="#0d3470" font-weight="700" text-anchor="middle">知几治理边界图  Proposal to Accepted State</text>
+<text x="836.0" y="68" font-size="19" fill="#0d3470" font-weight="600" text-anchor="middle">Agent 的判断如何经过治理边界，成为系统允许后续依赖的已确认状态</text>
+<text x="836.0" y="92" font-size="12" fill="#677a91" font-weight="400" text-anchor="middle">How an agent proposal crosses the governance boundary and becomes accepted state</text>
+<rect x="18" y="118" width="1636" height="390" rx="14" fill="#fbfdff" stroke="#9bc0e2" stroke-width="1.2"/>
+<circle cx="46" cy="146" r="18" fill="#2869ae"/>
+<text x="46" y="152.12" font-size="18" fill="#fff" font-weight="700" text-anchor="middle">1</text>
+<text x="76" y="153" font-size="22" fill="#103f7c" font-weight="700" text-anchor="start">主治理链路</text>
+<text x="205" y="153" font-size="14" fill="#103f7c" font-weight="600" text-anchor="start">Governed Proposal Boundary</text>
+<text x="1628" y="153" font-size="12" fill="#7890aa" font-weight="400" text-anchor="end">从候选判断到系统可依赖的已确认状态</text>
+<rect x="36" y="218" width="130" height="118" rx="10" fill="#f7fbff" stroke="#2c79ca" stroke-width="1.6"/>
+<circle cx="101.0" cy="245" r="21" fill="#2c79ca" opacity="0.12"/>
+<text x="101.0" y="250" font-size="14" fill="#2c79ca" font-weight="700" text-anchor="middle">DB</text>
+<text x="101.0" y="276" font-size="15" fill="#124a86" font-weight="700" text-anchor="middle">Evidence +</text>
+<text x="101.0" y="296" font-size="15" fill="#124a86" font-weight="700" text-anchor="middle">Confirmed State</text>
+<text x="101.0" y="321" font-size="11" fill="#44627e" font-weight="500" text-anchor="middle">证据 + 已确认状态</text>
+<rect x="190" y="218" width="150" height="118" rx="10" fill="#f7fbff" stroke="#2c79ca" stroke-width="1.6"/>
+<circle cx="265.0" cy="245" r="21" fill="#2c79ca" opacity="0.12"/>
+<text x="265.0" y="250" font-size="14" fill="#2c79ca" font-weight="700" text-anchor="middle">AI</text>
+<text x="265.0" y="276" font-size="15" fill="#124a86" font-weight="700" text-anchor="middle">Agent Analysis</text>
+<text x="265.0" y="321" font-size="11" fill="#44627e" font-weight="500" text-anchor="middle">信息整理 · 分析推理 · 候选生成</text>
+<rect x="364" y="218" width="150" height="118" rx="10" fill="#f7fbff" stroke="#2c79ca" stroke-width="1.6"/>
+<circle cx="439.0" cy="245" r="21" fill="#2c79ca" opacity="0.12"/>
+<text x="439.0" y="250" font-size="14" fill="#2c79ca" font-weight="700" text-anchor="middle">P</text>
+<text x="439.0" y="276" font-size="15" fill="#124a86" font-weight="700" text-anchor="middle">Proposal /</text>
+<text x="439.0" y="296" font-size="15" fill="#124a86" font-weight="700" text-anchor="middle">Hypothesis</text>
+<text x="439.0" y="321" font-size="11" fill="#44627e" font-weight="500" text-anchor="middle">候选判断 / 假设</text>
+<rect x="880" y="218" width="145" height="118" rx="10" fill="#f7fbff" stroke="#2c79ca" stroke-width="1.6"/>
+<circle cx="952.5" cy="245" r="21" fill="#2c79ca" opacity="0.12"/>
+<text x="952.5" y="250" font-size="14" fill="#2c79ca" font-weight="700" text-anchor="middle">DB</text>
+<text x="952.5" y="276" font-size="15" fill="#124a86" font-weight="700" text-anchor="middle">Accepted Domain</text>
+<text x="952.5" y="296" font-size="15" fill="#124a86" font-weight="700" text-anchor="middle">State</text>
+<text x="952.5" y="321" font-size="11" fill="#44627e" font-weight="500" text-anchor="middle">已确认分析状态</text>
+<rect x="1048" y="218" width="145" height="118" rx="10" fill="#f7fbff" stroke="#2c79ca" stroke-width="1.6"/>
+<circle cx="1120.5" cy="245" r="21" fill="#2c79ca" opacity="0.12"/>
+<text x="1120.5" y="250" font-size="14" fill="#2c79ca" font-weight="700" text-anchor="middle">WF</text>
+<text x="1120.5" y="276" font-size="15" fill="#124a86" font-weight="700" text-anchor="middle">Deterministic</text>
+<text x="1120.5" y="296" font-size="15" fill="#124a86" font-weight="700" text-anchor="middle">Workflow</text>
+<text x="1120.5" y="321" font-size="11" fill="#44627e" font-weight="500" text-anchor="middle">确定性流程决策</text>
+<rect x="1216" y="218" width="165" height="118" rx="10" fill="#f7fbff" stroke="#2c79ca" stroke-width="1.6"/>
+<circle cx="1298.5" cy="245" r="21" fill="#2c79ca" opacity="0.12"/>
+<text x="1298.5" y="250" font-size="14" fill="#2c79ca" font-weight="700" text-anchor="middle">▶</text>
+<text x="1298.5" y="276" font-size="15" fill="#124a86" font-weight="700" text-anchor="middle">Next Legal Action</text>
+<text x="1298.5" y="321" font-size="11" fill="#44627e" font-weight="500" text-anchor="middle">进入下一步合法动作</text>
+<rect x="540" y="168" width="315" height="238" rx="12" fill="#f7fbff" stroke="#3b8bd6" stroke-width="2.0"/>
+<rect x="534" y="162" width="327" height="250" rx="15" fill="none" stroke="#3b8bd6" stroke-width="1.6" stroke-dasharray="5,4"/>
+<rect x="540" y="168" width="315" height="36" rx="10" fill="#2f78c8" stroke="#2f78c8" stroke-width="1"/>
+<text x="697.5" y="193" font-size="15" fill="#ffffff" font-weight="700" text-anchor="middle">Governance Boundary  治理边界</text>
+<rect x="558" y="216" width="279" height="38" rx="7" fill="#eef6ff" stroke="#2c79ca" stroke-width="1.0"/>
+<text x="574" y="240" font-size="13" fill="#2c79ca" font-weight="700" text-anchor="start">Structural Validation</text>
+<text x="825" y="240" font-size="12" fill="#2c79ca" font-weight="500" text-anchor="end">结构校验</text>
+<rect x="558" y="260" width="279" height="38" rx="7" fill="#eef6ff" stroke="#2c79ca" stroke-width="1.0"/>
+<text x="574" y="284" font-size="13" fill="#2c79ca" font-weight="700" text-anchor="start">Evidence Binding</text>
+<text x="825" y="284" font-size="12" fill="#2c79ca" font-weight="500" text-anchor="end">证据绑定</text>
+<rect x="558" y="304" width="279" height="38" rx="7" fill="#eef6ff" stroke="#2c79ca" stroke-width="1.0"/>
+<text x="574" y="328" font-size="13" fill="#2c79ca" font-weight="700" text-anchor="start">Rule Validation</text>
+<text x="825" y="328" font-size="12" fill="#2c79ca" font-weight="500" text-anchor="end">规则复核</text>
+<rect x="558" y="348" width="279" height="62" rx="7" fill="#fff6e9" stroke="#d67713" stroke-width="1.0"/>
+<text x="574" y="368" font-size="12" fill="#d67713" font-weight="700" text-anchor="start">Human Gate</text>
+<text x="574" y="385" font-size="10.5" fill="#d67713" font-weight="600" text-anchor="start">(if required)</text>
+<text x="574" y="402" font-size="10.5" fill="#d67713" font-weight="600" text-anchor="start">人工确认（按需触发）</text>
+<line x1="166" y1="277" x2="190" y2="277" stroke="#2f78c8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+<line x1="340" y1="277" x2="364" y2="277" stroke="#2f78c8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+<line x1="514" y1="277" x2="534" y2="277" stroke="#2f78c8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+<line x1="855" y1="277" x2="880" y2="277" stroke="#2f78c8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+<line x1="1025" y1="277" x2="1048" y2="277" stroke="#2f78c8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+<line x1="1193" y1="277" x2="1216" y2="277" stroke="#2f78c8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+<path d="M625 406 L625 432 L470 432 L470 449" fill="none" stroke="#ef4f45" stroke-width="2.2" marker-end="url(#arrowRed)"/>
+<path d="M698 406 L698 456" fill="none" stroke="#8a95a1" stroke-width="2.0" marker-end="url(#arrowBlue)"/>
+<path d="M770 406 L770 432 L940 432 L940 449" fill="none" stroke="#f0a31a" stroke-width="2.2" marker-end="url(#arrowOrange)"/>
+<rect x="355" y="447" width="230" height="45" rx="8" fill="#fff6f5" stroke="#ef4f45" stroke-width="1.4"/>
+<text x="470" y="466" font-size="12" fill="#d6332f" font-weight="700" text-anchor="middle">MORE_EVIDENCE_REQUIRED</text>
+<text x="470" y="483" font-size="11" fill="#d6332f" font-weight="600" text-anchor="middle">证据不足</text>
+<rect x="610" y="454" width="176" height="40" rx="8" fill="#f4f7fa" stroke="#9ba8b4" stroke-width="1.2"/>
+<text x="698" y="474" font-size="12" fill="#64717f" font-weight="700" text-anchor="middle">Not accepted</text>
+<text x="698" y="489" font-size="10" fill="#64717f" font-weight="500" text-anchor="middle">不进入 Accepted State</text>
+<rect x="810" y="447" width="260" height="45" rx="8" fill="#fff9ee" stroke="#f0a31a" stroke-width="1.4"/>
+<text x="940" y="466" font-size="12" fill="#c87b0d" font-weight="700" text-anchor="middle">UPPER_LAYER_REVIEW_REQUIRED</text>
+<text x="940" y="483" font-size="11" fill="#c87b0d" font-weight="600" text-anchor="middle">需上层复核</text>
+<path d="M1298 336 L1298 374" fill="none" stroke="#2f78c8" stroke-width="2"/>
+<line x1="1218" y1="374" x2="1460" y2="374" stroke="#2f78c8" stroke-width="2"/>
+<line x1="1218" y1="374" x2="1218" y2="397" stroke="#2f78c8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+<line x1="1336" y1="374" x2="1336" y2="397" stroke="#2f78c8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+<line x1="1460" y1="374" x2="1460" y2="397" stroke="#2f78c8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+<rect x="1165" y="397" width="105" height="88" rx="8" fill="#f4f9ff" stroke="#8fb9e0" stroke-width="1.2"/>
+<text x="1217.5" y="421" font-size="10" fill="#1b5894" font-weight="700" text-anchor="middle">Continue</text>
+<text x="1217.5" y="439" font-size="10" fill="#1b5894" font-weight="700" text-anchor="middle">Analysis</text>
+<text x="1217.5" y="464" font-size="9" fill="#496a88" font-weight="500" text-anchor="middle">继续分析</text>
+<rect x="1280" y="397" width="112" height="88" rx="8" fill="#f4f9ff" stroke="#8fb9e0" stroke-width="1.2"/>
+<text x="1336.0" y="418" font-size="10" fill="#1b5894" font-weight="700" text-anchor="middle">Enter Next Layer /</text>
+<text x="1336.0" y="435" font-size="10" fill="#1b5894" font-weight="700" text-anchor="middle">Next Agent</text>
+<text x="1336.0" y="458" font-size="9" fill="#496a88" font-weight="500" text-anchor="middle">进入下一层 /</text>
+<text x="1336.0" y="472" font-size="9" fill="#496a88" font-weight="500" text-anchor="middle">下一 Agent</text>
+<rect x="1402" y="397" width="116" height="88" rx="8" fill="#f4f9ff" stroke="#8fb9e0" stroke-width="1.2"/>
+<text x="1460.0" y="418" font-size="10" fill="#1b5894" font-weight="700" text-anchor="middle">Request Review /</text>
+<text x="1460.0" y="435" font-size="10" fill="#1b5894" font-weight="700" text-anchor="middle">More Evidence</text>
+<text x="1460.0" y="458" font-size="9" fill="#496a88" font-weight="500" text-anchor="middle">请求复核 /</text>
+<text x="1460.0" y="472" font-size="9" fill="#496a88" font-weight="500" text-anchor="middle">补充证据</text>
+<rect x="18" y="528" width="1636" height="238" rx="14" fill="#fbfdff" stroke="#9bc0e2" stroke-width="1.2"/>
+<circle cx="46" cy="556" r="18" fill="#2869ae"/>
+<text x="46" y="562.12" font-size="18" fill="#fff" font-weight="700" text-anchor="middle">2</text>
+<text x="76" y="563" font-size="21" fill="#103f7c" font-weight="700" text-anchor="start">Four Human Gates</text>
+<text x="265" y="563" font-size="15" fill="#103f7c" font-weight="700" text-anchor="start">四类人工确认点</text>
+<text x="1628" y="563" font-size="12" fill="#7890aa" font-weight="400" text-anchor="end">Human Gate 只确认现实权威，不替代 Agent 完成分析</text>
+<rect x="36" y="590" width="370" height="150" rx="10" fill="#f9fcff" stroke="#a8c9e3" stroke-width="1.1"/>
+<circle cx="70" cy="618" r="21" fill="#2c79ca" opacity="0.12"/>
+<text x="70" y="623" font-size="13" fill="#2c79ca" font-weight="700" text-anchor="middle">F</text>
+<text x="106" y="614" font-size="15" fill="#114779" font-weight="700" text-anchor="start">Fact Gate</text>
+<text x="106" y="636" font-size="12" fill="#114779" font-weight="600" text-anchor="start">事实确认</text>
+<text x="106" y="660" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 公司/业务身份</text>
+<text x="106" y="678" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 数据口径</text>
+<text x="106" y="696" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 当前经营情况</text>
+<text x="106" y="714" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 材料抽取事实</text>
+<rect x="438" y="590" width="370" height="150" rx="10" fill="#f9fcff" stroke="#a8c9e3" stroke-width="1.1"/>
+<circle cx="472" cy="618" r="21" fill="#258a7a" opacity="0.12"/>
+<text x="472" y="623" font-size="13" fill="#258a7a" font-weight="700" text-anchor="middle">G</text>
+<text x="508" y="614" font-size="15" fill="#114779" font-weight="700" text-anchor="start">Goal / Constraint Gate</text>
+<text x="508" y="636" font-size="12" fill="#114779" font-weight="600" text-anchor="start">目标与约束确认</text>
+<text x="508" y="660" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 目标</text>
+<text x="508" y="678" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 约束</text>
+<text x="508" y="696" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 时间范围</text>
+<text x="508" y="714" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 资源条件</text>
+<rect x="840" y="590" width="370" height="150" rx="10" fill="#f9fcff" stroke="#a8c9e3" stroke-width="1.1"/>
+<circle cx="874" cy="618" r="21" fill="#2c79ca" opacity="0.12"/>
+<text x="874" y="623" font-size="13" fill="#2c79ca" font-weight="700" text-anchor="middle">E</text>
+<text x="910" y="614" font-size="15" fill="#114779" font-weight="700" text-anchor="start">Evidence Gate</text>
+<text x="910" y="636" font-size="12" fill="#114779" font-weight="600" text-anchor="start">证据补充</text>
+<text x="910" y="660" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 诊断所需业务资料</text>
+<text x="910" y="678" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 补充缺失证据</text>
+<text x="910" y="696" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 确认资料适用性</text>
+<rect x="1242" y="590" width="370" height="150" rx="10" fill="#f9fcff" stroke="#a8c9e3" stroke-width="1.1"/>
+<circle cx="1276" cy="618" r="21" fill="#7c64c7" opacity="0.12"/>
+<text x="1276" y="623" font-size="13" fill="#7c64c7" font-weight="700" text-anchor="middle">D</text>
+<text x="1312" y="614" font-size="15" fill="#114779" font-weight="700" text-anchor="start">Decision Gate</text>
+<text x="1312" y="636" font-size="12" fill="#114779" font-weight="600" text-anchor="start">路径决策</text>
+<text x="1312" y="660" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 诊断是否合理</text>
+<text x="1312" y="678" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 选哪个业务/场景继续</text>
+<text x="1312" y="696" font-size="10.5" fill="#4e6780" font-weight="500" text-anchor="start">• 是否进入下一层</text>
+<rect x="18" y="786" width="1636" height="285" rx="14" fill="#fbfdff" stroke="#9bc0e2" stroke-width="1.2"/>
+<circle cx="46" cy="814" r="18" fill="#2869ae"/>
+<text x="46" y="820.12" font-size="18" fill="#fff" font-weight="700" text-anchor="middle">3</text>
+<text x="76" y="821" font-size="21" fill="#103f7c" font-weight="700" text-anchor="start">Role &amp; Authority</text>
+<text x="248" y="821" font-size="15" fill="#103f7c" font-weight="700" text-anchor="start">角色职责与权威边界</text>
+<text x="1628" y="821" font-size="12" fill="#7890aa" font-weight="400" text-anchor="end">前三个是责任主体，Confirmed State 是后续可依赖的权威状态载体</text>
+<rect x="36" y="848" width="370" height="196" rx="10" fill="#eef7ff" stroke="#2c79ca" stroke-width="1.1"/>
+<text x="56" y="878" font-size="15" fill="#2c79ca" font-weight="700" text-anchor="start">Agent</text>
+<text x="58" y="905" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 信息整理</text>
+<text x="58" y="925" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 缺口识别</text>
+<text x="58" y="945" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 分析推理</text>
+<text x="58" y="965" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 候选生成</text>
+<text x="58" y="985" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 影响推演</text>
+<rect x="52" y="1011" width="338" height="24" rx="5" fill="#eaf3fb" stroke="#2c79ca" stroke-width="0.8"/>
+<text x="221" y="1028" font-size="9.5" fill="#2c79ca" font-weight="700" text-anchor="middle">产生候选，不产生最终确认</text>
+<rect x="438" y="848" width="370" height="196" rx="10" fill="#f7fbff" stroke="#2c79ca" stroke-width="1.1"/>
+<text x="458" y="878" font-size="15" fill="#2c79ca" font-weight="700" text-anchor="start">Human</text>
+<text x="460" y="905" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 确认事实</text>
+<text x="460" y="925" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 确认目标约束</text>
+<text x="460" y="945" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 补充证据</text>
+<text x="460" y="965" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 选择路径</text>
+<rect x="454" y="1011" width="338" height="24" rx="5" fill="#eaf3fb" stroke="#2c79ca" stroke-width="0.8"/>
+<text x="623" y="1028" font-size="9.5" fill="#2c79ca" font-weight="700" text-anchor="middle">提供模型无法自行拥有的现实权威</text>
+<rect x="840" y="848" width="370" height="196" rx="10" fill="#f7fbff" stroke="#2c79ca" stroke-width="1.1"/>
+<text x="860" y="878" font-size="15" fill="#2c79ca" font-weight="700" text-anchor="start">Workflow</text>
+<text x="862" y="905" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• Gate 控制</text>
+<text x="862" y="925" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 继续 / 暂停</text>
+<text x="862" y="945" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 进入下一层</text>
+<text x="862" y="965" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 跨 Agent 交接</text>
+<text x="862" y="985" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 向上反馈</text>
+<rect x="856" y="1011" width="338" height="24" rx="5" fill="#eaf3fb" stroke="#2c79ca" stroke-width="0.8"/>
+<text x="1025" y="1028" font-size="9.5" fill="#2c79ca" font-weight="700" text-anchor="middle">管理流程如何继续，不管理 Object 内部状态</text>
+<rect x="1242" y="848" width="370" height="196" rx="10" fill="#eefaf6" stroke="#2a9b7b" stroke-width="1.1"/>
+<text x="1262" y="878" font-size="15" fill="#2a9b7b" font-weight="700" text-anchor="start">Confirmed State / StatePackage</text>
+<text x="1264" y="905" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• 已确认事实</text>
+<text x="1264" y="925" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• Position</text>
+<text x="1264" y="945" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• InternalState</text>
+<text x="1264" y="965" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• ChangeLaw</text>
+<text x="1264" y="985" font-size="11" fill="#355b78" font-weight="500" text-anchor="start">• Evidence</text>
+<rect x="1258" y="1011" width="338" height="24" rx="5" fill="#e2f6ef" stroke="#2a9b7b" stroke-width="0.8"/>
+<text x="1427" y="1028" font-size="9.5" fill="#2a9b7b" font-weight="700" text-anchor="middle">只保存后续允许依赖的已确认状态</text>
+<rect x="18" y="1090" width="1636" height="190" rx="14" fill="#fbfdff" stroke="#9bc0e2" stroke-width="1.2"/>
+<circle cx="46" cy="1118" r="18" fill="#2869ae"/>
+<text x="46" y="1124.12" font-size="18" fill="#fff" font-weight="700" text-anchor="middle">4</text>
+<text x="76" y="1125" font-size="21" fill="#103f7c" font-weight="700" text-anchor="start">Governance Invariants</text>
+<text x="308" y="1125" font-size="15" fill="#103f7c" font-weight="700" text-anchor="start">五条治理不变量</text>
+<text x="1628" y="1125" font-size="12" fill="#7890aa" font-weight="400" text-anchor="end">这些原则定义治理边界，不是新的流程步骤</text>
+<rect x="36" y="1152" width="302" height="88" rx="8" fill="#f8fbfe" stroke="#aac9e3" stroke-width="1.0"/>
+<circle cx="60" cy="1174" r="10" fill="#3977b8"/>
+<text x="60" y="1177.74" font-size="11" fill="#fff" font-weight="700" text-anchor="middle">1</text>
+<text x="80" y="1177" font-size="11.5" fill="#234f7d" font-weight="700" text-anchor="start">Evidence ≠ Hypothesis</text>
+<text x="58" y="1212" font-size="10.5" fill="#60768a" font-weight="500" text-anchor="start">证据不等于解释</text>
+<rect x="358" y="1152" width="302" height="88" rx="8" fill="#f8fbfe" stroke="#aac9e3" stroke-width="1.0"/>
+<circle cx="382" cy="1174" r="10" fill="#3977b8"/>
+<text x="382" y="1177.74" font-size="11" fill="#fff" font-weight="700" text-anchor="middle">2</text>
+<text x="402" y="1177" font-size="11.5" fill="#234f7d" font-weight="700" text-anchor="start">Proposal ≠ Accepted State</text>
+<text x="380" y="1212" font-size="10.5" fill="#60768a" font-weight="500" text-anchor="start">候选不等于正式状态</text>
+<rect x="680" y="1152" width="302" height="88" rx="8" fill="#f8fbfe" stroke="#aac9e3" stroke-width="1.0"/>
+<circle cx="704" cy="1174" r="10" fill="#3977b8"/>
+<text x="704" y="1177.74" font-size="11" fill="#fff" font-weight="700" text-anchor="middle">3</text>
+<text x="724" y="1177" font-size="11.5" fill="#234f7d" font-weight="700" text-anchor="start">Human Approval ≠ Causal Proof</text>
+<text x="702" y="1212" font-size="10.5" fill="#60768a" font-weight="500" text-anchor="start">人工确认不等于因果证明</text>
+<rect x="1002" y="1152" width="302" height="88" rx="8" fill="#f8fbfe" stroke="#aac9e3" stroke-width="1.0"/>
+<circle cx="1026" cy="1174" r="10" fill="#3977b8"/>
+<text x="1026" y="1177.74" font-size="11" fill="#fff" font-weight="700" text-anchor="middle">4</text>
+<text x="1046" y="1177" font-size="11.5" fill="#234f7d" font-weight="700" text-anchor="start">Projection ≠ Actual Outcome</text>
+<text x="1024" y="1212" font-size="10.5" fill="#60768a" font-weight="500" text-anchor="start">推演不等于现实结果</text>
+<rect x="1324" y="1152" width="302" height="88" rx="8" fill="#f8fbfe" stroke="#aac9e3" stroke-width="1.0"/>
+<circle cx="1348" cy="1174" r="10" fill="#3977b8"/>
+<text x="1348" y="1177.74" font-size="11" fill="#fff" font-weight="700" text-anchor="middle">5</text>
+<text x="1368" y="1177" font-size="11.5" fill="#234f7d" font-weight="700" text-anchor="start">Selection ≠ Execution Authorization</text>
+<text x="1346" y="1212" font-size="10.5" fill="#60768a" font-weight="500" text-anchor="start">选择不等于执行授权</text>
+<text x="836.0" y="1261" font-size="11" fill="#6a7d90" font-weight="500" text-anchor="middle">未确认判断不会静默进入系统权威状态。</text>
+<text x="36" y="1328" font-size="9.5" fill="#9aabb9" font-weight="400" text-anchor="start">Zhiji · Governance Boundary Overview · Vertical Layout Variant</text>
+</svg>

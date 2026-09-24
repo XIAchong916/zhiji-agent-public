@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1090" font-family="'PingFang SC','Microsoft YaHei','Helvetica Neue',Arial,sans-serif">
+  <defs>
+    <marker id="dD" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#8a97a4"/>
+    </marker>
+    <marker id="dO" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#c2701a"/>
+    </marker>
+  </defs>
+
+  <rect width="1000" height="1090" fill="#ffffff"/>
+
+  <!-- ============ 标题 ============ -->
+  <text x="32" y="42" font-size="24" font-weight="bold" fill="#1a2330">知几 Agent · 系统架构</text>
+  <text x="32" y="68" font-size="13.5" fill="#5b6b7b">六层为主，逐层向下收敛 · 右侧为横切的 LLM Proposal 治理链</text>
+  <text x="32" y="88" font-size="11.5" fill="#7a8794">对应 docs/ARCHITECTURE.md §1–§9</text>
+  <line x1="32" y1="98" x2="968" y2="98" stroke="#dfe4e9" stroke-width="1"/>
+
+  <!-- ============ 左区：主结构 · 纵向七层 ============ -->
+  <text x="32" y="122" font-size="13" font-weight="bold" fill="#1a5b8a">主结构 · 六层架构</text>
+  <text x="628" y="122" text-anchor="end" font-size="11.5" fill="#7a8794">越靠下越稳定 · 依赖单向向下</text>
+
+  <!-- Human -->
+  <g>
+    <rect x="32" y="132" width="596" height="62" rx="9" fill="#f6f4fa" stroke="#c9bfe0" stroke-width="1.2"/>
+    <rect x="32" y="132" width="6" height="62" fill="#6b5a8e"/>
+    <circle cx="70" cy="163" r="15" fill="#6b5a8e"/>
+    <path d="M70,155.5 a4.2,4.2 0 1,1 0,8.4 a4.2,4.2 0 1,1 0,-8.4 M63.5,174 c0,-4 3,-6.5 6.5,-6.5 s6.5,2.5 6.5,6.5" fill="#ffffff"/>
+    <text x="96" y="163" font-size="17" font-weight="bold" fill="#4a3a6b">Human · 决策者</text>
+    <text x="96" y="185" font-size="12.5" fill="#44586a">拥有现实权威 · 在四类 Gate 上确认，Approval ≠ Causal Proof</text>
+    <rect x="392" y="146" width="236" height="21" rx="10.5" fill="#ece7f5"/>
+    <text x="510" y="161" text-anchor="middle" font-size="11.5" fill="#6b5a8e">Fact · Goal·Constraint · Evidence · Decision</text>
+  </g>
+  <line x1="330" y1="196" x2="330" y2="212" stroke="#8a97a4" stroke-width="1.6" marker-end="url(#dD)"/>
+
+  <!-- 1 Interaction -->
+  <g>
+    <rect x="32" y="214" width="596" height="96" rx="9" fill="#ffffff" stroke="#bcd7ee" stroke-width="1.2"/>
+    <rect x="32" y="214" width="6" height="96" fill="#8fb6db"/>
+    <circle cx="70" cy="248" r="15" fill="#8fb6db"/>
+    <text x="70" y="254" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">1</text>
+    <text x="96" y="248" font-size="17" font-weight="bold" fill="#1a5b8a">Interaction · 交互层</text>
+    <rect x="478" y="232" width="134" height="21" rx="10.5" fill="#fdf3e7"/>
+    <text x="545" y="247" text-anchor="middle" font-size="11.5" fill="#c2701a">治理链 ⑦ 落点</text>
+    <text x="96" y="272" font-size="12.5" fill="#44586a">接收 Human 输入，并展示系统当前允许执行的操作</text>
+    <text x="96" y="296" font-family="Menlo,'JetBrains Mono','Courier New',monospace" font-size="11.5" fill="#5b6b7b">CLI · API · future UI</text>
+  </g>
+  <line x1="330" y1="312" x2="330" y2="328" stroke="#8a97a4" stroke-width="1.6" marker-end="url(#dD)"/>
+
+  <!-- 2 Application -->
+  <g>
+    <rect x="32" y="330" width="596" height="112" rx="9" fill="#ffffff" stroke="#bcd7ee" stroke-width="1.2"/>
+    <rect x="32" y="330" width="6" height="112" fill="#6ba3cf"/>
+    <circle cx="70" cy="364" r="15" fill="#6ba3cf"/>
+    <text x="70" y="370" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">2</text>
+    <text x="96" y="364" font-size="17" font-weight="bold" fill="#1a5b8a">Application · 应用层</text>
+    <rect x="478" y="348" width="134" height="21" rx="10.5" fill="#fdf3e7"/>
+    <text x="545" y="363" text-anchor="middle" font-size="11.5" fill="#c2701a">治理链 ① 落点</text>
+    <text x="96" y="388" font-size="12.5" fill="#44586a">组织 Case、Journey、Proposal、Confirm / Select、跨 Agent handoff 与 Product Output</text>
+    <text x="96" y="412" font-family="Menlo,'JetBrains Mono','Courier New',monospace" font-size="11.5" fill="#5b6b7b">journey_orchestrator · journey_proposal_progression</text>
+    <text x="96" y="432" font-family="Menlo,'JetBrains Mono','Courier New',monospace" font-size="11.5" fill="#5b6b7b">product_delivery_loop · business traversal · solution journey</text>
+  </g>
+  <line x1="330" y1="444" x2="330" y2="460" stroke="#8a97a4" stroke-width="1.6" marker-end="url(#dD)"/>
+
+  <!-- 3 Workflow -->
+  <g>
+    <rect x="32" y="462" width="596" height="132" rx="9" fill="#ffffff" stroke="#bcd7ee" stroke-width="1.2"/>
+    <rect x="32" y="462" width="6" height="132" fill="#4a86b8"/>
+    <circle cx="70" cy="496" r="15" fill="#4a86b8"/>
+    <text x="70" y="502" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">3</text>
+    <text x="96" y="496" font-size="17" font-weight="bold" fill="#1a5b8a">Workflow · 工作流层</text>
+    <rect x="478" y="480" width="134" height="21" rx="10.5" fill="#fdf3e7"/>
+    <text x="545" y="495" text-anchor="middle" font-size="11.5" fill="#c2701a">治理链 ⑥⑦ 落点</text>
+    <text x="96" y="520" font-size="12.5" fill="#44586a">确定性控制状态、合法迁移、Human Gate、暂停与恢复 · 管理流程，不管理对象内部状态</text>
+    <text x="96" y="544" font-family="Menlo,'JetBrains Mono','Courier New',monospace" font-size="11.5" fill="#5b6b7b">DRAFT → … → LAYER_COMPLETED</text>
+    <text x="96" y="564" font-family="Menlo,'JetBrains Mono','Courier New',monospace" font-size="11.5" fill="#5b6b7b">Unlisted transition → Forbidden</text>
+    <text x="96" y="584" font-family="Menlo,'JetBrains Mono','Courier New',monospace" font-size="11.5" fill="#5b6b7b">MORE_EVIDENCE_REQUIRED · UPPER_LAYER_REVIEW_REQUIRED · FAILED_*</text>
+  </g>
+  <line x1="330" y1="596" x2="330" y2="612" stroke="#8a97a4" stroke-width="1.6" marker-end="url(#dD)"/>
+
+  <!-- 4 Diagnosis Engine -->
+  <g>
+    <rect x="32" y="614" width="596" height="112" rx="9" fill="#ffffff" stroke="#e8c9a4" stroke-width="1.2"/>
+    <rect x="32" y="614" width="6" height="112" fill="#c2701a"/>
+    <circle cx="70" cy="648" r="15" fill="#c2701a"/>
+    <text x="70" y="654" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">4</text>
+    <text x="96" y="648" font-size="17" font-weight="bold" fill="#8a4d10">Diagnosis Engine · 诊断引擎层</text>
+    <rect x="478" y="632" width="134" height="21" rx="10.5" fill="#fdf3e7"/>
+    <text x="545" y="647" text-anchor="middle" font-size="11.5" fill="#c2701a">治理链 ④ 落点</text>
+    <text x="96" y="672" font-size="12.5" fill="#44586a">承担与行业无关、可确定计算的诊断算子 · 能确定计算的部分不交给 LLM 猜</text>
+    <text x="96" y="696" font-family="Menlo,'JetBrains Mono','Courier New',monospace" font-size="11.5" fill="#5b6b7b">evidence_coverage · diagnosis_readiness · execution_readiness</text>
+    <text x="96" y="716" font-family="Menlo,'JetBrains Mono','Courier New',monospace" font-size="11.5" fill="#5b6b7b">intervention_feasibility · business_gap · outcome_delta · scenario</text>
+  </g>
+  <line x1="330" y1="728" x2="330" y2="744" stroke="#8a97a4" stroke-width="1.6" marker-end="url(#dD)"/>
+
+  <!-- 5 Domain -->
+  <g>
+    <rect x="32" y="746" width="596" height="132" rx="9" fill="#ffffff" stroke="#b6d9c6" stroke-width="1.2"/>
+    <rect x="32" y="746" width="6" height="132" fill="#2e8b57"/>
+    <circle cx="70" cy="780" r="15" fill="#2e8b57"/>
+    <text x="70" y="786" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">5</text>
+    <text x="96" y="780" font-size="17" font-weight="bold" fill="#1d6b41">Domain · 领域模型层</text>
+    <rect x="478" y="764" width="134" height="21" rx="10.5" fill="#fdf3e7"/>
+    <text x="545" y="779" text-anchor="middle" font-size="11.5" fill="#c2701a">治理链 ③⑤⑧ 落点</text>
+    <text x="96" y="804" font-size="12.5" fill="#44586a">表达业务世界中允许存在的对象、状态和生命周期 · InternalState = {R θ D Ω}</text>
+    <text x="96" y="828" font-family="Menlo,'JetBrains Mono','Courier New',monospace" font-size="11.5" fill="#5b6b7b">SystemDefinition · ObjectDefinition · PositionSnapshot</text>
+    <text x="96" y="848" font-family="Menlo,'JetBrains Mono','Courier New',monospace" font-size="11.5" fill="#5b6b7b">InternalStateSnapshot · ChangeLaw · InterventionOption</text>
+    <text x="96" y="868" font-family="Menlo,'JetBrains Mono','Courier New',monospace" font-size="11.5" fill="#5b6b7b">PositionProjection · Observation · EvidenceItem / Pack</text>
+  </g>
+  <line x1="330" y1="880" x2="330" y2="896" stroke="#8a97a4" stroke-width="1.6" marker-end="url(#dD)"/>
+
+  <!-- 6 Infrastructure -->
+  <g>
+    <rect x="32" y="898" width="596" height="152" rx="9" fill="#fbfcfd" stroke="#c8d0d8" stroke-width="1.2"/>
+    <rect x="32" y="898" width="6" height="152" fill="#5b6b7b"/>
+    <circle cx="70" cy="932" r="15" fill="#5b6b7b"/>
+    <text x="70" y="938" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">6</text>
+    <text x="96" y="932" font-size="17" font-weight="bold" fill="#3d4a56">Infrastructure · 基础设施层</text>
+    <rect x="478" y="916" width="134" height="21" rx="10.5" fill="#fdf3e7"/>
+    <text x="545" y="931" text-anchor="middle" font-size="11.5" fill="#c2701a">治理链 ② 落点</text>
+
+    <rect x="96" y="948" width="516" height="42" rx="7" fill="#f4f6f8" stroke="#dde3e8" stroke-width="1"/>
+    <text x="108" y="966" font-size="11.5" font-weight="bold" fill="#3d4a56">组 1 · Persistence / Recovery</text>
+    <text x="108" y="983" font-family="Menlo,'JetBrains Mono','Courier New',monospace" font-size="11.5" fill="#5b6b7b">PostgreSQL · SQLAlchemy · Alembic · Evidence lineage</text>
+
+    <rect x="96" y="994" width="516" height="42" rx="7" fill="#f4f6f8" stroke="#dde3e8" stroke-width="1"/>
+    <text x="108" y="1012" font-size="11.5" font-weight="bold" fill="#3d4a56">组 2 · LLM Adapter</text>
+    <text x="108" y="1029" font-family="Menlo,'JetBrains Mono','Courier New',monospace" font-size="11.5" fill="#5b6b7b">LLMProposalAdapter · Fake deterministic adapter · seam</text>
+
+    <text x="96" y="1046" font-size="11.5" font-weight="bold" fill="#c0392b">Real LLM Provider 尚未进入正式产品路径</text>
+  </g>
+
+  <!-- ============ 右区：横切治理链 ============ -->
+  <rect x="640" y="104" width="336" height="946" rx="10" fill="#fffdf9" stroke="#e8c9a4" stroke-width="1.4" stroke-dasharray="7,4"/>
+  <rect x="640" y="104" width="336" height="52" rx="10" fill="#fdf3e7"/>
+  <rect x="640" y="144" width="336" height="12" fill="#fdf3e7"/>
+  <text x="808" y="126" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a4d10">LLM Proposal Governance</text>
+  <text x="808" y="145" text-anchor="middle" font-size="11.5" fill="#8a4d10">横切治理链 · 概率语义不直接写入已确认状态</text>
+
+  <!-- step 1 -->
+  <g>
+    <rect x="654" y="162" width="308" height="54" rx="8" fill="#ffffff" stroke="#e8c9a4" stroke-width="1"/>
+    <circle cx="676" cy="189" r="13" fill="#c2701a"/>
+    <text x="676" y="194" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#ffffff">1</text>
+    <text x="698" y="187" font-size="13.5" font-weight="bold" fill="#1a2330">Context Assembly</text>
+    <text x="698" y="206" font-size="11.5" fill="#7a8794">→ Application</text>
+  </g>
+  <line x1="676" y1="216" x2="676" y2="226" stroke="#c2701a" stroke-width="1.6" marker-end="url(#dO)"/>
+  <!-- step 2 -->
+  <g>
+    <rect x="654" y="228" width="308" height="54" rx="8" fill="#ffffff" stroke="#e8c9a4" stroke-width="1"/>
+    <circle cx="676" cy="255" r="13" fill="#c2701a"/>
+    <text x="676" y="260" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#ffffff">2</text>
+    <text x="698" y="253" font-size="13.5" font-weight="bold" fill="#1a2330">Adapter Call</text>
+    <text x="698" y="272" font-size="11.5" fill="#7a8794">→ Infrastructure</text>
+  </g>
+  <line x1="676" y1="282" x2="676" y2="292" stroke="#c2701a" stroke-width="1.6" marker-end="url(#dO)"/>
+  <!-- step 3 -->
+  <g>
+    <rect x="654" y="294" width="308" height="54" rx="8" fill="#ffffff" stroke="#e8c9a4" stroke-width="1"/>
+    <circle cx="676" cy="321" r="13" fill="#c2701a"/>
+    <text x="676" y="326" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#ffffff">3</text>
+    <text x="698" y="319" font-size="13.5" font-weight="bold" fill="#1a2330">Structured Proposal</text>
+    <text x="698" y="338" font-size="11.5" fill="#7a8794">结构化候选 · PROPOSED → Engine + Domain</text>
+  </g>
+  <line x1="676" y1="348" x2="676" y2="358" stroke="#c2701a" stroke-width="1.6" marker-end="url(#dO)"/>
+  <!-- step 4 -->
+  <g>
+    <rect x="654" y="360" width="308" height="54" rx="8" fill="#ffffff" stroke="#e8c9a4" stroke-width="1"/>
+    <circle cx="676" cy="387" r="13" fill="#c2701a"/>
+    <text x="676" y="392" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#ffffff">4</text>
+    <text x="698" y="385" font-size="13.5" font-weight="bold" fill="#1a2330">Structural Validation</text>
+    <text x="698" y="404" font-size="11.5" fill="#7a8794">格式 / Schema 严格校验 → Engine</text>
+  </g>
+  <line x1="676" y1="414" x2="676" y2="424" stroke="#c2701a" stroke-width="1.6" marker-end="url(#dO)"/>
+  <!-- step 5 -->
+  <g>
+    <rect x="654" y="426" width="308" height="54" rx="8" fill="#ffffff" stroke="#e8c9a4" stroke-width="1"/>
+    <circle cx="676" cy="453" r="13" fill="#c2701a"/>
+    <text x="676" y="458" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#ffffff">5</text>
+    <text x="698" y="451" font-size="13.5" font-weight="bold" fill="#1a2330">Evidence Binding</text>
+    <text x="698" y="470" font-size="11.5" fill="#7a8794">证据绑定 · 来源可追溯 → Domain</text>
+  </g>
+  <line x1="676" y1="480" x2="676" y2="490" stroke="#c2701a" stroke-width="1.6" marker-end="url(#dO)"/>
+  <!-- step 6 -->
+  <g>
+    <rect x="654" y="492" width="308" height="54" rx="8" fill="#ffffff" stroke="#e8c9a4" stroke-width="1"/>
+    <circle cx="676" cy="519" r="13" fill="#c2701a"/>
+    <text x="676" y="524" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#ffffff">6</text>
+    <text x="698" y="517" font-size="13.5" font-weight="bold" fill="#1a2330">Rule Validation</text>
+    <text x="698" y="536" font-size="11.5" fill="#7a8794">规则复核 · 合法迁移判定 → Workflow</text>
+  </g>
+  <line x1="676" y1="546" x2="676" y2="556" stroke="#c2701a" stroke-width="1.6" marker-end="url(#dO)"/>
+  <!-- step 7 -->
+  <g>
+    <rect x="654" y="558" width="308" height="54" rx="8" fill="#fdf3e7" stroke="#c2701a" stroke-width="1.8"/>
+    <circle cx="676" cy="585" r="13" fill="#c2701a"/>
+    <text x="676" y="590" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#ffffff">7</text>
+    <text x="698" y="583" font-size="13.5" font-weight="bold" fill="#8a4d10">Human Gate</text>
+    <text x="698" y="602" font-size="11.5" fill="#8a4d10">候选不得自动升级 → Human / Interaction</text>
+  </g>
+  <line x1="676" y1="612" x2="676" y2="622" stroke="#c2701a" stroke-width="1.6" marker-end="url(#dO)"/>
+  <!-- step 8 -->
+  <g>
+    <rect x="654" y="624" width="308" height="54" rx="8" fill="#ffffff" stroke="#e8c9a4" stroke-width="1"/>
+    <circle cx="676" cy="651" r="13" fill="#c2701a"/>
+    <text x="676" y="656" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#ffffff">8</text>
+    <text x="698" y="649" font-size="13.5" font-weight="bold" fill="#1a2330">Versioned Accepted State</text>
+    <text x="698" y="668" font-size="11.5" fill="#7a8794">版本化写入 · 历史不可覆盖 → Domain + Persistence</text>
+  </g>
+
+  <!-- 卡 A -->
+  <rect x="654" y="694" width="308" height="106" rx="8" fill="#f4f6f8" stroke="#dde3e8" stroke-width="1"/>
+  <text x="668" y="716" font-size="12" font-weight="bold" fill="#3d4a56">这张带不重复治理图</text>
+  <text x="668" y="738" font-size="11.5" fill="#5b6b7b">本带只回答「8 步各落在哪一层」。</text>
+  <text x="668" y="757" font-size="11.5" fill="#5b6b7b">谁有权、Proposal 如何变成 Accepted、</text>
+  <text x="668" y="776" font-size="11.5" fill="#5b6b7b">五条不变量，见 governance-gates.svg</text>
+  <text x="668" y="795" font-size="11.5" fill="#5b6b7b">与 docs/GOVERNANCE.md。</text>
+
+  <!-- 卡 B -->
+  <rect x="654" y="814" width="308" height="98" rx="8" fill="#fdf1ef" stroke="#e8c4be" stroke-width="1"/>
+  <text x="668" y="836" font-size="12" font-weight="bold" fill="#8f2f22">提高语义智能 ≠ 提高模型权威</text>
+  <text x="668" y="858" font-size="11.5" fill="#7a3a30">模型只能产生 Proposal；</text>
+  <text x="668" y="877" font-size="11.5" fill="#7a3a30">已确认事实永不被模型推断覆盖；</text>
+  <text x="668" y="896" font-size="11.5" fill="#7a3a30">提案 / trace / 校验结果分别持久化。</text>
+  <text x="668" y="908" font-size="11.5" fill="#8a5c52">FAILED_* = FAILED_RETRYABLE / FAILED_TERMINAL</text>
+
+  <!-- 卡 C -->
+  <rect x="654" y="926" width="308" height="124" rx="8" fill="#eaf3fb" stroke="#bcd7ee" stroke-width="1"/>
+  <text x="668" y="948" font-size="12" font-weight="bold" fill="#1a5b8a">依赖方向 · 单向向下</text>
+  <text x="668" y="970" font-size="11.5" fill="#2f6f9f">Interaction → Application</text>
+  <text x="668" y="989" font-size="11.5" fill="#2f6f9f">→ Workflow → Engine → Domain</text>
+  <text x="668" y="1012" font-size="11.5" fill="#5b6b7b">可替换 Provider，</text>
+  <text x="668" y="1031" font-size="11.5" fill="#5b6b7b">不必重写 Domain。</text>
+
+  <!-- 脚注 -->
+  <text x="32" y="1074" font-size="11.5" fill="#7a8794">图源：docs/ARCHITECTURE.md §1（分层）· §3（七算子）· §4（Workflow 状态机）· §5（Application）· §6（LLM Proposal 边界）· §7（Persistence）· §9（依赖方向）。治理视角见 docs/GOVERNANCE.md 与 governance-gates.svg。</text>
+</svg>
