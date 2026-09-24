@@ -1,86 +1,86 @@
-# DEVFLOW · AI Native 软件工程控制系统
+# DEVFLOW · AI-Native Software Engineering Control System
 
-> 本文档回答一个核心问题：<br>
-> **知几 Agent 是怎样在 Human、ChatGPT、Codex、Terminal / CI 与 Git / GitHub 共同参与的情况下，被持续、可控地开发出来的。**
+[English](DEVFLOW.md) | [中文](DEVFLOW.zh-CN.md)
 
-DevFlow 不是知几 Agent 的业务功能，也不是一个已经产品化的通用开发平台。
+> This document answers one core question:<br>
+> **How was Zhiji Agent developed continuously and controllably with Human, ChatGPT, Codex, Terminal / CI, and Git / GitHub all participating?**
 
-它来源于知几 Agent 的真实开发过程：
+DevFlow is not a business feature of Zhiji Agent, and it is not a productized general-purpose development platform.
 
-> 当一个个人 AI 项目从少量代码逐渐演变为包含大量 Module、Phase、Task、状态、验证与修复的复杂软件系统后，问题不再只是“AI 能不能写代码”，而变成“如何让 AI 连续、可控、可恢复地完成复杂工程任务”。
+It emerged from the real development process of Zhiji Agent:
 
-因此，DevFlow 的定位是：
+> As a personal AI project grows from a small amount of code into a complex software system with many Modules, Phases, Tasks, states, verification steps, and repairs, the central problem stops being “can AI write code?” and becomes “how can AI execute complex engineering work continuously, controllably, and recoverably?”
 
-> **一套实际支撑知几 Agent 开发的个人 AI 软件工程控制系统。**
+DevFlow is therefore positioned as:
 
-它试图解决的不是模型生成能力不足，而是 AI 深度参与软件开发之后出现的工程控制问题：
+> **A personal AI software-engineering control system used in the actual development of Zhiji Agent.**
 
-- Context Loss：跨会话后上下文和当前事实丢失；
-- Scope Drift：长任务中逐渐偏离原任务边界；
-- State Ambiguity：无法准确判断现在执行到哪里；
-- False Completion：AI 说“完成了”，但没有足够工程证据；
-- Repair Loop：一次修复可能引入新的问题；
-- Recovery Difficulty：执行失败或会话切换后难以恢复可信现场。
+It is designed not to compensate for weak model generation, but to solve engineering-control problems that appear once AI becomes deeply involved in software development:
 
-DevFlow 的核心思路是：
+- **Context Loss**: current facts and context disappear across sessions;
+- **Scope Drift**: long tasks gradually deviate from their intended boundaries;
+- **State Ambiguity**: it becomes unclear where execution actually is;
+- **False Completion**: AI says “done” without sufficient engineering evidence;
+- **Repair Loop**: one fix may introduce another problem;
+- **Recovery Difficulty**: after failure or session change, it is hard to reconstruct a trustworthy engineering state.
 
-> **把开发过程从“依赖聊天上下文的连续协作”，转化成“由显式任务、状态和工程证据约束的执行系统”。**
+The core idea is:
+
+> **Transform development from continuous collaboration that depends on chat context into an execution system constrained by explicit tasks, states, and engineering evidence.**
 
 ---
 
-## 1. Role Separation · 为什么要拆分角色
+## 1. Role Separation · Why Split Responsibilities
 
-DevFlow 不把“规划、编码、验证、验收、版本事实”全部交给一个 Agent。
+DevFlow does not give planning, coding, verification, acceptance, and version facts to one Agent.
 
-它把开发参与方划分为六类职责单元：
+It separates participation into six responsibility units:
 
 ```text
 Human
   ↓
-目标 / 边界 / 风险 / 最终验收
+goals / boundaries / risk / final acceptance
 
 ChatGPT
   ↓
-需求分析 / 方案规划 / 技术审查 / 问题诊断
+requirements analysis / planning / technical review / problem diagnosis
 
 Codex
   ↓
-代码实现 / 测试 / 修复
+code implementation / testing / repair
 
 DevFlow
   ↓
-任务编排 / 状态控制 / 证据归档
+task orchestration / state control / evidence archiving
 
 Terminal / CI
   ↓
-本地执行 / 自动化验证
+local execution / automated verification
 
 Git / GitHub
   ↓
-Branch / Commit / PR / Merge 等版本事实
+version facts: Branch / Commit / PR / Merge
 ```
 
-这里的核心不是工具名称，而是**责任分离**。
+The point is not the specific tool names; it is **separation of responsibility**.
 
-可以概括为：
+In one sentence:
 
-> **方向由 Human 给出，分析与执行由 AI 承担，过程由 DevFlow 控制，结果由工程证据与 Human 共同确认。**
+> **Human sets direction; AI performs analysis and execution; DevFlow controls the process; engineering evidence and Human judgment jointly confirm the result.**
 
----
+### 1.1 Human · Final Authority over Goals and Risk
 
-### 1.1 Human · 最终目标与风险权威
+Human is responsible for:
 
-Human 负责：
+- product goals;
+- requirement boundaries;
+- major architectural trade-offs;
+- risk judgment;
+- whether major Scope changes are acceptable;
+- final functional acceptance;
+- final authorization for high-risk operations such as Merge or destructive recovery.
 
-- 产品目标；
-- 需求边界；
-- 关键架构取舍；
-- 风险判断；
-- 是否接受重大 Scope 变化；
-- 最终功能验收；
-- Merge / destructive recovery 等高风险操作的最终授权。
-
-Human 不需要亲自完成全部代码诊断，但必须保留：
+Human does not need to perform every code-level diagnosis personally, but retains:
 
 ```text
 Final Product Authority
@@ -88,23 +88,21 @@ Final Risk Authority
 Final Acceptance Authority
 ```
 
----
+### 1.2 ChatGPT · Planning, Analysis, and Review
 
-### 1.2 ChatGPT · 规划、分析与审查
+ChatGPT mainly handles:
 
-ChatGPT 主要承担：
+- requirement understanding;
+- solution design;
+- architecture planning;
+- Task decomposition;
+- Artifact review;
+- failure classification;
+- Root Cause analysis;
+- Repair design;
+- Resume / Stop / Replan decisions.
 
-- 需求理解；
-- 方案设计；
-- 架构规划；
-- Task 拆解；
-- Artifact 审查；
-- 失败分类；
-- Root Cause 分析；
-- Repair 方案设计；
-- Resume / Stop / Replan 判断。
-
-它更接近：
+It acts roughly as:
 
 ```text
 Planner
@@ -114,116 +112,106 @@ Reviewer
 Diagnosis Layer
 ```
 
-但 ChatGPT 的自然语言判断本身不构成工程事实。
+But ChatGPT's natural-language judgment is not itself an engineering fact.
 
----
+### 1.3 Codex · Constrained Executor
 
-### 1.3 Codex · 受约束的执行者
+Codex is responsible for:
 
-Codex 负责：
+- reading the formal Task Contract;
+- inspecting the real worktree;
+- modifying code within the allowed scope;
+- running focused checks;
+- repairing implementation problems;
+- producing execution results.
 
-- 读取正式 Task Contract；
-- 检查真实 worktree；
-- 在允许范围内修改代码；
-- 运行 focused checks；
-- 修复实现问题；
-- 输出执行结果。
+It should not independently:
 
-它不应自行：
+- expand Scope;
+- modify the formal Task definition;
+- bypass failing tests;
+- weaken verification merely to “pass”;
+- declare formal task acceptance.
 
-- 扩大 Scope；
-- 修改正式 Task 定义；
-- 绕过失败测试；
-- 为了“通过”而削弱验证；
-- 宣布任务已经正式验收。
+Therefore:
 
-因此：
+> **Codex may execute, but execution authority comes from the Contract, not from Codex's own judgment.**
 
-> **Codex 可以执行，但执行权限来自 Contract，而不是来自它自己的判断。**
+### 1.4 DevFlow · Control Plane
 
----
+DevFlow itself does not write business code and does not decide whether requirements are reasonable.
 
-### 1.4 DevFlow · 控制平面
-
-DevFlow 自身不负责写业务代码，也不负责判断需求是否合理。
-
-它负责控制：
+It controls:
 
 ```text
-现在应该执行哪个 Task
-Task 可以修改什么
-执行后产生了什么 Artifact
-验证是否通过
-当前 Phase / Task 处于什么状态
-失败后应该暂停在哪里
-恢复时从哪些事实重新开始
+which Task should run now
+what that Task may modify
+what Artifact the execution produced
+whether verification passed
+what state the current Phase / Task is in
+where failure should pause
+which facts recovery must reread
 ```
 
-因此它更像一个：
+It is therefore closer to a:
 
 > **Development Control Plane**
 
-而不是 Coding Agent。
+than a Coding Agent.
 
 ---
 
-## 2. Authoritative Facts · 不再让对话承担工程事实
+## 2. Authoritative Facts · Stop Using Conversation as Engineering State
 
-DevFlow 最重要的变化，是把原本散落在聊天中的目标、任务、状态与结果，固化成明确的控制对象。
+The most important change in DevFlow is that goals, tasks, state, and results that would otherwise be scattered across chats are turned into explicit control objects.
 
-核心有五类。
+There are five core types.
 
----
+### 2.1 Planning Artifact · Overall Direction
 
-### 2.1 Planning Artifact · 整体方向
+Records:
 
-记录：
+- requirement analysis;
+- architecture design;
+- Phase / Module planning;
+- Task decomposition;
+- key boundaries and acceptance strategy.
 
-- 需求分析；
-- 架构方案；
-- Phase / Module 规划；
-- Task 拆解；
-- 关键边界与验收思路。
+It answers:
 
-它回答：
+> **What are we planning to build, and why this way?**
 
-> **我们准备做什么，为什么这样做？**
+### 2.2 Manifest · Formal Task Identity
 
----
+Manifest defines:
 
-### 2.2 Manifest · 正式任务身份
+- formal Phases;
+- formal Tasks;
+- Task IDs;
+- Task order;
+- dependencies;
+- runtime metadata such as precompleted tasks.
 
-Manifest 定义：
+It answers:
 
-- 正式 Phase；
-- 正式 Task；
-- Task ID；
-- Task 顺序；
-- 依赖关系；
-- precompleted task 等运行信息。
+> **Which Tasks formally belong to this Phase?**
 
-它回答：
+### 2.3 State · Current Execution Position
 
-> **哪些 Task 真正属于这个 Phase？**
+State records:
 
----
+- current Phase status;
+- current Task;
+- completed tasks;
+- failed / paused position;
+- commit checkpoints;
+- latest Artifact reference.
 
-### 2.3 State · 当前执行位置
+It answers:
 
-State 记录：
+> **Where is the engineering work actually at right now?**
 
-- 当前 Phase 状态；
-- 当前 Task；
-- completed tasks；
-- failed / paused 位置；
-- commit checkpoints；
-- latest artifact reference。
-
-它回答：
-
-> **当前工程真实进行到哪里？**
-
-典型 Phase 状态包括：
+Typical Phase states include:
 
 ```text
 READY
@@ -233,68 +221,64 @@ FAILED
 COMPLETED
 ```
 
-State 的职责是记录当前位置，而不是单独决定下一步应该做什么。
+State records current position; it does not independently decide what should happen next.
+
+### 2.4 Task Contract · AI Execution Boundary
+
+A Task Contract defines:
+
+- what the Task must implement;
+- what may be modified;
+- what must not be modified;
+- Acceptance Criteria;
+- required Verification;
+- mandatory stop conditions.
+
+Therefore:
+
+> **The Task Contract is the authority for the boundary of one AI execution.**
+
+Even if an AI believes “it would be better to change a bit more while I'm here,” that does not expand the formal Scope.
+
+### 2.5 Artifact · What Actually Happened
+
+Artifact stores actual execution evidence such as:
+
+- code-execution results;
+- Verification;
+- logs;
+- failure information;
+- acceptance information;
+- session / attempt evidence.
+
+It answers:
+
+> **What actually happened in this execution attempt?**
+
+A core DevFlow rule is:
+
+> **Natural-language reporting cannot replace an Artifact.**
 
 ---
 
-### 2.4 Task Contract · AI 的执行边界
+## 3. Question-Specific Authority · Different Questions Use Different Sources of Truth
 
-Task Contract 规定当前 Task：
+DevFlow does not use a simplistic model where one file always has the highest authority.
 
-- 要实现什么；
-- 可以修改什么；
-- 禁止修改什么；
-- Acceptance Criteria 是什么；
-- 需要运行哪些 Verification；
-- 什么情况下必须停止。
+Instead:
 
-因此：
-
-> **Task Contract 是单次 AI 执行边界的权威来源。**
-
-一个 AI 即使“认为顺手多改一点更好”，也不能因此扩大正式 Scope。
-
----
-
-### 2.5 Artifact · 实际发生了什么
-
-Artifact 保存真实执行产生的：
-
-- 代码执行结果；
-- Verification；
-- logs；
-- failure information；
-- acceptance information；
-- session / attempt evidence。
-
-它回答：
-
-> **这一次执行到底发生了什么？**
-
-DevFlow 的核心原则之一就是：
-
-> **自然语言汇报不能替代 Artifact。**
-
----
-
-## 3. Question-Specific Authority · 不同问题看不同事实源
-
-DevFlow 不采用“某一个文件永远最高优先级”的简单模型。
-
-更准确的方式是：
-
-| 问题 | 权威来源 |
+| Question | Authoritative source |
 |---|---|
-| 当前代码 / Branch / Commit 是什么？ | Git / GitHub |
-| 哪些 Task 正式属于当前 Phase？ | Manifest |
-| 当前执行到哪里？ | State，并与 Manifest 校验 |
-| 当前 Task 可以改什么？ | Task Contract |
-| 实现与验证有没有通过？ | Verification + Artifact |
-| 是否需要 Human Review？ | Acceptance Artifact |
-| 最终是否正式接受？ | Human Decision |
-| 当前会话应该从哪里恢复？ | Git + Manifest + State + Contract + Artifact + Handoff |
+| What are the current code / Branch / Commit? | Git / GitHub |
+| Which Tasks formally belong to the current Phase? | Manifest |
+| Where is execution now? | State, cross-checked with Manifest |
+| What may the current Task modify? | Task Contract |
+| Did implementation and verification pass? | Verification + Artifact |
+| Is Human Review required? | Acceptance Artifact |
+| Has the result been formally accepted? | Human Decision |
+| Where should the current session resume? | Git + Manifest + State + Contract + Artifact + Handoff |
 
-因此：
+Therefore:
 
 ```text
 Skill
@@ -302,28 +286,28 @@ Handoff
 AI Summary
 ```
 
-都只是：
+are only:
 
-> **帮助读取和解释权威事实。**
+> **helpers for reading and interpreting authoritative facts.**
 
-它们不能覆盖 Git、State、Contract 或 Artifact。
+They cannot override Git, State, Contract, or Artifact.
 
 ---
 
-## 4. Operating Modes · 为什么不是所有任务都用同一种执行方式
+## 4. Operating Modes · Why Not Every Task Uses the Same Execution Path
 
-DevFlow 根据任务性质选择四种主要运行模式。
+DevFlow uses four primary operating modes depending on task type.
 
 ### 4.1 Planning First
 
-适用于：
+Used for:
 
-- 新 Module；
-- 新 Phase；
-- 实质性新能力；
-- 目标或 Scope 尚未冻结的工作。
+- a new Module;
+- a new Phase;
+- a materially new capability;
+- work whose goal or Scope is not yet frozen.
 
-流程是：
+Flow:
 
 ```text
 Requirement
@@ -343,19 +327,17 @@ Task Contract
 Execution
 ```
 
-原则是：
+Principle:
 
-> **先定义，再执行。**
-
----
+> **Define before execute.**
 
 ### 4.2 Continuous Phase
 
-适用于：
+Used for:
 
-> 已经完成规划、可以按照固定 Task Graph 连续推进的标准开发阶段。
+> a standard development stage that has already been planned and can progress through a fixed Task Graph.
 
-Phase Runner 根据：
+The Phase Runner selects the next eligible Task using:
 
 ```text
 Manifest
@@ -365,22 +347,18 @@ Dependencies
 Current State
 ```
 
-选择下一项 eligible Task。
-
-Task Runner 再在 Task Contract 范围内完成一次受控执行。
-
----
+The Task Runner then performs one controlled execution within the Task Contract.
 
 ### 4.3 Iterative Repair
 
-适用于：
+Used when:
 
-- 执行失败；
-- Verification 失败；
-- Acceptance 不通过；
-- Semantic Review 发现实现偏离。
+- execution fails;
+- Verification fails;
+- Acceptance fails;
+- Semantic Review finds implementation drift.
 
-Repair 不重新设计整个系统，而是：
+Repair does not redesign the entire system. Instead:
 
 ```text
 Failure Artifact
@@ -396,25 +374,23 @@ Verification
 Review
 ```
 
-核心原则：
+Core principle:
 
-> **基于证据定位真实原因，在原 Scope 内做最小范围修复。**
+> **Use evidence to locate the real cause, then make the smallest repair within the existing Scope.**
 
-并且新的 Fix Artifact 不覆盖原失败 Artifact，从而保留完整问题历史。
-
----
+A new Fix Artifact does not overwrite the original failure Artifact, preserving the full problem history.
 
 ### 4.4 Single Task
 
-适用于：
+Used for:
 
-- 独立评审；
-- 治理修复；
-- 文档任务；
-- 最终验收；
-- 不属于连续 Phase 的一次性工作。
+- independent review;
+- governance repair;
+- documentation work;
+- final acceptance;
+- one-off work outside a continuous Phase.
 
-虽然没有完整 Phase Runner，但仍然需要遵守：
+Even without a full Phase Runner, it still follows:
 
 ```text
 Contract
@@ -425,9 +401,9 @@ Acceptance
 
 ---
 
-## 5. Execution Loop · 一次任务如何真正完成
+## 5. Execution Loop · How a Task Actually Completes
 
-DevFlow 的主运行链可以概括为：
+The main DevFlow execution chain is:
 
 ```text
 Planning
@@ -447,22 +423,22 @@ Commit / State Update
 Next Task
 ```
 
-展开后：
+Expanded:
 
 ```text
-Human / ChatGPT 定义目标与任务
+Human / ChatGPT defines goal and Task
           ↓
-Manifest 确认任务身份
+Manifest confirms Task identity
           ↓
-State 确认当前位置
+State confirms current position
           ↓
-Task Contract 限定执行边界
+Task Contract constrains execution
           ↓
-Codex 执行代码修改
+Codex modifies code
           ↓
-Terminal / CI 运行确定性验证
+Terminal / CI runs deterministic verification
           ↓
-生成 Artifact
+Artifact is produced
           ↓
 Semantic / Human Review
           ↓
@@ -470,16 +446,16 @@ Accept / Repair / Replan / Stop
           ↓
 Git checkpoint
           ↓
-State 更新
+State update
           ↓
-下一 Task
+Next Task
 ```
 
-关键点是：
+The key point is:
 
-> **“AI 执行完”不是任务完成条件。**
+> **“AI finished executing” is not the condition for task completion.**
 
-任务真正完成需要：
+A Task is complete only when there is:
 
 ```text
 Execution Result
@@ -488,22 +464,22 @@ Deterministic Evidence
 +
 Semantic Acceptance
 +
-必要时 Human Decision
+Human Decision when required
 ```
 
 ---
 
-## 6. Quality Governance · 技术通过不等于任务通过
+## 6. Quality Governance · Technical Pass ≠ Task Pass
 
-DevFlow 将验收拆成三个不同层次。
+DevFlow separates acceptance into three layers.
 
-### 6.1 Deterministic Verification · 技术验证
+### 6.1 Deterministic Verification · Technical Verification
 
-负责判断：
+Answers:
 
-> **实现是否满足基本工程条件。**
+> **Does the implementation satisfy basic engineering conditions?**
 
-包括：
+Including:
 
 ```text
 git diff --check
@@ -515,28 +491,26 @@ PostgreSQL verification
 GitHub Actions
 ```
 
-这些结果应该是：
+These results should be:
 
-- 可重复；
-- 可量化；
-- 可留证。
+- repeatable;
+- measurable;
+- preservable as evidence.
 
----
+### 6.2 Semantic Acceptance · Semantic Review
 
-### 6.2 Semantic Acceptance · 语义验收
+Even when every technical check passes, the Task may still be wrong.
 
-技术检查全部通过，仍不意味着任务一定正确。
+Review must also ask:
 
-还需要检查：
+- was the correct object changed?
+- does the implementation truly satisfy the Task Contract?
+- did Scope Drift occur?
+- did the implementation bypass an existing Architecture Contract?
+- were tests or assertions weakened merely to create a “pass”?
+- was the Root Cause fixed rather than only the symptom?
 
-- 改的是不是正确对象；
-- 是否真正满足 Task Contract；
-- 是否发生 Scope Drift；
-- 是否绕过原有 Architecture Contract；
-- 是否通过修改测试 / 弱化断言制造“通过”；
-- 是否解决 Root Cause 而不只是症状。
-
-因此：
+Therefore:
 
 ```text
 Tests Pass
@@ -544,37 +518,35 @@ Tests Pass
 Task Accepted
 ```
 
----
+### 6.3 Human Decision · Final Judgment
 
-### 6.3 Human Decision · 最终判断
+Human retains final decision authority for:
 
-涉及以下情况时，最终决策仍由 Human 保留：
+- product goals;
+- Scope changes;
+- Architecture trade-offs;
+- high-risk operations;
+- NEED_HUMAN states;
+- final Acceptance;
+- Merge.
 
-- 产品目标；
-- Scope 变化；
-- Architecture trade-off；
-- 高风险操作；
-- NEED_HUMAN；
-- 最终 Acceptance；
-- Merge。
+Therefore:
 
-所以：
-
-> **Verification 提供事实，Semantic Review 提供判断，Human 提供最终责任。**
+> **Verification provides facts, Semantic Review provides judgment, and Human provides final responsibility.**
 
 ---
 
-## 7. State & Recovery · 为什么可以跨会话继续开发
+## 7. State & Recovery · Why Development Can Continue Across Sessions
 
-长周期 AI 开发的一个核心问题是：
+A central problem in long-running AI development is:
 
-> 一旦换聊天窗口，之前积累的“上下文”是不是就丢了？
+> If the chat window changes, does all accumulated “context” disappear?
 
-DevFlow 的答案是：
+DevFlow's answer is:
 
-> **聊天上下文不能作为恢复工程现场的唯一来源。**
+> **Chat context cannot be the only source used to recover engineering state.**
 
-恢复时重新读取：
+Recovery rereads:
 
 ```text
 Git
@@ -590,24 +562,22 @@ Artifact
 Handoff
 ```
 
-重新确定：
+and reconstructs:
 
-- 当前代码版本；
-- 当前正式任务；
-- 已完成事项；
-- 当前失败 / 暂停位置；
-- 最新执行证据；
-- 下一步允许做什么。
+- the current code version;
+- the current formal Task;
+- completed work;
+- current failure / pause position;
+- latest execution evidence;
+- what is allowed next.
 
-如果不同权威事实之间发生冲突：
+If authoritative facts conflict:
 
-> **进入人工确认，而不是让 AI 自动选择一个“看起来合理”的版本。**
+> **The system escalates to Human confirmation rather than letting AI automatically pick the version that “looks reasonable.”**
 
-同时：
+Normal Context Recovery may only read and reconstruct existing State.
 
-> 正常 Context Recovery 只能读取并重建现有 State。
-
-如果 State 本身需要被修改，就应该作为一个独立的 State Repair / Governance Task：
+If State itself must change, that should be a separate State Repair / Governance Task:
 
 ```text
 explicit authorization
@@ -616,17 +586,17 @@ explicit authorization
 → evidence
 ```
 
-而不是在恢复过程中顺手改掉。
+not an opportunistic edit made during recovery.
 
 ---
 
-## 8. Why DevFlow Matters · 它真正解决的不是自动化，而是控制问题
+## 8. Why DevFlow Matters · The Real Problem Is Control, Not Automation
 
-DevFlow 最初可能看起来像：
+At first, DevFlow may look like:
 
-> “让 AI 帮我自动写代码。”
+> “Let AI help me write code automatically.”
 
-但随着知几规模扩大，它实际解决的问题越来越接近：
+As Zhiji grew, however, the real questions became closer to:
 
 ```text
 How to preserve intent?
@@ -637,45 +607,45 @@ How to repair without losing history?
 How to resume from facts instead of memory?
 ```
 
-因此它的价值不是：
+Its value is therefore not:
 
-> 尽可能减少 Human。
+> minimizing Human involvement as much as possible.
 
-而是：
+It is:
 
-> **把 Human、AI 与工程工具放到各自更适合承担的位置。**
+> **placing Human, AI, and engineering tools in the roles they are better suited to perform.**
 
-可以概括成：
+In compact form:
 
 ```text
 Human
-保留目标、边界与最终责任
+retains goals, boundaries, and final responsibility
 
 AI
-承担高密度分析与执行工作
+performs high-density analysis and execution
 
 DevFlow
-保证执行过程有边界、有状态、有证据
+ensures execution has boundaries, state, and evidence
 
 Verification / Git
-提供独立于 AI 叙述的工程事实
+provide engineering facts independent of AI narration
 ```
 
 ---
 
-## 9. Zhiji × DevFlow · 两套系统为什么会表现出相似结构
+## 9. Zhiji × DevFlow · Why the Two Systems Converged on Similar Structures
 
-知几 Agent 和 DevFlow 解决的是两类不同问题：
+Zhiji Agent and DevFlow solve different kinds of problems:
 
 ```text
 Zhiji Agent
-管理 AI 如何参与复杂企业决策
+manages how AI participates in complex enterprise decisions
 
 DevFlow
-管理 AI 如何参与复杂软件开发
+manages how AI participates in complex software development
 ```
 
-但两者逐渐形成了相似原则：
+Yet they gradually converged on similar principles:
 
 | Zhiji | DevFlow |
 |---|---|
@@ -687,62 +657,58 @@ DevFlow
 | Fail Closed | Stop on verification / scope / state conflict |
 | Recovery | Context / Phase Recovery |
 
-它们共同强调：
+Both emphasize:
 
 ```text
-显式状态
-明确权限
-候选与事实分离
-确定性验证
+explicit state
+clear authority
+separation of candidate from fact
+deterministic verification
 Human Gate
-证据可追溯
-失败可恢复
+traceable evidence
+recoverable failure
 ```
 
-这种相似性不是说二者是同一套系统。
+This does not mean the two systems are the same.
 
-而是说明：
+It suggests instead that:
 
-> **当 AI 从“提供建议”进一步进入长链复杂任务时，状态、权限和证据逐渐成为比单次生成能力更基础的问题。**
-
----
-
-## 10. Current Boundary · DevFlow 当前不是什么
-
-对外介绍 DevFlow 时，需要保留几个明确边界。
-
-### 10.1 不是通用开发平台
-
-DevFlow 是：
-
-> **知几 Agent 开发过程中形成并实际使用的个人 AI 软件工程控制系统。**
-
-当前没有把它包装成：
-
-- 多租户研发平台；
-- 通用 Coding Agent SaaS；
-- 企业级 SDLC 替代品。
+> **When AI moves from “giving advice” into long-chain complex work, state, authority, and evidence become more fundamental than one-shot generation quality.**
 
 ---
 
-### 10.2 不是全自动软件工厂
+## 10. Current Boundary · What DevFlow Is Not
 
-DevFlow 仍然明确保留：
+Several boundaries should remain explicit in public descriptions of DevFlow.
+
+### 10.1 Not a General Development Platform
+
+DevFlow is:
+
+> **a personal AI software-engineering control system developed and used during Zhiji Agent development.**
+
+It is not currently packaged as:
+
+- a multi-tenant development platform;
+- a general Coding Agent SaaS;
+- an enterprise SDLC replacement.
+
+### 10.2 Not a Fully Autonomous Software Factory
+
+DevFlow explicitly retains:
 
 ```text
 Human Decision
 ```
 
-尤其在：
+especially for:
 
-- Scope 变化；
-- 高风险操作；
-- ambiguous recovery；
-- 最终验收与合并；
+- Scope changes;
+- high-risk operations;
+- ambiguous recovery;
+- final acceptance and Merge.
 
-等节点。
-
-因此：
+Therefore:
 
 ```text
 AI Native
@@ -750,11 +716,9 @@ AI Native
 Fully Autonomous
 ```
 
----
+### 10.3 Engineering Facts ≠ Product Correctness
 
-### 10.3 工程事实不等于产品正确性
-
-即使：
+Even if:
 
 ```text
 ruff passed
@@ -763,21 +727,21 @@ pytest passed
 PostgreSQL passed
 ```
 
-也只能证明相应的技术验证成立。
+that proves only the corresponding technical checks.
 
-最终仍需要回答：
+The project must still answer:
 
-> **实现是否真的满足产品目标与 Task Contract？**
+> **Does the implementation actually satisfy the product goal and Task Contract?**
 
 ---
 
-## 11. Summary · DevFlow 的核心
+## 11. Summary · DevFlow in One Model
 
-DevFlow 可以压缩成一句话：
+DevFlow can be compressed into one sentence:
 
-> **把 Human 的目标与边界、AI 的规划与代码执行、自动化验证、Git 版本事实和人工验收，组织成一条由显式 Contract、State 与 Artifact 驱动的可控开发闭环。**
+> **Organize Human goals and boundaries, AI planning and code execution, automated verification, Git version facts, and Human acceptance into a controllable development loop driven by explicit Contract, State, and Artifact.**
 
-进一步压缩：
+Compressed further:
 
 ```text
 Define before execute.
@@ -788,35 +752,35 @@ Repair from evidence.
 Human keeps final authority.
 ```
 
-它真正试图解决的是：
+The deeper problem DevFlow addresses is:
 
-> **如何在 AI 承担越来越多软件工程工作的同时，不把任务边界、工程状态、验证事实和最终责任一起交给 AI。**
+> **How can AI take on more software-engineering work without also becoming the authority over task boundaries, engineering state, verification facts, and final responsibility?**
 
 ---
 
-## 12. 本文与其他文档的关系
+## 12. Relationship to Other Documents
 
-DevFlow 是 Public Repo 中的一条第二故事线。
+DevFlow is a second narrative thread in the Public Repo.
 
-理解知几 Agent 本身，并不要求先理解 DevFlow。
+Understanding Zhiji Agent itself does not require understanding DevFlow first.
 
-| 读者还想确认 | 去哪 |
+| If you want to know... | Read... |
 |---|---|
-| 知几本身如何分析企业问题？ | `docs/METHOD.md` |
-| 知几里的 Agent / Human / Workflow 权限如何划分？ | `docs/GOVERNANCE.md` |
-| 知几的软件架构如何实现这些约束？ | `docs/ARCHITECTURE.md` |
-| 知几当前真实做到哪里？ | `docs/STATUS.md` |
-| 知几实际一次 Product Loop 怎么运行？ | `demo/README.md` |
-| 知几有哪些公开工程验证事实？ | `evidence/` |
+| How does Zhiji analyze enterprise problems? | `docs/METHOD.md` |
+| How are Agent / Human / Workflow authorities divided in Zhiji? | `docs/GOVERNANCE.md` |
+| How does Zhiji's software architecture enforce these constraints? | `docs/ARCHITECTURE.md` |
+| What has Zhiji actually implemented today? | `docs/STATUS.md` |
+| What does one Zhiji Product Loop actually look like? | `demo/README.md` |
+| What public engineering verification facts exist? | `evidence/` |
 
-两条故事线的关系可以理解为：
+The relationship between the two narratives is:
 
 ```text
 Zhiji Agent
-业务决策如何被建模、治理和推演
+how business decisions are modeled, governed, and simulated
 
 DevFlow
-复杂 AI 软件如何被规划、执行、验证和恢复
+how complex AI software is planned, executed, verified, and recovered
 ```
 
-它们共同构成这个项目对 AI Native 系统设计的两种实践。
+Together they form two practical explorations of AI-native system design within this project.

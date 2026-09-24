@@ -1,39 +1,41 @@
-# EVIDENCE · 工程证据索引
+# EVIDENCE · Engineering Evidence Index
 
-> 本目录回答一个问题：<br>
-> **Public Repo 中关于“已经实现、已经跑通、已经验证”的主张，有哪些实际工程事实可以支撑？**
+[English](README.md) | [中文](README.zh-CN.md)
 
-这里保存的不是新的产品定义，也不是另一份 STATUS。
+> This directory answers one question:<br>
+> **What concrete engineering facts support the claims in the Public Repo that something has been implemented, run, or verified?**
 
-它只负责提供：
+This directory does not introduce a new product definition and is not another STATUS document.
 
-- 可核验的 Verification Snapshot；
-- Demo 运行证据；
-- 原始终端与 Prompt / Response 审计材料；
-- 证据能够支持什么、不能支持什么的明确边界。
+Its only responsibilities are to provide:
 
-因此：
+- a verifiable Verification Snapshot;
+- Demo run evidence;
+- raw terminal and Prompt / Response audit artifacts;
+- explicit boundaries for what the evidence does and does not support.
+
+Therefore:
 
 ```text
 docs/
-定义与解释
+define and explain
         ↓
 STATUS
-声明当前做到哪里
+states what currently exists
         ↓
 EVIDENCE
-提供支持这些声明的工程事实
+provides engineering facts supporting those claims
 ```
 
 ---
 
-## 1. Evidence Principles · 证据原则
+## 1. Evidence Principles
 
 ### 1.1 Evidence ≠ Claim
 
-文档中的一句“已实现”本身不是证据。
+A sentence saying “implemented” is not, by itself, evidence.
 
-工程主张应尽量能够落到：
+Engineering claims should map, whenever possible, to one or more concrete facts such as:
 
 ```text
 Commit / Git tree
@@ -45,21 +47,19 @@ Persisted output
 Prompt / Response trace
 ```
 
-中的一种或多种实际事实。
-
 ### 1.2 Evidence ≠ Source-level Audit
 
-当前 Private Source Repository 保持私有。
+The Private Source Repository remains private.
 
-因此本 Public Repo 可以提供：
+The Public Repo can therefore provide:
 
-- 运行结果；
-- 测试与 CI 摘要；
-- Demo 原始 trace；
-- Prompt / Response 审计轨迹；
-- 脱敏后的工程证据。
+- runtime results;
+- test and CI summaries;
+- raw Demo traces;
+- Prompt / Response audit traces;
+- sanitized engineering evidence.
 
-但不能因此声称外部 Reviewer 已经获得完整源码级审计能力。
+But this must not be interpreted as external reviewers having full source-level audit access.
 
 ```text
 Engineering Evidence
@@ -69,22 +69,22 @@ Source-level Audit
 
 ### 1.3 Demo Evidence ≠ Business Validation
 
-一次完整 Demo 可以证明系统路径真实运行过，但不能证明：
+A complete Demo can show that a system path actually ran, but it cannot prove that:
 
 ```text
-真实企业诊断质量已经验证
-Projection 等于 Actual Outcome
-ChangeLaw 已被因果证明
-推荐方案一定产生预期 ROI
+Real enterprise diagnosis quality has been validated
+Projection equals Actual Outcome
+ChangeLaw has been causally proven
+The recommended solution will produce the expected ROI
 ```
 
-这些结论必须依赖后续真实企业 Case、Measurement 与 Actual Outcome。
+Those conclusions require later real-enterprise Cases, Measurement, and Actual Outcome evidence.
 
 ---
 
-## 2. Current Evidence Snapshot · 当前证据锚点
+## 2. Current Evidence Snapshot
 
-当前 Public Evidence Snapshot 以 Private Source Repository 的主线状态为锚点：
+The current Public Evidence Snapshot is anchored to the Private Source Repository mainline:
 
 ```text
 repository: XIAchong916/zhiji-agent
@@ -93,25 +93,25 @@ commit: 49ec33c
 date: 2026-09-24
 ```
 
-该提交对应 PR #58 合并后的 `main`。
+This commit is `main` after PR #58 was merged.
 
-PR #58 的 CI 运行在 merge tree `aad34a8` 上；该 merge tree 与最终 `main` commit `49ec33c` 使用相同 Git tree：
+The PR #58 CI ran on merge tree `aad34a8`. That merge tree and final `main` commit `49ec33c` share the same Git tree:
 
 ```text
 tree: f3abf089a7689d48ca95a657ae82d8c2fb8b56f0
 ```
 
-因此当前 Verification Snapshot 可以与这一 `main` 状态对应。
+The current Verification Snapshot can therefore be associated with that `main` state.
 
-详细结果见：
+See:
 
 [verification-snapshot.md](verification-snapshot.md)
 
 ---
 
-## 3. Deterministic Verification · 确定性工程验证
+## 3. Deterministic Verification
 
-当前对应 CI 的主要结果为：
+The corresponding CI results are:
 
 | Verification | Result |
 |---|---|
@@ -124,34 +124,34 @@ tree: f3abf089a7689d48ca95a657ae82d8c2fb8b56f0
 | PostgreSQL gate · Run 2 | `83 passed` |
 | PostgreSQL selected tests | `83 / 2945` |
 
-GitHub Actions 的两个主要 Job 均通过：
+Both primary GitHub Actions jobs passed:
 
 ```text
 deterministic   PASS
 postgres        PASS
 ```
 
-这些结果主要支持：
+These results support the following engineering-level claims:
 
-- 当前代码能够通过 ordinary deterministic quality gate；
-- 当前 PostgreSQL persistence / migration / integration 路径能够通过隔离验证；
-- 当前类型检查与 Ruff gate 为 green；
-- Public Repo 中关于工程闭环“不是纯架构设想”的主张具有实际运行依据。
+- the current code passes the ordinary deterministic quality gate;
+- the PostgreSQL persistence / migration / integration path passes isolated verification;
+- the current type-checking and Ruff gates are green;
+- the Public Repo's claim that the engineering loop is not merely an architectural concept is grounded in actual execution evidence.
 
-它们**不**直接证明：
+They do **not** directly prove:
 
-- 真实模型诊断质量；
-- 跨行业泛化；
-- 真实业务效果；
-- production deployment readiness。
+- real-model diagnosis quality;
+- cross-industry generalization;
+- real business outcomes;
+- production deployment readiness.
 
 ---
 
-## 4. Demo Evidence · 真实 Product Loop 证据
+## 4. Demo Evidence · Real Product Loop Evidence
 
-本目录同时保存当前真实模型 Demo 的原始工程证据。
+This directory also preserves raw engineering evidence from the current real-model Demo.
 
-目录：
+Directory:
 
 ```text
 demo-product-loop-v3/
@@ -162,103 +162,103 @@ demo-product-loop-v3/
 
 ### 4.1 `run-summary.md`
 
-用于说明：
+Explains:
 
-- 本次 Demo 的运行条件；
-- 使用的 Case 类型；
-- Provider / Persistence / Human Gate 边界；
-- 关键运行阶段；
-- 最终 Output；
-- 已知限制；
-- 该运行能够证明什么、不能证明什么。
+- the Demo run conditions;
+- the type of Case used;
+- Provider / Persistence / Human Gate boundaries;
+- major runtime stages;
+- the final Output;
+- known limitations;
+- what the run can and cannot prove.
 
 [Read the run summary →](demo-product-loop-v3/run-summary.md)
 
 ### 4.2 `.cast` · Raw Terminal Trace
 
-`zhiji_demo_product_loop_v3.cast` 是 asciinema v2 原始终端录制。
+`zhiji_demo_product_loop_v3.cast` is the raw asciinema v2 terminal recording.
 
-它承担的是：
+Its purpose is to answer:
 
-> **“实际终端中发生了什么？”**
+> **“What actually happened in the terminal?”**
 
-而不是重新解释产品设计。
+rather than to reinterpret the product design.
 
-它可以用于核验：
+It can be used to verify:
 
-- CLI 的真实运行顺序；
-- Human 输入；
-- Agent Proposal 出现位置；
-- Human Gate；
-- Layer / Journey 推进；
-- 最终 `PRODUCT_OUTPUT_READY`。
+- the actual CLI execution sequence;
+- Human input;
+- where Agent Proposals appear;
+- Human Gates;
+- Layer / Journey progression;
+- the final `PRODUCT_OUTPUT_READY` state.
 
 [Raw terminal trace →](demo-product-loop-v3/zhiji_demo_product_loop_v3.cast)
 
 ### 4.3 `.prompts.txt` · Prompt / Response Audit Trace
 
-`zhiji_demo_product_loop_v3.prompts.txt` 保存本次 Demo 的 Prompt / Response 审计轨迹。
+`zhiji_demo_product_loop_v3.prompts.txt` preserves the Prompt / Response audit trace for the run.
 
-它用于核验：
+It can be used to verify:
 
-- 哪些阶段真正调用了语义生成；
-- 哪些内容来自 Agent；
-- 哪些动作由 Human Confirm / Select；
-- Proposal 是否停在 USER Gate；
-- 最终运行是否正常结束。
+- which stages actually invoked semantic generation;
+- which content came from the Agent;
+- which actions were Human Confirm / Select operations;
+- whether the Proposal stopped at the USER Gate;
+- whether the run completed normally.
 
 [Prompt / Response trace →](demo-product-loop-v3/zhiji_demo_product_loop_v3.prompts.txt)
 
-> 公开版本只应保存已经完成脱敏和安全检查的审计材料，不应包含 API Key、Authorization Header、`.env` 内容、数据库凭据或不必要的本地绝对路径。
+> Public audit artifacts should contain only sanitized and security-reviewed material. They should not expose API keys, Authorization headers, `.env` contents, database credentials, or unnecessary local absolute paths.
 
 ---
 
-## 5. Demo Evidence vs. Public Video · 为什么两套都保留
+## 5. Demo Evidence vs. Public Video
 
-Public Repo 中：
+In the Public Repo:
 
 ```text
 demo/
 ```
 
-负责：
+is responsible for:
 
-> **让人看懂系统如何运行。**
+> **Helping a reader understand how the system runs.**
 
-而：
+Whereas:
 
 ```text
 evidence/demo-product-loop-v3/
 ```
 
-负责：
+is responsible for:
 
-> **让人核验这次运行确实发生过。**
+> **Helping a reviewer verify that the run actually happened.**
 
-两者关系是：
+The relationship is:
 
 ```text
 Public Cut
-快速理解
+quick understanding
         ↓
 Engineering Demo
-完整观察
+complete observation
         ↓
 .cast + prompts
-原始审计
+raw audit
 ```
 
-因此 Public Cut 可以剪辑，但不应成为唯一证据。
+The Public Cut can therefore be edited, but it should not be the only evidence.
 
-完整 Demo、Raw Terminal Trace 与 Prompt / Response Trace 共同承担底层核验作用。
+The full Demo, Raw Terminal Trace, and Prompt / Response Trace together provide the lower-level verification surface.
 
 [See the Demo →](../demo/README.md)
 
 ---
 
-## 6. What Current Evidence Supports · 当前证据支持什么
+## 6. What Current Evidence Supports
 
-结合当前 Verification Snapshot 与 Demo Evidence，可以支持以下工程层结论：
+Taken together, the current Verification Snapshot and Demo Evidence support the engineering-level conclusion that:
 
 ```text
 Business Diagnosis
@@ -268,22 +268,22 @@ Scenario Diagnosis
 Solution Design
 ```
 
-能够在同一 Product Loop 中连续推进。
+can progress continuously within one Product Loop.
 
-同时已经有证据支持：
+There is also evidence that:
 
-- Workflow / State 可以持续推进；
-- Human Gate 可以控制关键状态迁移；
-- Evidence 与 lineage 可以跨阶段保留；
-- Journey 可以持久化和恢复；
-- Product Output 可以从持久化状态生成；
-- PostgreSQL 路径可以运行并通过专项验证；
-- 真实 OpenAI-compatible Provider 可以进入 Semantic Generation 路径；
-- Agent 可以生成受限 Semantic Proposal；
-- Agent Proposal 可以以 `HYPOTHESIS` 身份停在 USER Gate；
-- `CURRENT_POSITION / TARGET_POSITION / CHANGE_LAWS / INTERVENTIONS / PROJECTION` 五类 Agent Semantic Proposal 已经过真实 Provider 路径验证；
-- Solution Selection 不会自动产生现实执行权限；
-- 最终 Output 明确保留：
+- Workflow / State can continue to progress;
+- Human Gates can control critical state transitions;
+- Evidence and lineage can be preserved across stages;
+- a Journey can be persisted and recovered;
+- Product Output can be generated from persisted state;
+- the PostgreSQL path runs and passes dedicated verification;
+- a real OpenAI-compatible Provider can enter the Semantic Generation path;
+- the Agent can generate bounded Semantic Proposals;
+- Agent Proposals can stop at the USER Gate with `HYPOTHESIS` status;
+- all five Agent Semantic Proposal families — `CURRENT_POSITION / TARGET_POSITION / CHANGE_LAWS / INTERVENTIONS / PROJECTION` — have been verified through a real-provider path;
+- Solution Selection does not automatically create real-world execution authority;
+- the final Output explicitly preserves:
 
 ```text
 No execution: true
@@ -292,9 +292,9 @@ No authorization: true
 
 ---
 
-## 7. What Current Evidence Does Not Support · 当前证据不支持什么
+## 7. What Current Evidence Does Not Support
 
-当前公开证据不能支持以下结论：
+The current public evidence does **not** support the following claims:
 
 ```text
 Agent can autonomously diagnose enterprises             ✗
@@ -309,7 +309,7 @@ System is production-ready                              ✗
 System has autonomous execution authority               ✗
 ```
 
-尤其需要保持：
+The following boundaries must remain explicit:
 
 ```text
 Real Semantic Proposal
@@ -335,34 +335,34 @@ Execution Authorization
 
 ---
 
-## 8. Evidence Directory · 文件关系
+## 8. Evidence Directory
 
 ```text
 evidence/
 │
 ├── README.md
-│   └── 解释证据体系与阅读方式
+│   └── explains the evidence system and reading path
 │
 ├── verification-snapshot.md
-│   └── 当前 main 对应的 pytest / mypy / Ruff / PostgreSQL / CI 证据
+│   └── pytest / mypy / Ruff / PostgreSQL / CI evidence for the current main anchor
 │
 └── demo-product-loop-v3/
     │
     ├── run-summary.md
-    │   └── 一次真实模型 Product Loop 的运行摘要与验证边界
+    │   └── run summary and validation boundaries for one real-model Product Loop
     │
     ├── zhiji_demo_product_loop_v3.cast
-    │   └── 原始终端运行轨迹
+    │   └── raw terminal execution trace
     │
     └── zhiji_demo_product_loop_v3.prompts.txt
-        └── Prompt / Response 审计轨迹
+        └── Prompt / Response audit trace
 ```
 
 ---
 
-## 9. Reading Order · 推荐阅读顺序
+## 9. Recommended Reading Order
 
-如果只是第一次了解项目：
+For a first look at the project:
 
 ```text
 ../README.md
@@ -372,7 +372,7 @@ evidence/
 verification-snapshot.md
 ```
 
-如果希望进一步核验一次真实模型运行：
+To verify one real-model run in more depth:
 
 ```text
 demo-product-loop-v3/run-summary.md
@@ -382,7 +382,7 @@ demo-product-loop-v3/run-summary.md
 .prompts.txt
 ```
 
-如果希望判断“这些证据究竟意味着项目做到哪里”：
+To understand what these facts mean for the project's current capability state:
 
 ```text
 Evidence
@@ -390,10 +390,10 @@ Evidence
 ../docs/STATUS.md
 ```
 
-`STATUS.md` 负责能力判断，Evidence 负责事实支撑。
+`STATUS.md` owns capability classification; Evidence owns factual support.
 
 [Read STATUS →](../docs/STATUS.md)
 
 ---
 
-> **Evidence 的目的不是让项目看起来“完成了”，而是让已经提出的工程主张拥有明确、可追踪的事实基础。**
+> **The purpose of Evidence is not to make the project look “finished.” It is to give every engineering claim a clear, traceable factual basis.**

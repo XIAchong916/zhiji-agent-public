@@ -1,41 +1,43 @@
-# ARCHITECTURE · 知几的软件架构
+# ARCHITECTURE · Zhiji Software Architecture
 
-> 本文档回答一个核心问题：<br>
-> **METHOD 中定义的分析方法，以及 GOVERNANCE 中定义的人机权限边界，如何被实现成一个可运行、可恢复、可追溯的软件系统。**
+[English](ARCHITECTURE.md) | [中文](ARCHITECTURE.zh-CN.md)
 
-知几的架构不是从“如何调用一个 LLM”开始设计的。
+> This document answers one core question:<br>
+> **How are the analytical method defined in METHOD and the human–AI authority boundaries defined in GOVERNANCE implemented as a runnable, recoverable, traceable software system?**
 
-它首先接受两个上游约束：
+Zhiji's architecture was not designed by starting from “how do we call an LLM?”
+
+It first accepts two upstream constraints:
 
 ```text
 METHOD
-定义业务世界如何被表达和推演
+Defines how the business world is represented and simulated
         ↓
 GOVERNANCE
-定义谁能提出、确认和改变什么
+Defines who may propose, confirm, and change what
         ↓
 ARCHITECTURE
-把这些约束变成软件边界和运行规则
+Turns those constraints into software boundaries and runtime rules
 ```
 
-因此，架构的核心目标不是让 Agent 自由地完成更多事情，而是同时满足两件事：
+The core architectural goal is therefore not to let the Agent do as much as possible. It is to satisfy two conditions at the same time:
 
-> **让概率性的语义能力可以进入系统；<br>
-> 又让业务状态、权限和流程不依赖模型本身保持正确。**
+> **Allow probabilistic semantic capability to enter the system;<br>
+> while keeping business state, authority, and process correct independently of the model itself.**
 
-这形成知几最重要的软件设计原则：
+This creates Zhiji's most important software-design principle:
 
-> **概率性的语义判断交给 Agent，确定性的状态、计算和流程交给软件系统。**
+> **Probabilistic semantic judgment belongs to the Agent; deterministic state, computation, and process control belong to the software system.**
 
 ---
 
-## 1. Architecture at a Glance · 整体结构
+## 1. Architecture at a Glance
 
 ![Zhiji system architecture](../assets/system-architecture.svg)
 
-> 这张图展示 METHOD 与 GOVERNANCE 如何落到软件分层：语义能力通过受控边界进入，Workflow / Engine / Domain 保持确定性治理，Persistence 与 Evidence / Lineage / Recovery 支撑可恢复和可审计运行。
+> This diagram shows how METHOD and GOVERNANCE become software layers: semantic capability enters through a controlled boundary; Workflow / Engine / Domain retain deterministic governance; Persistence plus Evidence / Lineage / Recovery make execution recoverable and auditable.
 
-知几可以概括为下面几层：
+Zhiji can be summarized as:
 
 ```text
 Interaction Surface
@@ -56,35 +58,35 @@ Persistence
       ↘ Recovery / Audit
 ```
 
-这些层并不是按技术组件随意拆分，而是分别承担不同责任。
+These layers are not arbitrary technical decomposition. Each carries a distinct responsibility.
 
-| Layer | 核心责任 |
+| Layer | Core responsibility |
 |---|---|
-| **Interaction** | 接收 Human 输入并展示系统当前允许执行的操作 |
-| **Application** | 组织 Case、Journey、Proposal、Confirm / Select、跨 Agent handoff 和 Product Output |
-| **Workflow** | 确定性控制当前状态、合法迁移、Human Gate、暂停与恢复 |
-| **Engine** | 承担与具体行业无关、可确定计算的诊断算子 |
-| **Domain** | 表达业务世界中允许存在的对象、状态和生命周期 |
-| **Persistence** | 保存 Domain、Journey、Decision、Evidence lineage 和恢复信息 |
-| **Semantic Proposal Boundary** | 允许 Agent / LLM 产生非权威语义 Proposal，但不能绕过治理边界 |
+| **Interaction** | Accept Human input and present actions currently allowed by the system |
+| **Application** | Coordinate Case, Journey, Proposal, Confirm / Select, cross-Agent handoff, and Product Output |
+| **Workflow** | Deterministically control current state, legal transitions, Human Gates, pause, and recovery |
+| **Engine** | Provide deterministic, industry-agnostic diagnostic operators |
+| **Domain** | Represent the objects, states, relationships, and lifecycle allowed in the business model |
+| **Persistence** | Store Domain, Journey, Decision, Evidence lineage, and recovery information |
+| **Semantic Proposal Boundary** | Allow Agent / LLM to generate non-authoritative semantic Proposals without bypassing governance |
 
-这套结构背后的关键分离是：
+The key separation is:
 
 ```text
 Semantic Intelligence
-负责“理解、生成、推演”
+responsible for understanding, generating, simulating
 
 Deterministic System
-负责“约束、记录、状态迁移、恢复”
+responsible for constraints, records, state transitions, recovery
 ```
 
-两者需要协作，但不能合并成一个“万能 Agent”。
+The two collaborate, but they must not collapse into one “universal Agent.”
 
 ---
 
-## 2. Domain Model · 把 METHOD 变成可持久化的业务对象
+## 2. Domain Model · Turning METHOD into Persistent Business Objects
 
-METHOD 中使用的是概念语言：
+METHOD uses conceptual language:
 
 ```text
 System
@@ -96,9 +98,9 @@ System
 → New Position
 ```
 
-Architecture 的第一项工作，是把这些概念变成明确、可验证、可引用的软件对象。
+Architecture first turns these concepts into explicit, validatable, referencable software objects.
 
-当前核心 Domain 类型包括：
+Current core Domain types include:
 
 ```text
 SystemDefinition
@@ -121,59 +123,59 @@ EvidenceItem
 EvidencePack
 ```
 
-这些对象不是为了“把一切结构化”，而是为了让系统能够明确区分：
+These objects do not exist merely to “structure everything.” They allow the system to distinguish:
 
-> **现在保存的到底是一项事实、一个当前状态、一个因果假设、一种干预方案，还是一个未来预测。**
+> **Are we storing a fact, a current state, a causal hypothesis, an intervention option, or a future forecast?**
 
-### 2.1 Actual State 与 Forecast 必须分离
+### 2.1 Actual State and Forecast Must Stay Separate
 
-一个最重要的例子是 Position。
+Position is an important example.
 
-架构中刻意区分：
+The architecture deliberately separates:
 
 ```text
 PositionSnapshot
-实际状态的版本化表达
+versioned representation of actual/current state
 
 PositionProjection
-实施前的预测
+pre-implementation forecast
 
 Observation / Measurement
-实施后的原始观测
+post-implementation raw observation
 
 ActualOutcome
-基于 Measurement 的审核结果
+reviewed result derived from Measurement
 ```
 
-因此不能出现：
+Therefore this transition is forbidden:
 
 ```text
 PositionProjection
       ↓
-自动变成
+automatically becomes
 ActualOutcome
 ```
 
-也不能因为 Human 选择了某个方案，就把预测结果提前写成已经发生的现实结果。
+Selecting a solution also cannot write its projected result as though it had already happened.
 
-这使 GOVERNANCE 中的：
+This makes the GOVERNANCE rule:
 
 ```text
 Projection ≠ Actual Outcome
 ```
 
-在软件对象层真正成立。
+true at the software-object level.
 
-### 2.2 Domain 只描述业务语义
+### 2.2 Domain Describes Business Semantics Only
 
-Domain 的职责是定义：
+Domain defines:
 
-- 什么对象可以存在；
-- 对象之间允许有什么关系；
-- 每类对象具有哪些本地不变量；
-- 生命周期和 epistemic status 如何表达。
+- which objects may exist;
+- which relationships are allowed;
+- local invariants of each object type;
+- lifecycle and epistemic status.
 
-例如可以理解为：
+For example:
 
 ```text
 System CONTAINS Object
@@ -190,35 +192,35 @@ Intervention PRODUCES PositionProjection
 Observation SUPPORTS later assessment
 ```
 
-Domain **不负责**：
+Domain does **not** own:
 
-- 数据库读写；
-- API；
-- CLI；
-- 页面；
-- 模型调用；
-- Prompt；
-- Workflow 编排。
+- database I/O;
+- API;
+- CLI;
+- UI;
+- model calls;
+- Prompt construction;
+- Workflow orchestration.
 
-因此，底层 Domain 不需要知道上层最终使用什么模型、什么数据库或什么交互方式。
+The lower-level Domain therefore does not need to know which model, database, or interaction surface is used above it.
 
-这也是后续各层能够独立演进的基础。
+That separation is the basis for independent evolution of the layers.
 
 ---
 
-## 3. Diagnosis Engine · 能确定计算的部分不交给 LLM 猜
+## 3. Diagnosis Engine · Deterministic Work Is Not Left for the LLM to Guess
 
-METHOD 中有一些任务需要语义判断，例如：
+Some METHOD tasks require semantic judgment, for example:
 
-- 企业当前可能处于什么 Position；
-- 一个 ChangeLaw 是否可能成立；
-- 哪些 Intervention 值得提出。
+- what Position the enterprise may currently occupy;
+- whether a ChangeLaw may explain the state;
+- which Interventions are worth proposing.
 
-但也有另一类任务，一旦输入确定，就应该得到稳定、可重复的结果。
+But another class of tasks should produce stable, repeatable results once their inputs are fixed.
 
-这些能力不应该依赖模型“再判断一次”。
+Those tasks should not depend on the model “making the judgment again.”
 
-当前 `packages/engine/` 中的实际确定性算子包括：
+Current deterministic operators in `packages/engine/` include:
 
 ```text
 evidence_coverage
@@ -230,39 +232,39 @@ outcome_delta
 scenario
 ```
 
-它们分别承担诸如：
+They cover work such as:
 
-- Evidence 覆盖、缺口与冲突；
-- 诊断信息是否达到继续分析条件；
-- 执行准备度与来源链；
-- Intervention 是否满足约束；
-- 当前 Position 与 benchmark 之间的差距；
-- 结果指标如何计算 delta；
-- Scenario benchmark 与 hard constraint 判断。
+- Evidence coverage, gaps, and conflicts;
+- whether diagnostic information is sufficient to proceed;
+- execution-readiness and provenance chain;
+- whether an Intervention satisfies constraints;
+- gap between current Position and benchmark;
+- delta calculation for outcome metrics;
+- Scenario benchmark and hard-constraint evaluation.
 
-Engine 的核心原则是：
+The Engine principle is:
 
-> **如果一个判断可以由明确输入和规则确定计算，就不把它留给 LLM 自由发挥。**
+> **If a judgment can be deterministically computed from explicit inputs and rules, do not leave it to free-form LLM reasoning.**
 
-因此：
+Therefore:
 
 ```text
 Agent
-负责开放语义空间中的推断
+infers in open semantic space
 
 Engine
-负责确定性规则空间中的计算
+calculates in deterministic rule space
 ```
 
-这也解释了为什么三个 Agent 不需要各自维护一套独立“业务算法”。
+This is also why the three Agents do not maintain three separate “business algorithms.”
 
-Agent 是任务角色，Engine 是共享计算能力。
+Agent is a cognitive role. Engine is shared computational capability.
 
 ---
 
-## 4. Workflow · 把 GOVERNANCE 变成确定性状态迁移
+## 4. Workflow · Turning GOVERNANCE into Deterministic State Transition
 
-如果系统只有 Domain + Agent，复杂 Journey 仍然容易退化成：
+With only Domain + Agent, a complex Journey can easily degrade into:
 
 ```text
 Human
@@ -272,69 +274,63 @@ Agent
 Long Conversation
 ```
 
-然后依赖模型自己记住：
+and then depend on the model remembering:
 
-- 当前分析到了哪里；
-- 什么已经确认；
-- 什么还只是 Proposal；
-- 下一步是否允许继续。
+- where the analysis currently is;
+- what has been confirmed;
+- what is still only a Proposal;
+- whether the next step is legal.
 
-因此，知几使用显式 Workflow State Machine 管理过程状态。
+Zhiji therefore uses an explicit Workflow State Machine to manage process state.
 
-### 4.1 Workflow 管理的是 Process State
+### 4.1 Workflow Manages Process State
 
-Workflow 负责：
+Workflow controls:
 
-- 当前处于哪个 Layer；
-- 当前处于哪个 State；
-- 哪些 Proposal 已经存在；
-- 哪些结果已经 Confirmed；
-- 下一步允许哪些 Action；
-- 哪些迁移需要 Human Gate；
-- 是否需要更多 Evidence；
-- 是否需要返回上层 Review；
-- 当前失败是否允许 Retry；
-- 当前 Layer 是否已经完成。
+- current Layer;
+- current State;
+- which Proposals exist;
+- which results are Confirmed;
+- which Actions are legal next;
+- which transitions require Human Gate;
+- whether more Evidence is required;
+- whether upper-layer Review is required;
+- whether a failure is retryable;
+- whether the current Layer is complete.
 
-它管理的是：
+It manages:
 
 ```text
 Process State
 ```
 
-而不是：
+not:
 
 ```text
 Object.InternalState
 ```
 
-这个区别非常重要。
+That distinction is critical.
 
-例如：
+For example:
 
 ```text
 CHANGE_LAWS_PROPOSED
 ```
 
-是流程状态；
-
-而：
+is a process state, while:
 
 ```text
 ChangeLaw
 ```
 
-是 Domain record。
+is a Domain record.
 
-Workflow 可以控制：
+Workflow may control whether confirming a ChangeLaw is legal. It cannot treat its own Workflow State as business fact.
 
-> 当前是否允许确认 ChangeLaw。
+### 4.2 Both Happy Path and Exceptional Paths Must Be Explicit
 
-但不能把自己的 Workflow State 当成业务事实本身。
-
-### 4.2 正常链与异常链都必须显式
-
-典型正常路径包括：
+A representative normal path includes:
 
 ```text
 DRAFT
@@ -355,9 +351,9 @@ DRAFT
 → LAYER_COMPLETED
 ```
 
-但架构真正重要的不只是 Happy Path。
+The architecture is not defined only by its Happy Path.
 
-还必须显式表达：
+It also explicitly represents:
 
 ```text
 MORE_EVIDENCE_REQUIRED
@@ -366,20 +362,20 @@ FAILED_RETRYABLE
 FAILED_TERMINAL
 ```
 
-以及：
+as well as:
 
-- rejection；
-- resume；
-- retry；
-- hard-constraint failure。
+- rejection;
+- resume;
+- retry;
+- hard-constraint failure.
 
-因为复杂决策系统中：
+In a complex decision system:
 
-> **“暂时不能继续”本身就是一个合法状态。**
+> **“Cannot proceed yet” is itself a legitimate state.**
 
 ### 4.3 Fail Closed
 
-Workflow 的关键规则是：
+A key Workflow rule is:
 
 ```text
 Unlisted transition
@@ -387,31 +383,27 @@ Unlisted transition
      Forbidden
 ```
 
-即：
+That is:
 
-> **没有被明确允许的状态迁移，一律拒绝。**
+> **Any state transition that is not explicitly allowed is rejected.**
 
-这使治理边界不依赖 Prompt 提醒。
+Governance therefore does not depend on a Prompt reminding the model about the rules.
 
-即使 Agent 产生了一个结构正确、语言合理的 Proposal，如果当前 Workflow State 不允许进入对应下一步，系统仍然不会迁移。
+Even if the Agent produces a structurally valid and linguistically plausible Proposal, the system still will not transition if the current Workflow State does not allow that next step.
 
-因此：
+> **Governance is not “tell the model not to overstep.” It is “make overstepping have no legal system path.”**
 
-> **治理不是“告诉模型不要越权”，而是让越权不存在合法系统路径。**
+### 4.4 Human Gate Is a Workflow Constraint, Not Model Self-restraint
 
-### 4.4 Human Gate 是 Workflow 约束，不是 Agent 自觉
+Existing Workflow Contracts explicitly restrict mandatory human approval by actor.
 
-现有 Workflow Contract 对 mandatory human approval 有显式 actor 限制。
-
-需要人工权限的 Gate 只能由：
+Gates that require human authority can only be completed by:
 
 ```text
 ActorType.USER
 ```
 
-完成。
-
-同时：
+At the same time:
 
 ```text
 Approval
@@ -419,25 +411,25 @@ Approval
 ≠ Epistemic Status
 ```
 
-Human Approval 可以允许流程继续，但不会因此自动改变 ChangeLaw 的 epistemic status。
+Human Approval may allow the process to continue, but it does not automatically change the epistemic status of a ChangeLaw.
 
-这把 GOVERNANCE 中的：
+This implements the GOVERNANCE rule:
 
 ```text
 Human Approval ≠ Causal Proof
 ```
 
-落实成了软件规则。
+as a software rule.
 
 ---
 
-## 5. Application Services · 把各层组织成真正的 Product Loop
+## 5. Application Services · Assembling the Layers into a Real Product Loop
 
-Domain、Engine 和 Workflow 各自解决局部问题。
+Domain, Engine, and Workflow each solve local concerns.
 
-Application 层负责把它们组合成用户真正经历的连续行为。
+Application coordinates them into the continuous behavior experienced by the user.
 
-可以概括为：
+A simplified flow is:
 
 ```text
 Case Intake
@@ -461,7 +453,7 @@ Complete Case Design
 Generate Product Output
 ```
 
-当前 Application 层已经包含实际的：
+Current Application services include real paths for:
 
 ```text
 journey_orchestrator
@@ -473,9 +465,9 @@ scenario → solution handoff
 solution journey
 ```
 
-这些服务的意义不是增加一层“胶水代码”，而是防止上层入口直接修改底层状态。
+These services are not merely “glue code.” They prevent interaction layers from directly mutating lower-level state.
 
-也就是说：
+The intended direction is:
 
 ```text
 CLI / API
@@ -485,27 +477,27 @@ Application Service
 Workflow + Domain Contract
 ```
 
-而不是：
+not:
 
 ```text
 CLI / LLM
    ↓
-直接写数据库
+write directly to database
 ```
 
 ---
 
-## 6. Semantic Proposal Boundary · LLM 如何进入系统
+## 6. Semantic Proposal Boundary · How LLM Capability Enters the System
 
-知几不会把 LLM 放在系统控制中心。
+Zhiji does not place the LLM at the center of system control.
 
-模型进入架构的身份是：
+The model enters the architecture as a:
 
 > **Semantic Proposal Provider**
 
-它负责产生开放语义空间中的候选判断，但这些判断仍受既有 Authority Contract 约束。
+It generates candidate judgments in open semantic space, while existing Authority Contracts continue to govern what those judgments can become.
 
-当前语义 Proposal family 包括：
+Semantic families in the broader model include:
 
 ```text
 SYSTEM
@@ -519,9 +511,9 @@ SCENARIO_CANDIDATES
 SOLUTION_CANDIDATES
 ```
 
-但不同 family 并不拥有相同 authority。
+But the families do not share the same authority.
 
-现有语义模型已经区分：
+The semantic model already distinguishes statuses such as:
 
 ```text
 USER_FACT
@@ -530,18 +522,16 @@ INHERITED
 HYPOTHESIS
 ```
 
-例如：
+For example:
 
-- `PositionSemantics` 可以表达 evidence-grounded hypothesis；
-- `ChangeLawSemantics` 可以表达 causal hypothesis；
-- `InterventionSemantics` 可以表达 proposed intervention；
-- `ProjectionSemantics` 是 non-authoritative forecast；
-- `ObjectIdentitySemantics` 不允许由 provider 自行创造；
-- `InternalStateSemantics` 中的 R / θ / D / Ω 保持 explicit USER-owned。
+- `PositionSemantics` can represent an evidence-grounded hypothesis;
+- `ChangeLawSemantics` can represent a causal hypothesis;
+- `InterventionSemantics` can represent a proposed intervention;
+- `ProjectionSemantics` is a non-authoritative forecast;
+- `ObjectIdentitySemantics` cannot be freely invented by the provider;
+- `InternalStateSemantics` keeps `R / θ / D / Ω` explicitly USER-owned.
 
-因此真实模型接入不需要重写治理体系。
-
-它应该进入现有链：
+Real-model integration therefore does not require a new governance system. It enters the existing chain:
 
 ```text
 Authorized Context + Evidence
@@ -557,19 +547,19 @@ Authorized Context + Evidence
 Accepted Domain State
 ```
 
-核心原则是：
+Core principle:
 
-> **提高 Semantic Intelligence，不等于提高模型 Authority。**
+> **Increasing Semantic Intelligence does not automatically increase model Authority.**
 
-### 6.1 当前真实状态：LLM seam 已有，真实 Provider 尚未完成
+### 6.1 Current Reality · Real Provider and Governed Semantic Generation Are Implemented
 
-当前架构需要明确区分两个事实。
+The current architecture must distinguish several separate facts rather than collapsing them into one “LLM integration” label.
 
-一方面，仓库已经存在 LLM proposal / review 管线，包括：
+First, the older proposal/review seam still exists:
 
 ```text
 LLMProposalInput
-→ adapter
+→ proposal adapter
 → raw proposal
 → strict validation
 → typed candidate
@@ -578,39 +568,52 @@ LLMProposalInput
 → safe trace metadata
 ```
 
-另一方面：
+That specific proposal-only `LLMProposalAdapter` path remains fake-only in default production composition.
 
-> **Real external LLM / provider integration 当前仍未成为完整正式运行路径。**
-
-当前 Product Loop 的语义 progression 使用非网络的 `StructuredSemanticProposalProvider` 作为 store / validator；已有 LLM proposal 管线仍处于 fake-only seam。
-
-因此，当前已经证明的是：
+Separately, a real OpenAI-compatible completion path is implemented through `LLMCompletionAdapter` and the real provider adapter. `SemanticGenerationService` can use that boundary to generate five evidence-grounded semantic proposal families:
 
 ```text
-模型应该如何进入系统
+CURRENT_POSITION
+TARGET_POSITION
+CHANGE_LAWS
+INTERVENTIONS
+PROJECTION
 ```
 
-以及：
+The runtime path is:
 
 ```text
-Proposal 如何被治理
+Confirmed Context / Evidence
+        ↓
+Real LLM Provider
+        ↓
+Untrusted raw semantic output
+        ↓
+Strict parsing / identifier validation
+        ↓
+HYPOTHESIS / AGENT Proposal
+        ↓
+USER Gate
 ```
 
-但还没有证明：
+All five families have been exercised end-to-end against a real OpenAI-compatible provider. Ordinary CI intentionally does not make live provider calls; provider verification remains opt-in and does not imply production readiness.
 
-```text
-真实模型已经能够稳定地产生高质量企业诊断语义
-```
+Two authority boundaries remain unchanged:
 
-这个边界属于 `STATUS.md`，但 Architecture 必须在这里说明，以避免把“架构接口已经存在”和“真实语义智能已经上线”混为一谈。
+- `R / θ / D / Ω` are USER-owned. The Agent cannot author or silently overwrite them;
+- Agent-authored Scenario / Solution Candidate semantics are still deferred because their current authority contracts remain USER-owned.
 
-### 6.2 Runtime Context 与 Persisted Trace 分离
+There is also a current interaction limitation for Current Position: the system can stage an Agent-drafted Position, but the current confirmation path does not yet merge that draft with USER-supplied InternalState in one confirmation transaction. The public Demo therefore uses a fully USER-entered Current Position.
 
-真实 LLM 需要看到足够的业务语义，才能完成有效诊断。
+So the architecture now demonstrates more than “how a model should enter the system.” It demonstrates a real governed model path—but still not autonomous enterprise diagnosis or validated semantic quality.
 
-但长期持久化的 Trace 又不应该保存所有敏感业务原文。
+### 6.2 Runtime Context and Persisted Trace Are Separate
 
-因此架构需要区分：
+A real LLM needs enough business semantics to perform useful diagnosis.
+
+But long-term Trace should not persist every piece of sensitive source material verbatim.
+
+The architecture therefore distinguishes:
 
 ```text
 Ephemeral Authorized Runtime Context
@@ -626,37 +629,37 @@ Safe Digest / Structured Result / Metadata
 Persisted Trace
 ```
 
-现有 trace 设计有意保留：
+The trace design intentionally preserves information such as:
 
-- record / evidence ID；
-- lifecycle / source metadata；
-- hash；
-- length；
-- safe summary；
+- record / evidence ID;
+- lifecycle / source metadata;
+- hash;
+- length;
+- safe summary;
 
-而不是把原始业务全文直接写入长期 trace。
+rather than automatically writing all raw enterprise text into long-lived trace storage.
 
-因此：
+Therefore:
 
-> **模型运行时上下文与系统长期审计记录不是同一个数据面。**
+> **Model runtime context and long-term system audit trace are different data planes.**
 
-这为后续真实企业数据的隐私、安全和可审计性保留了边界。
+That boundary matters for privacy, security, and auditability with real enterprise data.
 
 ---
 
-## 7. Persistence & Recovery · Conversation 不是系统状态
+## 7. Persistence & Recovery · Conversation Is Not System State
 
-业务诊断 Journey 可能持续很长时间，并跨越：
+A business-diagnosis Journey may span:
 
-- 多个 Agent；
-- 多个 Layer；
-- 多次 Human Gate；
-- 多个会话；
-- 程序重启。
+- multiple Agents;
+- multiple Layers;
+- multiple Human Gates;
+- multiple conversations;
+- process restarts.
 
-因此，知几不能把模型上下文当作系统记忆。
+Zhiji therefore cannot treat model context as system memory.
 
-核心状态需要独立持久化，包括：
+Core state must be persisted independently, including:
 
 ```text
 Domain records
@@ -669,7 +672,7 @@ Completion records
 Recovery information
 ```
 
-当前 Product Loop 已经存在基于：
+The current Product Loop has a persistence path based on:
 
 ```text
 PostgreSQL
@@ -677,24 +680,24 @@ SQLAlchemy
 Alembic migrations
 ```
 
-的持久化路径，并支持 restart / recovery。
+and supports restart / recovery.
 
-所以：
+Therefore:
 
-> **Conversation Context 不是系统状态本身。**
+> **Conversation Context is not system state.**
 
-即使：
+Even if:
 
-- 对话窗口丢失；
-- 模型更换；
-- 程序退出；
-- 运行进程重启；
+- a chat window disappears;
+- the model changes;
+- the program exits;
+- the runtime restarts;
 
-已经确认的 Domain State 和 Journey progress 仍然可以从持久化事实恢复。
+confirmed Domain State and Journey progress can still be recovered from persisted facts.
 
-### 7.1 Recovery 依赖事实，而不是重新推断历史
+### 7.1 Recovery Depends on Facts, Not Re-inference of History
 
-恢复时，系统应该依赖：
+Recovery should rely on:
 
 ```text
 persisted Journey state
@@ -704,34 +707,34 @@ lineage
 current authoritative head
 ```
 
-而不是要求 LLM 根据一段摘要重新猜：
+not ask an LLM to infer from a narrative summary:
 
-> “之前大概进行到哪里。”
+> “Where were we approximately?”
 
-这也是为什么：
+This is why:
 
-> **Narrative Summary 不能成为重建 Domain State 的权威来源。**
+> **Narrative Summary cannot be the authoritative reconstruction source for Domain State.**
 
 ---
 
-## 8. Evidence & Lineage · 为什么最终结果可以追溯
+## 8. Evidence & Lineage · Why Final Results Remain Traceable
 
-知几不仅需要保存：
+Zhiji does not only need to preserve:
 
-> 最终选了哪个方案。
+> which solution was selected.
 
-还需要能够回答：
+It must also answer:
 
 ```text
-这个状态从哪里来？
-哪个 Proposal 产生了它？
-基于什么 Evidence？
-谁确认的？
-经过了什么 Workflow State？
-后来是否被 superseded？
+Where did this state come from?
+Which Proposal produced it?
+Which Evidence supported it?
+Who confirmed it?
+Which Workflow State did it pass through?
+Was it later superseded?
 ```
 
-因此系统保留显式 lineage，把：
+The system therefore keeps explicit lineage connecting:
 
 ```text
 Evidence
@@ -747,17 +750,15 @@ Selection
 Derived Product Output
 ```
 
-连接起来。
+Across Layers, StatePackage also relies on explicit source references rather than copying a provenance-free narrative summary.
 
-跨 Layer 时，StatePackage 同样依赖明确来源引用，而不是复制一份失去来源的自然语言摘要。
-
-这使 METHOD 中的递归继承，与 GOVERNANCE 中的 Authority Separation，都能在软件中保留可追溯性。
+This preserves both METHOD's recursive inheritance and GOVERNANCE's Authority Separation in software.
 
 ---
 
-## 9. Dependency Direction · 为什么底层不能知道上层
+## 9. Dependency Direction · Why Lower Layers Must Not Know the Upper Layers
 
-知几保持明确的依赖方向：
+Zhiji maintains a clear dependency direction:
 
 ```text
 domain
@@ -771,56 +772,56 @@ application
 API / CLI / UI
 ```
 
-越靠下的层：
+The lower the layer:
 
-> **越稳定，也越不应该知道上层的实现方式。**
+> **the more stable it should be, and the less it should know about upper-layer implementation details.**
 
-例如 Domain 不应该知道：
+Domain should not need to know:
 
-- 用户通过 CLI 还是 Web 使用系统；
-- 使用哪个 LLM；
-- 数据库是 PostgreSQL 还是其他实现；
-- API 使用什么 Framework；
-- Product UI 如何展示某个状态。
+- whether the user interacts through CLI or Web;
+- which LLM is used;
+- whether persistence is PostgreSQL or another implementation;
+- which API framework is used;
+- how the Product UI presents a state.
 
-这种单向依赖带来两个结果。
+This one-way dependency yields two important properties.
 
-第一：
+First:
 
-> 可以替换模型 Provider，而不需要重写 Domain。
+> model Providers can be replaced without rewriting Domain.
 
-第二：
+Second:
 
-> 可以调整交互方式，而不需要修改核心业务语义和 Workflow Authority。
+> interaction surfaces can change without changing core business semantics or Workflow Authority.
 
-因此，变化较快的 AI / UI 能力不会反向污染最稳定的业务模型。
+Rapidly changing AI / UI capability therefore does not contaminate the most stable business model.
 
 ---
 
-## 10. Runtime Separation · 一次运行中哪些东西必须分开
+## 10. Runtime Separation · What Must Stay Distinct During Execution
 
-整个架构最终保护的是几个运行时对象之间的分离：
+The architecture ultimately protects separation among these runtime concepts:
 
 ```text
 Domain State
-系统当前允许依赖的业务状态
+business state the system is currently allowed to depend on
 
 Semantic Proposal
-Agent / LLM 产生的非权威候选
+non-authoritative candidate generated by Agent / LLM
 
 Human Decision
-确认、选择、批准等现实权威事件
+real-authority event such as confirmation, selection, approval
 
 Position Projection
-实施前预测
+pre-implementation forecast
 
 Measurement / Actual Outcome
-实施后现实结果
+post-implementation real-world result
 ```
 
-它们不能相互自动替代。
+They cannot automatically substitute for one another.
 
-因此，一个典型运行过程是：
+A representative execution path is:
 
 ```text
 Persisted Domain State + Evidence
@@ -846,17 +847,17 @@ Observation / Measurement
 Actual Outcome
 ```
 
-这是 METHOD、GOVERNANCE 和 ARCHITECTURE 三篇文档真正汇合的地方。
+This is where METHOD, GOVERNANCE, and ARCHITECTURE converge.
 
 ---
 
-## 11. Architecture Boundary · 架构当前不声称什么
+## 11. Architecture Boundary · What This Architecture Does Not Claim
 
-Architecture 描述的是：
+ARCHITECTURE describes:
 
-> **现有设计如何把业务语义、AI Proposal、Human Authority、Workflow 和 Persistence 组织成一套受治理的软件系统。**
+> **How the current design organizes business semantics, AI Proposals, Human Authority, Workflow, and Persistence into a governed software system.**
 
-它不意味着以下事项已经成立：
+It does not imply that the following have been established:
 
 ```text
 Real LLM semantic quality is validated             ✗
@@ -870,43 +871,37 @@ Production deployment is complete                  ✗
 Autonomous external execution is authorized        ✗
 ```
 
-同样：
+Likewise:
 
-> 一项 capability 在代码中存在，也不自动等于 Production-ready。
+> a capability existing in code does not automatically mean it is production-ready.
 
-具体实现状态由：
+Exact implementation status belongs in:
 
 ```text
 docs/STATUS.md
 ```
 
-负责说明。
-
-真实运行过程由：
+Actual runtime behavior belongs in:
 
 ```text
 demo/README.md
 ```
 
-负责展示。
-
-工程事实由：
+Engineering facts belong in:
 
 ```text
 evidence/
 ```
 
-负责提供。
-
 ---
 
-## 12. Summary · 架构的核心
+## 12. Summary · The Core of the Architecture
 
-知几的软件架构可以压缩成一句话：
+Zhiji's architecture can be compressed into one sentence:
 
-> **Domain 保存业务语义，Engine 负责确定性计算，Workflow 控制合法状态迁移，Application 组织完整 Journey，Semantic Provider 提供非权威智能，Human 提供现实权威，Persistence 与 Lineage 保证状态不依赖会话并可被恢复和追溯。**
+> **Domain preserves business semantics, Engine performs deterministic computation, Workflow controls legal state transitions, Application organizes the complete Journey, Semantic Provider supplies non-authoritative intelligence, Human provides real-world authority, and Persistence plus Lineage make state independent of the conversation and recoverable / traceable.**
 
-进一步压缩：
+Further compressed:
 
 ```text
 LLM proposes
@@ -918,39 +913,39 @@ Persistence remembers
 Evidence explains
 ```
 
-这些职责不能被一个“更强的 Agent”简单合并。
+These responsibilities cannot simply be merged into a “stronger Agent.”
 
-架构的目标也不是限制 AI，而是：
+The architecture is not designed to restrict AI. It is designed to:
 
-> **让 AI 可以在一个边界清晰的系统里持续变强，而不需要随着模型能力增长不断重写业务事实、权限和状态治理。**
+> **let AI continue to become stronger inside a system with clear boundaries, without requiring business fact, authority, and state governance to be rewritten every time model capability improves.**
 
 ---
 
-## 13. 本文与其他文档的关系
+## 13. Relationship to Other Documents
 
-本文只回答“METHOD 与 GOVERNANCE 如何被实现成软件系统”。它不重新展开完整业务分析方法，也不把当前实现状态和工程验证混进架构定义。
+This document answers only “how METHOD and GOVERNANCE become a software system.” It does not repeat the full business method or mix implementation status and verification evidence into architecture definition.
 
-| 读者还想确认 | 去哪 |
+| If you want to verify... | Read... |
 |---|---|
-| System / Object / Position / ChangeLaw / Intervention 和五层递归到底怎么工作？ | `docs/METHOD.md` |
-| Agent、Human、Workflow 各自有什么权限？Proposal 如何变成 Accepted State？ | `docs/GOVERNANCE.md` |
-| 当前哪些架构能力已经 implemented，哪些仍是 fake-only / deferred？ | `docs/STATUS.md` |
-| 一次 Product Loop 实际怎么经过这些层？ | `demo/README.md` |
-| Persistence / recovery / Workflow / E2E 真的跑通过吗？ | `evidence/` |
-| Semantic Authority、Human Gate、Epistemic State 等架构假设去哪挑战？ | `rfcs/RFC-001-ARCHITECTURE-REVIEW.md` |
+| How System / Object / Position / ChangeLaw / Intervention and five-layer recursion work | `docs/METHOD.md` |
+| What authority Agent, Human, and Workflow have; how Proposal becomes Accepted State | `docs/GOVERNANCE.md` |
+| Which capabilities are implemented / fake-only / deferred | `docs/STATUS.md` |
+| How a real Product Loop passes through these layers | `demo/README.md` |
+| Whether Persistence / recovery / Workflow / E2E actually ran | `evidence/` |
+| Where to challenge Semantic Authority, Human Gate, Epistemic State, and other assumptions | `rfcs/RFC-001-ARCHITECTURE-REVIEW.md` |
 
-整体关系是：
+Overall relationship:
 
 ```text
 METHOD
-定义“业务问题怎么分析”
+defines “how business problems are analyzed”
         ↓
 GOVERNANCE
-定义“谁能决定什么”
+defines “who may decide what”
         ↓
 ARCHITECTURE
-定义“软件如何保证”
+defines “how software enforces it”
         ↓
 STATUS / DEMO / EVIDENCE
-证明“当前真实做到哪里”
+show “what actually exists today”
 ```

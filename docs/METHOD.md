@@ -1,48 +1,50 @@
-# METHOD · 知几的诊断与方案推演方法
+# METHOD · Zhiji Diagnosis and Solution-Simulation Method
 
-> 本文档回答一个核心问题：<br>
-> **知几如何把一个宽泛、复杂的企业 AI 转型问题，逐步收敛成可干预、可比较、可验证的业务决策问题。**
+[English](METHOD.md) | [中文](METHOD.zh-CN.md)
 
-知几的方法不是从某个 AI 技术能力出发寻找应用场景，而是从企业当前真实业务问题出发，先解释：
+> This document answers one core question:<br>
+> **How does Zhiji turn a broad, complex enterprise AI-transformation problem into a business decision problem that can be intervened on, compared, and validated?**
 
-1. **当前分析的对象是谁，它处在什么环境中；**
-2. **它为什么处在当前位置；**
-3. **哪些变量真正影响结果；**
-4. **哪些变量可以被现实手段改变；**
-5. **在当前目标、约束和能力下，哪些干预真正可行；**
-6. **局部改变是否可能向更高层业务系统产生价值。**
+Zhiji does not begin with an AI capability and search for a use case. It starts from the enterprise's real business problem and first asks:
 
-整个方法由四部分组成：
+1. **What is the object being analyzed, and what environment is it in?**
+2. **Why is it in its current position?**
+3. **Which variables actually influence the outcome?**
+4. **Which variables can be changed by real interventions?**
+5. **Given current goals, constraints, and capabilities, which interventions are actually feasible?**
+6. **Can a local change create value at a higher business-system level?**
+
+The method has four parts:
 
 ```text
 Core Model
-业务问题如何被统一表达
+how business problems are expressed in one language
         ↓
 Recursive Diagnosis
-复杂问题如何逐层收敛
+how complex problems progressively narrow
         ↓
 State Inheritance & Impact Propagation
-不同层级之间如何连续推演
+how reasoning continues across layers
         ↓
 Three Agents
-不同认知任务如何由稳定角色执行
+how stable cognitive tasks are assigned to stable roles
 ```
 
-## Method at a Glance · 方法总览
+## Method at a Glance
 
 ![Zhiji recursive diagnosis loop](../assets/recursive-loop.svg)
 
-> 同一套 Core Model 在 Industry → Enterprise → Business → Scenario → Solution Capability 五层递归复用；向下继承 Confirmed StatePackage，向上传递 Candidate Impact，而不是直接覆盖上层状态。
+> The same Core Model is recursively reused across Industry → Enterprise → Business → Scenario → Solution Capability. Confirmed `StatePackage` flows downward; Candidate Impact flows upward instead of directly overwriting higher-layer state.
 
 ---
 
-## 1. Core Model · 如何表达一个业务问题
+## 1. Core Model · How to Represent a Business Problem
 
-知几的起点是一个基本判断：
+Zhiji starts from a basic proposition:
 
-> **业务问题可以被理解为：某个 Object 为什么在当前 System 中处于当前位置，以及如何在现实约束下推动它向目标位置迁移。**
+> **A business problem can be understood as: why an Object is in its current Position within a System, and how to move it toward a target Position under real constraints.**
 
-为了让行业、企业、业务、场景和能力方案可以使用同一套分析语言，知几将分析抽象为：
+To let Industry, Enterprise, Business, Scenario, and Solution Capability use the same analytical language, Zhiji abstracts analysis as:
 
 ```text
 System
@@ -58,150 +60,150 @@ Intervention
 New Position
 ```
 
-这条链并不是一组静态分类，而是一条连续的分析逻辑：
+This is not a static taxonomy. It is a continuous reasoning chain:
 
-> **先确定观察边界，再明确变化承载者；先判断当前位置，再解释变化机制；最后才讨论应该如何干预。**
+> **First define the observation boundary, then identify the carrier of change; first determine the current Position, then explain the change mechanism; only then discuss intervention.**
 
-### 1.1 System · 系统
+### 1.1 System
 
-**System** 是 Object 所处的环境。
+**System** is the environment in which the Object exists.
 
-它定义当前分析中与 Object 有关的：
+For the current analysis, it defines the Object's:
 
-- 边界；
-- 规则；
-- 资源条件；
-- 外部约束；
-- 与其他对象之间的关系。
+- boundaries;
+- rules;
+- resource conditions;
+- external constraints;
+- relationships with other objects.
 
-同一个 Object 放在不同 System 中，其价值、约束和可行动空间可能完全不同。
+The same Object placed in different Systems may have completely different value, constraints, and action space.
 
-因此，开始分析之前首先需要回答：
+Before analysis begins, the first question is therefore:
 
-> **我们究竟在哪个系统中观察这个对象？**
+> **Within which system are we observing this object?**
 
-System 的作用不是把所有环境因素都罗列出来，而是明确：**哪些外部条件构成当前判断的有效边界。**
-
----
-
-### 1.2 Object · 对象
-
-**Object** 是当前分析中真正承担变化的对象。
-
-在不同层级中，Industry、Enterprise、Business、Scenario 和 Solution Capability 都可以成为当前分析的 Object。
-
-明确 Object 的目的，是把一个复杂系统中的大量变量第一次收敛到一个清晰的问题：
-
-> **到底是谁正在发生变化？**
-
-如果 Object 不明确，后面的 Position、ChangeLaw 和 Intervention 很容易混在不同层级中，最终出现：
-
-- 企业问题被当作场景问题解决；
-- 局部效率提升被误认为企业价值提升；
-- 技术能力建设脱离上层业务目标。
-
-因此，Object 是后续全部推演的变化承载者。
+The purpose of System is not to enumerate every environmental factor. It is to define **which external conditions form the valid boundary of the current judgment**.
 
 ---
 
-### 1.3 Position · 位置
+### 1.2 Object
 
-**Position** 描述 Object 在当前 System 中所处的相对状态。
+**Object** is the entity that actually carries change in the current analysis.
 
-知几不把业务状态简化成单一指标，而是同时关注：
+At different layers, an Industry, Enterprise, Business, Scenario, or Solution Capability can all become the current Object.
 
-- **Structural Position**：它在系统结构中的位置；
-- **Functional Position**：它承担什么功能；
-- **Performance Position**：当前表现如何；
-- **Evolutionary Position**：它正在向什么方向变化。
+Defining the Object narrows a complex system for the first time into one precise question:
 
-因此，一个业务问题不再只是：
+> **What, exactly, is changing?**
 
-> “某个指标下降了。”
+If the Object is unclear, Position, ChangeLaw, and Intervention easily become mixed across layers, producing errors such as:
 
-而是进一步变成：
+- treating an enterprise-level problem as a scenario-level problem;
+- mistaking local efficiency improvement for enterprise-value improvement;
+- building technical capabilities disconnected from higher-level business goals.
 
-> **Object 当前处于什么 Position？为什么处于这里？与目标 Position 之间存在什么差距？**
-
-Position 的意义在于把零散指标重新放回业务系统中理解。
-
-指标可以描述某个结果，而 Position 试图描述：
-
-> **这个结果在整个系统中的业务含义是什么。**
+The Object is therefore the carrier of all later reasoning about change.
 
 ---
 
-### 1.4 Internal State · 内部状态
+### 1.3 Position
 
-只知道 Position 仍然不足以解释：
+**Position** describes the Object's relative state within the current System.
 
-> 为什么会处在这里，以及现实中究竟能改变什么？
+Zhiji does not reduce business state to one metric. It simultaneously considers:
 
-因此，知几进一步把 Object 的内部状态抽象为：
+- **Structural Position**: where the Object sits in the system structure;
+- **Functional Position**: what function it performs;
+- **Performance Position**: how it currently performs;
+- **Evolutionary Position**: what direction it is moving toward.
+
+A business problem is therefore no longer merely:
+
+> “A metric went down.”
+
+It becomes:
+
+> **What Position is the Object currently in? Why is it there? What gap exists between the current and target Position?**
+
+Position reconnects fragmented metrics to the business system.
+
+A metric can describe one result. Position attempts to describe:
+
+> **what that result means within the whole system.**
+
+---
+
+### 1.4 Internal State
+
+Knowing Position is still insufficient to explain:
+
+> Why is the Object here, and what can actually be changed in reality?
+
+Zhiji therefore abstracts Object internal state as:
 
 ```text
 Object.InternalState = {R, θ, D, Ω}
 ```
 
-其中：
+where:
 
 **R — Objectives / References**
 
-目标与评价参照。
+Goals and evaluation references.
 
-它回答：
+It answers:
 
-> 什么状态才算更好？当前判断到底服务于什么目标？
+> What state counts as better? Which goal is the current judgment serving?
 
-R 可以来自经营目标、业务目标、阶段性优先级或其他已经确认的评价参照。
+R may come from operating goals, business goals, stage-specific priorities, or other confirmed evaluation references.
 
 **θ — Constraints**
 
-边界与约束。
+Boundaries and constraints.
 
-它回答：
+It answers:
 
-> 哪些事情不能做，或者不能以某种方式做？
+> What cannot be done, or cannot be done in a certain way?
 
-例如预算、时间、风险、合规、业务规则以及其他不可突破条件。
+Examples include budget, time, risk, compliance, business rules, and other hard boundaries.
 
 **D — Capabilities**
 
-当前能力与资源条件。
+Current capabilities and resource conditions.
 
-它回答：
+It answers:
 
-> 现在真正具备什么能力，缺少什么能力？
+> What capabilities actually exist now, and what is missing?
 
-D 不只代表技术能力，也可以包括数据、组织、流程、资源和其他能够影响执行的条件。
+D includes not only technical capability but also data, organization, process, resources, and other conditions that affect execution.
 
 **Ω — Feasible Option Space**
 
-当前现实可行的选择空间。
+The set of actions that are actually feasible now.
 
-它不是所有理论上可能的方案集合，而是：
+It is not the set of every theoretically possible solution. It is:
 
-> **在当前 System、目标、约束和能力条件下，真正能够被考虑的行动空间。**
+> **the action space that can genuinely be considered under the current System, goals, constraints, and capabilities.**
 
-可以表示为：
+It can be represented as:
 
 ```text
 Ω = Φ(System, R, θ, D)
 ```
 
-这意味着，一个理论上“有效”的方案，如果超出当前能力、预算、合规要求或其他现实边界，就不属于当前真正可执行的 Intervention 空间。
+A theoretically “effective” solution that exceeds current capability, budget, compliance requirements, or other real boundaries is therefore outside the currently executable Intervention space.
 
-因此，知几不把“可能有效”和“当前可做”混为一件事。
+Zhiji does not conflate “possibly effective” with “currently doable.”
 
 ---
 
-### 1.5 ChangeLaw · 变化机制
+### 1.5 ChangeLaw
 
-**ChangeLaw** 用来解释：
+**ChangeLaw** explains:
 
-> **哪些变量发生变化，会通过什么机制改变 Object 的 Position？**
+> **Which variable changes, through what mechanism, can change the Object's Position?**
 
-它关注的不是简单相关关系，而是一条结构化变化链：
+It is concerned not merely with correlation but with a structured change chain:
 
 ```text
 Driver
@@ -213,65 +215,65 @@ Intermediate Variables
 Result
 ```
 
-并进一步考虑：
+It also considers:
 
-- **Threshold**：什么条件下变化才会发生；
-- **Time Lag**：变化需要多久才能体现；
-- **Feedback**：结果是否会形成进一步正向或负向反馈；
-- **Expected Transition**：最终预期推动哪种 Position 迁移。
+- **Threshold**: under what conditions does the change occur?
+- **Time Lag**: how long before the effect becomes observable?
+- **Feedback**: does the outcome create reinforcing or balancing feedback?
+- **Expected Transition**: which Position transition is expected?
 
-ChangeLaw 的意义在于把：
+ChangeLaw moves analysis from:
 
-> “这个地方有问题”
+> “There is a problem here.”
 
-进一步推进成：
+to:
 
-> **“什么变量通过什么机制导致当前结果。”**
+> **“Which variable, through which mechanism, creates the current outcome?”**
 
-只有到这一层，后续 Intervention 才有明确作用对象。
+Only at this level does a later Intervention have a clear target.
 
-同时，ChangeLaw 在知几中首先是**需要 Evidence 支持和后续验证的判断**，不是因为 Agent 生成就自动成为业务事实。
+At the same time, a ChangeLaw in Zhiji begins as a **judgment that requires Evidence and later validation**. It does not become business fact merely because an Agent generated it.
 
 ---
 
-### 1.6 Intervention · 干预
+### 1.6 Intervention
 
-**Intervention** 是对可改变变量施加的主动行动。
+**Intervention** is an active action applied to changeable variables.
 
-一个 Intervention 至少需要满足两个条件：
+An Intervention must satisfy at least two conditions:
 
-1. 能够作用于已经识别的 ChangeLaw 或关键变量；
-2. 位于当前可行选择空间 Ω 内。
+1. it acts on an identified ChangeLaw or key variable;
+2. it lies within the current feasible option space Ω.
 
-因此，知几的顺序不是：
+Zhiji therefore does not follow:
 
 ```text
-AI 有什么能力
+What can AI do?
       ↓
-找一个地方使用
+Find somewhere to use it
 ```
 
-而是：
+It follows:
 
 ```text
-业务结果由什么机制形成
+What mechanism produces the business result?
         ↓
-哪些变量真正可改变
+Which variables can actually be changed?
         ↓
-什么 Intervention 在现实中可行
+Which Intervention is feasible in reality?
         ↓
-AI 是否适合成为实现这种干预的能力
+Is AI an appropriate capability for implementing that Intervention?
 ```
 
-AI 在这里是**可能的能力手段**，不是分析的起点。
+AI is a **possible capability mechanism**, not the analytical starting point.
 
 ---
 
-### 1.7 New Position · 新位置
+### 1.7 New Position
 
-Intervention 的目标不是“完成一个项目”或“上线一个 AI 功能”，而是推动 Object 的真实业务状态发生变化。
+The objective of an Intervention is not merely to “finish a project” or “launch an AI feature.” It is to change the Object's real business state.
 
-可以抽象为两步：
+This can be abstracted in two steps.
 
 **State Update**
 
@@ -284,9 +286,9 @@ InternalState(t+1)
       )
 ```
 
-其中变化受 ChangeLaw 约束。
+where the change is constrained by ChangeLaw.
 
-随后：
+Then:
 
 **Position Migration**
 
@@ -298,59 +300,59 @@ Position(t+1)
       )
 ```
 
-因此，知几最终关心的问题不是：
+Zhiji therefore does not ultimately ask:
 
-> AI 功能有没有上线？
+> Was the AI feature launched?
 
-而是：
+It asks:
 
-> **这项 Intervention 是否真的改变了 Object 的 InternalState，并推动它向目标 Position 迁移？**
+> **Did the Intervention actually change the Object's InternalState and move it toward the target Position?**
 
-由此形成完整基础链：
+The complete basic chain is:
 
 ```text
-确定 System
+Define System
     ↓
-选择 Object
+Select Object
     ↓
-判断 Current Position
+Determine Current Position
     ↓
-明确 Target Position
+Define Target Position
     ↓
-解释 ChangeLaw
+Explain ChangeLaw
     ↓
-识别可改变变量
+Identify changeable variables
     ↓
-寻找 Ω 内的 Intervention
+Find Intervention within Ω
     ↓
-推演 New Position
+Simulate New Position
     ↓
-后续 Measurement 验证
+Validate later through Measurement
 ```
 
 ---
 
-## 2. Recursive Diagnosis · 为什么需要递归
+## 2. Recursive Diagnosis · Why Recursion Is Necessary
 
-现实企业不是一个单层系统。
+A real enterprise is not a single-layer system.
 
-一个 AI 转型问题通常会同时跨越：
+An AI-transformation problem usually crosses:
 
-- 外部行业环境；
-- 企业整体经营；
-- 具体业务或价值流；
-- 某个实际业务场景；
-- 最终需要建设或组合的能力。
+- external industry environment;
+- enterprise-level operations;
+- a concrete business or value stream;
+- a specific operational scenario;
+- the capability that must eventually be built or combined.
 
-如果始终停留在高层：
+If analysis stays too high-level:
 
-> 分析容易变成宏观判断，无法形成真正可执行的 Intervention。
+> it becomes macro-level judgment and cannot produce an executable Intervention.
 
-如果过早进入局部：
+If it moves local too early:
 
-> 又可能直接优化某个场景，却无法确认它是否服务于企业真正重要的目标。
+> it may optimize one scenario without knowing whether that scenario serves an important enterprise goal.
 
-因此，知几将分析组织为五个连续观察层级：
+Zhiji therefore organizes analysis into five continuous observation layers:
 
 ```text
 Industry
@@ -364,9 +366,9 @@ Scenario
 Solution Capability
 ```
 
-这五层不是五套独立方法。
+These are not five independent methods.
 
-每一层都继续使用同一个 Core Model：
+Each layer reuses the same Core Model:
 
 ```text
 System
@@ -377,25 +379,23 @@ System
 → Intervention
 ```
 
-区别只是：
-
-> **当前观察的 System 和 Object 发生了变化。**
+Only the currently observed System and Object change.
 
 ---
 
 ### 2.1 Object → Next-layer System
 
-递归发生的关键是：
+The key recursive relationship is:
 
-> **当前层需要继续深入的 Object，在下一层打开内部结构后，成为新的 System。**
+> **The Object that requires deeper analysis at the current layer becomes the new System when its internal structure is opened at the next layer.**
 
-形式化表示为：
+Formally:
 
 ```text
 Layer(n).Object = Layer(n+1).System
 ```
 
-例如：
+For example:
 
 ```text
 External Business Environment
@@ -411,86 +411,86 @@ External Business Environment
  Solution Capability
 ```
 
-在较高层观察时，一个 Enterprise 可以作为 Industry System 中的 Object。
+At a higher layer, an Enterprise can be an Object inside an Industry System.
 
-当分析需要继续深入 Enterprise 内部，这个 Enterprise 不再只是被观察对象，而成为下一层新的 System，从中继续选择更具体的 Business / Value Stream 作为新的 Object。
+When analysis needs to enter that Enterprise, it is no longer only the observed Object; it becomes the next System, within which a more specific Business / Value Stream is selected as the next Object.
 
-因此，递归不是简单地把问题拆成更多层。
+Recursion is therefore not merely “breaking the problem into more levels.”
 
-它的核心作用是：
+Its core purpose is:
 
-> **每进入下一层，都重新明确新的 System 边界，并把上层已经确认的方向转化为下一层更具体的问题。**
+> **At each deeper layer, redefine the System boundary and transform the confirmed higher-layer direction into a more concrete lower-layer problem.**
 
-所以：
+Thus:
 
-> **递归是方法，逐层收敛才是结果。**
+> **Recursion is the method; progressive narrowing is the result.**
 
 ---
 
-### 2.2 五层分别解决什么问题
+### 2.2 What Each of the Five Layers Answers
 
-五层不是为了形成一个复杂分类体系，而是为了防止不同尺度的问题混在一起。
+The five layers are not meant to create a complex taxonomy. They prevent problems at different scales from being mixed together.
 
-| Layer | 主要回答的问题 |
+| Layer | Main question |
 |---|---|
-| **Industry** | 外部环境和产业结构正在如何变化？ |
-| **Enterprise** | 企业在当前行业环境中处于什么位置，目标和关键约束是什么？ |
-| **Business** | 哪些业务 / 价值流真正影响企业目标，值得继续投入分析？ |
-| **Scenario** | 某个具体场景为什么处于当前状态，哪些变量值得干预？ |
-| **Solution Capability** | 如果决定干预，需要组合或建设什么能力，如何验证？ |
+| **Industry** | How are the external environment and industry structure changing? |
+| **Enterprise** | Where is the enterprise positioned in the current industry environment, and what are its goals and key constraints? |
+| **Business** | Which businesses / value streams actually affect enterprise goals and deserve deeper analysis? |
+| **Scenario** | Why is a specific scenario in its current state, and which variables are worth intervening on? |
+| **Solution Capability** | If intervention is chosen, what capabilities must be combined or built, and how should success be validated? |
 
-由此，一个宽泛问题逐步收敛：
+A broad problem then narrows as:
 
 ```text
-企业 AI 转型
+Enterprise AI transformation
       ↓
-值得关注的经营方向
+Business directions worth attention
       ↓
-关键业务 / 价值流
+Key business / value stream
       ↓
-值得干预的具体场景
+Specific scenario worth intervening on
       ↓
-可执行的能力方案
+Executable capability solution
 ```
 
 ---
 
-## 3. State Inheritance · 信息如何向下连续传递
+## 3. State Inheritance · How Information Continues Downward
 
-进入下一层并不意味着：
+Entering the next layer does not mean:
 
 ```text
-换一个 Agent
+Switch Agent
     ↓
-重新开始分析
+Start analysis again
 ```
 
-上一层已经确认的分析结果需要成为下一层的分析起点。
+Confirmed higher-layer results must become the starting point of lower-layer analysis.
 
-知几将这组跨层信息组织为：
+Zhiji organizes cross-layer information as a:
 
 ```text
 StatePackage
 ```
 
-StatePackage 包含两类信息。
+A StatePackage contains two classes of information.
 
-### 3.1 可继续参与推演的状态参数
+### 3.1 State Parameters That Continue Participating in Reasoning
 
 ```text
 R / θ / D / Ω
 ```
 
-即：
+That is:
 
-- 目标；
-- 约束；
-- 能力；
-- 当前可行选择空间。
+- objectives;
+- constraints;
+- capabilities;
+- current feasible option space.
 
-进入下一层后，可以基于更细粒度的信息继续识别这些状态中的可调整变量，并重新计算现实可行空间。
+At the next layer, finer-grained information can identify adjustable variables within these states and recompute the real feasible option space.
 
-### 3.2 作为分析基线继承的信息
+### 3.2 Information Inherited as Analysis Baseline
 
 ```text
 Position
@@ -498,15 +498,15 @@ ChangeLaw
 Evidence
 ```
 
-这些内容代表上一层已经形成的：
+These represent higher-layer:
 
-- 状态判断；
-- 变化机制；
-- 证据基础。
+- state judgment;
+- change mechanism;
+- evidence basis.
 
-下一层可以进一步补充和细化，但不能无依据地覆盖上一层已经确认的历史状态。
+A lower layer may supplement and refine them, but cannot overwrite confirmed historical state without basis.
 
-因此，跨层过程更接近：
+The cross-layer process is therefore closer to:
 
 ```text
 Confirmed StatePackage(n)
@@ -518,7 +518,7 @@ Confirmed StatePackage(n)
  Continue Diagnosis
 ```
 
-而不是：
+than:
 
 ```text
 New Layer
@@ -526,17 +526,17 @@ New Layer
 Start Again
 ```
 
-这使上层的目标、约束和已有认知不会因为换了分析层级或换了 Agent 而自动丢失。
+This prevents higher-layer goals, constraints, and knowledge from disappearing automatically when the analysis layer or Agent changes.
 
 ---
 
-## 4. Impact Propagation · 局部改变如何向上反馈
+## 4. Impact Propagation · How Local Change Feeds Upward
 
-递归不仅向下收敛，也需要向上判断：
+Recursion must not only narrow downward. It must also ask upward:
 
-> **局部 Intervention 是否真的产生了更大的业务价值？**
+> **Did the local Intervention actually create broader business value?**
 
-影响可能沿着下面的方向重新评估：
+Impact may be reassessed along:
 
 ```text
 Solution Capability
@@ -550,13 +550,13 @@ Solution Capability
      Industry
 ```
 
-但这里最重要的一点是：
+But the most important rule is:
 
-> **向上传递的是候选影响，不是状态覆盖。**
+> **What propagates upward is candidate impact, not state overwrite.**
 
-一个局部变化不应该因为模型认为“有影响”，就直接改写上层已经确认的状态。
+A local change must not directly rewrite confirmed higher-layer state simply because the model believes it has an effect.
 
-更准确的过程是：
+A more accurate path is:
 
 ```text
 Intervention(n+1)
@@ -570,62 +570,62 @@ Candidate Impact(n)
        ↓
 review / confirm
        ↓
-新的上层状态（如果成立）
+new higher-layer state (if accepted)
 ```
 
-局部影响向上传导时，可能：
+As local impact propagates upward, it may:
 
-- 被放大；
-- 被削弱；
-- 被其他机制抵消；
-- 在某一层停止。
+- be amplified;
+- be attenuated;
+- be offset by other mechanisms;
+- stop at a certain layer.
 
-因此，每一层都需要重新判断：
+Each layer must therefore ask again:
 
-> **当前变化是否足以改变上一层 Object 的 InternalState 或 Position？**
+> **Is this change sufficient to alter the parent Object's InternalState or Position?**
 
-如果成立，新状态经过确认后，才形成新的 StatePackage；如果不成立，则保留原有上层状态并停止继续传播。
+If yes, the new state is confirmed before forming a new StatePackage. If not, the previous higher-layer state remains and propagation stops.
 
-由此形成一个双向递归结构：
+This creates a bidirectional recursive structure:
 
 ```text
-上层
-确定方向 / 目标 / 约束
+Higher layer
+defines direction / goals / constraints
           ↓
      StatePackage
           ↓
-下层
-打开结构 / 定位变量 / 设计干预
+Lower layer
+opens structure / locates variables / designs intervention
           ↓
     Intervention
           ↓
-局部状态与位置变化
+local state and position change
           ↑
  Candidate Impact
           ↑
-上层重新判断整体影响
+higher layer reassesses total impact
 ```
 
-知几因此试图同时保持两件事：
+Zhiji therefore tries to preserve two things at once:
 
-> **向下不断收敛，直到找到真正可以执行的干预点；<br>
-> 向上持续关联，判断局部改变是否真的产生整体业务价值。**
+> **Narrow downward until the real executable intervention point is found;<br>
+> remain connected upward to judge whether local change creates whole-system business value.**
 
 ---
 
-## 5. Three Agents · 为什么是三个 Agent，而不是五个
+## 5. Three Agents · Why Three Agents Instead of Five
 
-五个分析层级描述的是：
+The five analysis layers describe:
 
-> **问题需要分析到什么业务尺度。**
+> **the business scale to which a problem must be analyzed.**
 
-Agent 的划分描述的是：
+The Agent split describes:
 
-> **哪一种稳定的认知任务由什么角色负责。**
+> **which stable cognitive task is owned by which role.**
 
-两者不是同一个维度。
+These are different dimensions.
 
-因此，知几没有机械地为五层分别建立五个 Agent，而是收敛成三个连续角色：
+Zhiji therefore does not mechanically create one Agent per layer. It converges on three continuous roles:
 
 ```text
 Business Diagnosis Agent
@@ -635,32 +635,32 @@ Scenario Diagnosis Agent
 Solution Design Agent
 ```
 
-### 5.1 Business Diagnosis Agent · 业务诊断
+### 5.1 Business Diagnosis Agent
 
-覆盖：
+Covers:
 
 ```text
 Industry → Enterprise → Business
 ```
 
-这一阶段的共同任务是：
+The shared task of this stage is:
 
-> **从企业整体经营出发，逐层缩小问题空间，寻找真正值得继续投入分析的方向。**
+> **Start from enterprise-level operation, progressively narrow the problem space, and find the directions truly worth deeper analysis.**
 
-它主要关注：
+It focuses on:
 
-- 宏观环境和产业格局；
-- 企业目标与当前经营状态；
-- 企业在系统中的 Position 和变化方向；
-- 哪些 Business / Value Stream 对目标更加关键；
-- 哪些业务问题值得继续下钻；
-- 哪些 Scenario 应进入下一阶段。
+- macro environment and industry structure;
+- enterprise objectives and current operating state;
+- enterprise Position and direction of change;
+- which Business / Value Streams matter most to the objectives;
+- which business problems deserve deeper diagnosis;
+- which Scenarios should enter the next stage.
 
-它的核心职责可以概括为：
+Its core responsibility is:
 
-> **着眼全局、充分定位、逐层收敛。**
+> **Take the whole-system view, locate sufficiently, and narrow progressively.**
 
-典型输出链：
+Typical output chain:
 
 ```text
 Industry Position
@@ -676,36 +676,36 @@ Candidate Scenario Portfolio
 
 ---
 
-### 5.2 Scenario Diagnosis Agent · 场景诊断
+### 5.2 Scenario Diagnosis Agent
 
-运行在：
+Operates at:
 
 ```text
 Scenario
 ```
 
-它继承 Business Diagnosis 已经确认的目标、约束、业务方向、Position、Evidence 和相关 ChangeLaw。
+It inherits confirmed goals, constraints, business direction, Position, Evidence, and relevant ChangeLaws from Business Diagnosis.
 
-这一阶段不再主要回答“哪里有问题”，而是进一步回答：
+At this stage the question is no longer mainly “where is the problem?” but:
 
-> **这个场景为什么处于当前状态，是否真的值得解决，以及哪些变量可以被现实干预。**
+> **Why is this scenario in its current state, is it actually worth solving, and which variables can be realistically intervened on?**
 
-主要分析：
+It analyzes:
 
-- Current Position；
-- Target Position；
-- 关键业务变量；
-- ChangeLaw；
-- 可干预变量；
-- Intervention；
-- Expected Position Change；
-- 当前目标、约束和能力是否允许这种变化。
+- Current Position;
+- Target Position;
+- key business variables;
+- ChangeLaw;
+- intervenable variables;
+- Intervention;
+- Expected Position Change;
+- whether current goals, constraints, and capabilities allow that change.
 
-其核心职责是：
+Its core responsibility is:
 
-> **因果定位与价值验证。**
+> **Causal localization and value validation.**
 
-最终，一个宽泛 Candidate Scenario 应被收敛成一个更明确的可决策对象：
+A broad Candidate Scenario should eventually narrow into a more explicit decision object:
 
 ```text
 Current Position
@@ -721,41 +721,41 @@ Expected Position Change
 
 ---
 
-### 5.3 Solution Design Agent · 方案设计
+### 5.3 Solution Design Agent
 
-运行在：
+Operates at:
 
 ```text
 Solution Capability
 ```
 
-它不重新寻找业务问题，而是继承已经确认的 Scenario、Target Position、ChangeLaw、Intervention direction、Evidence、目标与约束。
+It does not search for the business problem again. It inherits the confirmed Scenario, Target Position, ChangeLaw, Intervention direction, Evidence, objectives, and constraints.
 
-这一阶段主要回答：
+Its primary question is:
 
-> **如果决定改变这个场景，具体需要什么能力组合，以及怎样验证方案是否有效？**
+> **If we decide to change this scenario, what capability combination is required, and how should we validate whether the solution works?**
 
-主要负责：
+It is responsible for:
 
-- 将干预变量映射为能力需求；
-- 组合现有能力与新增能力；
-- 形成可比较的 Solution Options；
-- 分析成本、风险和关键假设；
-- 推演可能的 Position Change；
-- 设计 Measurement Plan；
-- 定义后续成功 / 失败判断条件。
+- mapping intervention variables to capability requirements;
+- combining existing and new capabilities;
+- forming comparable Solution Options;
+- analyzing cost, risk, and key assumptions;
+- simulating possible Position Change;
+- designing a Measurement Plan;
+- defining later success / failure criteria.
 
-核心职责是：
+Its core responsibility is:
 
-> **方案决策与工程化设计。**
+> **Solution decision and engineering design.**
 
 ---
 
-### 5.4 三个 Agent 构成的是一条认知链
+### 5.4 The Three Agents Form One Cognitive Chain
 
-三个 Agent 并不是三个彼此独立的聊天机器人。
+The three Agents are not three independent chatbots.
 
-它们通过已经确认的 StatePackage 连续交接：
+They hand off through confirmed StatePackages:
 
 ```text
 Business Diagnosis
@@ -769,46 +769,46 @@ Confirmed StatePackage
 Solution Design
 ```
 
-因此，跨 Agent 时：
+Across Agent boundaries:
 
-> **前一个阶段已经确认的目标、约束、状态、变化机制和 Evidence 不重新生成，而是作为下一阶段的分析起点继续使用。**
+> **Confirmed goals, constraints, states, change mechanisms, and Evidence are not regenerated. They become the next stage's analytical starting point.**
 
-三个 Agent 最终形成一条连续认知链：
+The three Agents therefore form one continuous cognitive chain:
 
 ```text
-发现值得解决的问题
+Find what is worth solving
         ↓
-判断问题为什么成立、是否值得解决
+Explain why the problem exists and whether it is worth solving
         ↓
-设计怎样改变它
+Design how to change it
         ↓
-定义如何验证改变是否有效
+Define how to validate whether the change worked
 ```
 
 ---
 
-## 6. End-to-End Method · 一次完整推演如何发生
+## 6. End-to-End Method · How One Complete Reasoning Process Works
 
-把前面的部分合在一起，一次完整方法可以概括为：
+Putting the pieces together, one full method run can be summarized as:
 
 ```text
 Business Problem
       ↓
-确定当前 System / Object
+Define current System / Object
       ↓
-判断 Current Position
+Determine Current Position
       ↓
-明确 R / θ / D / Ω
+Define R / θ / D / Ω
       ↓
-识别关键 ChangeLaw
+Identify key ChangeLaw
       ↓
-判断 Target Position
+Determine Target Position
       ↓
-识别可干预变量
+Identify intervenable variables
       ↓
-形成 Candidate Intervention
+Form Candidate Intervention
       ↓
-向下进入更具体层级
+Move downward to a more concrete layer
       ↓
 Scenario Diagnosis
       ↓
@@ -820,12 +820,12 @@ Human Selection
       ↓
 Measurement Plan
       ↓
-后续 Actual Outcome 验证
+Later Actual Outcome validation
 ```
 
-在这个过程中，有三条原则始终不变：
+Three principles remain constant throughout.
 
-### 原则一：先解释问题，再设计方案
+### Principle 1: Explain the Problem Before Designing the Solution
 
 ```text
 Position / ChangeLaw
@@ -833,7 +833,7 @@ Position / ChangeLaw
 Intervention
 ```
 
-而不是：
+not:
 
 ```text
 Technology
@@ -841,7 +841,7 @@ Technology
 Find a use case
 ```
 
-### 原则二：向下收敛，但不丢失上层目标
+### Principle 2: Narrow Downward Without Losing Higher-layer Goals
 
 ```text
 Higher-layer confirmed state
@@ -851,9 +851,9 @@ Higher-layer confirmed state
     Lower-layer diagnosis
 ```
 
-局部优化必须持续受到更高层目标和约束的限制。
+Local optimization must remain constrained by higher-layer objectives and boundaries.
 
-### 原则三：局部变化不能自动等同于整体价值
+### Principle 3: Local Improvement Does Not Automatically Equal Overall Value
 
 ```text
 Local Improvement
@@ -861,33 +861,33 @@ Local Improvement
 Enterprise Value
 ```
 
-局部 Intervention 产生的影响需要重新向上评估，只有当它足以改变更高层的 InternalState 或 Position 时，才可能形成更大的业务价值判断。
+The effect of a local Intervention must be evaluated upward again. Only if it is sufficient to alter higher-layer InternalState or Position can it support a broader business-value judgment.
 
 ---
 
-## 7. Method Boundary · 当前方法的边界
+## 7. Method Boundary
 
-本文描述的是知几当前已经明确的**分析方法和业务抽象**，并不意味着这些假设已经全部完成真实企业验证。
+This document describes Zhiji's current **analysis method and business abstraction**. It does not claim that all of these assumptions have been validated in real enterprises.
 
-当前需要继续接受外部挑战的部分包括：
+Areas that still require external challenge include:
 
-- `Layer(n).Object = Layer(n+1).System` 是否对复杂企业结构具有足够通用性；
-- 五层结构是否覆盖所有真实企业问题，或是否需要跳层、并行层和多父 System；
-- ChangeLaw 在不同证据强度下应该如何表达其可信程度；
-- Candidate Impact 的向上传播在真实业务中应如何校准；
-- 三个 Agent 的职责边界在真实企业长期运行中是否需要进一步调整。
+- whether `Layer(n).Object = Layer(n+1).System` is general enough for complex enterprise structures;
+- whether the five-layer structure covers real enterprise problems, or whether skipping layers, parallel layers, or multiple parent Systems are required;
+- how ChangeLaw confidence should be represented under different levels of evidence strength;
+- how upward Candidate Impact should be calibrated in real business systems;
+- whether the three-Agent responsibility split needs further adjustment under long-term enterprise use.
 
-这些问题不会在 METHOD 中被预设为已经解决，而属于后续 Architecture Review、真实企业案例和 Measurement Feedback 需要继续验证的内容。
+METHOD does not predeclare these questions as solved. They belong to later Architecture Review, real-enterprise cases, and Measurement Feedback.
 
 ---
 
-## 8. Summary · 方法的核心
+## 8. Summary · The Core of the Method
 
-知几的方法可以压缩成一句话：
+Zhiji's method can be compressed into one sentence:
 
-> **先把企业问题表达为 Object 在 System 中的 Position 与变化机制问题，再通过五层递归逐步收敛到可干预的 Scenario 和 Solution Capability；上层状态通过 StatePackage 向下继承，局部影响以 Candidate Impact 向上反馈，最终由三个连续 Agent 完成从问题定位、场景验证到方案设计的认知链。**
+> **Express an enterprise problem as the Position and change-mechanism problem of an Object inside a System; use five-layer recursion to progressively narrow toward an intervenable Scenario and Solution Capability; inherit higher-layer state downward through StatePackage; propagate local effects upward as Candidate Impact; and use three continuous Agents to form a cognitive chain from problem localization to scenario validation to solution design.**
 
-进一步压缩为：
+Compressed further:
 
 ```text
 Understand the System
@@ -907,8 +907,8 @@ Propagate Impact Upward
 Design and Validate the Solution
 ```
 
-知几不是试图让 AI “直接给出答案”。
+Zhiji is not trying to make AI “directly give the answer.”
 
-它试图把：
+It is trying to turn:
 
-> **一个原本依赖经验、讨论和隐性认知的复杂决策过程，转化为可以逐层表达、持续推演、人工确认和后续验证的方法。**
+> **a complex decision process that originally depends on experience, discussion, and tacit knowledge into a method that can be expressed layer by layer, reasoned through continuously, confirmed by humans, and validated later.**

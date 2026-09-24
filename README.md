@@ -1,13 +1,14 @@
 # Zhiji Agent · 知几
 
-> A governed recursive diagnosis and decision-simulation system for enterprise AI transformation.<br>
-> 一套面向企业 AI 转型决策的受治理递归诊断与方案推演系统。
+[English](README.md) | [中文](README.zh-CN.md)
 
-**知几：见微知机，因势成解。**
+> A governed recursive diagnosis and decision-simulation system for enterprise AI transformation.
 
-知几 Agent 试图把企业 AI 转型中原本高度依赖专家经验、访谈组织和多轮讨论的判断过程，转化为一套**结构化、可持续推进、可复核的人机协同决策流程**。
+**Zhiji (知几): detect the signal early, understand the situation, and respond to the forces that shape it.**
 
-它从真实业务问题出发，通过递归诊断业务状态、变化机制和可干预变量，将宽泛的转型问题逐步收敛到具体场景与能力方案，并通过 Evidence、Human Gate、Deterministic Workflow 与持久化状态约束 Agent 的语义权威。
+Zhiji Agent explores how enterprise AI-transformation decisions—work that often depends on expert judgment, interview facilitation, and repeated discussion—can be turned into a **structured, continuously executable, reviewable human–AI decision process**.
+
+It starts from real business problems. Through recursive diagnosis of business state, change mechanisms, and variables that can actually be intervened on, it narrows broad transformation questions into concrete scenarios and capability solutions. Evidence, Human Gates, deterministic workflow, and persisted state constrain the semantic authority of the Agent.
 
 ```text
 Business Diagnosis
@@ -17,94 +18,94 @@ Scenario Diagnosis
 Solution Design
 ```
 
-当前项目已经实现可持久化、可恢复、具备 Human Gate 和完整 lineage 的端到端 Product Loop；真实 OpenAI-compatible LLM Provider 已进入正式代码路径，Agent 已能够生成受限、可审查的 Semantic Proposal，并在 USER Gate 停止等待确认。
+The current project has an end-to-end Product Loop with persistence, recovery, Human Gates, and lineage. A real OpenAI-compatible LLM Provider is implemented in the production code path. The Agent can produce bounded, reviewable Semantic Proposals that stop at the USER Gate for confirmation.
 
-当前仍**不**宣称：
+The project still **does not claim** that:
 
-- Agent 已能够自主完成高质量企业诊断；
-- 真实企业诊断效果已经验证；
-- 推荐方案一定产生预期经营结果；
-- 系统已经 production-ready；
-- 系统拥有现实业务执行权限。
+- the Agent can autonomously perform high-quality enterprise diagnosis;
+- real-enterprise diagnosis quality has been validated;
+- recommended solutions are guaranteed to produce expected business outcomes;
+- the system is production-ready;
+- the system has real-world execution authority.
 
 `Recursive Diagnosis` · `Human-in-the-loop` · `Evidence & State` · `Governed Semantic Proposal`
 
 ---
 
-## 1. Why Zhiji · 为什么需要知几
+## 1. Why Zhiji
 
-企业开始 AI 转型时，问题往往首先被表达成一个技术需求：
+Enterprise AI-transformation initiatives are often first expressed as technology requests:
 
-> “做一个知识库。”<br>
-> “做一个客服 Agent。”<br>
-> “接入大模型。”<br>
-> “用 AI 提升某个环节的效率。”
+> “Build a knowledge base.”<br>
+> “Build a customer-service Agent.”<br>
+> “Connect a large language model.”<br>
+> “Use AI to improve efficiency in this process.”
 
-但技术方案本身不能回答更前置的问题：
+But a technology solution cannot answer the more fundamental questions:
 
-**企业当前真正需要改变的是什么？<br>
-问题产生在哪个业务层级和环节？<br>
-哪些变量真正决定业务结果？<br>
-哪些变量可以被改变？<br>
-AI 是否是合适的干预手段？<br>
-在成本、能力和约束条件下，这项投入是否值得？**
+**What does the enterprise actually need to change?<br>
+At which business level and process does the problem occur?<br>
+Which variables actually determine the outcome?<br>
+Which variables can be changed?<br>
+Is AI an appropriate intervention mechanism?<br>
+Given current cost, capability, and constraints, is the investment worth making?**
 
-因此，知几的基本判断是：
+Zhiji therefore starts from a basic position:
 
-> **企业 AI 转型首先是一个业务决策问题，其次才是一个技术实现问题。**
+> **Enterprise AI transformation is first a business-decision problem, and only then a technology-implementation problem.**
 
-知几想解决的不是“如何让 AI 给出一个更好的答案”，而是：
+Zhiji is not primarily trying to answer “how can AI produce a better response?” It is trying to answer:
 
-> **如何把复杂的企业 AI 转型判断，转化为一个可以被系统持续执行、确认、复核和验证的决策过程。**
+> **How can complex enterprise AI-transformation judgment be converted into a decision process that a system can repeatedly execute, confirm, review, and validate?**
 
-为此，知几尝试完成三个转变：
+It attempts three shifts:
 
-- **业务模型化**：显式表达业务对象、状态、目标、约束、能力与变化机制；
-- **分析可执行化**：把从宏观问题到具体场景和方案的分析组织成可递归推进的流程；
-- **决策可信化**：把 AI 的概率性判断与 Evidence、State、Human Gate 和后续 Measurement 分开治理。
+- **Model the business explicitly** — represent business objects, states, objectives, constraints, capabilities, and change mechanisms;
+- **Make analysis executable** — organize the path from broad questions to concrete scenarios and solutions as a recursively progressable process;
+- **Make decisions reviewable** — govern probabilistic AI judgments separately from Evidence, State, Human Gates, and later Measurement.
 
-### Intended Value · 目标价值
+### Intended Value
 
-- **降低前置判断成本**：把原本高度依赖人工组织和专家经验的部分分析过程，转化为可重复执行的诊断与推演流程；
-- **减少直接试错风险**：在投入资源之前显式暴露变化机制、干预路径、关键假设和潜在影响；
-- **提高结论可复核性**：让判断建立在结构化模型、Evidence、状态记录和 Human Gate 上，而不是只依赖一次模型回答或专家个人信用。
+- **Reduce the cost of front-loaded judgment** by turning parts of diagnosis that otherwise depend heavily on coordination and expert experience into repeatable analysis and simulation;
+- **Reduce direct trial-and-error risk** by exposing change mechanisms, intervention paths, critical assumptions, and potential impacts before committing resources;
+- **Improve reviewability** by grounding judgments in structured models, Evidence, persisted state, and Human Gates rather than a single model answer or an expert's personal credibility.
 
-> 以上是知几希望验证的产品价值，而不是已经完成真实企业验证的效果结论。
+> These are product values Zhiji intends to validate. They are not claims of proven real-enterprise outcomes.
 
-### What Zhiji Is Not · 知几不是什么
+### What Zhiji Is Not
 
-- **不是通用聊天机器人**：Agent 输出首先是 Proposal / Hypothesis，不直接成为业务事实；
-- **不是一次性报告生成器**：最终 Output 由 Journey 中已经持久化和确认的状态派生；
-- **不是自动化执行平台**：Confirm / Select / Approve 表示分析路径或方案被接受，不代表系统获得现实执行权限。
+- **Not a general chatbot** — Agent output begins as Proposal / Hypothesis and does not directly become a business fact;
+- **Not a one-shot report generator** — final Output is derived from persisted and confirmed states across a Journey;
+- **Not an automated execution platform** — Confirm / Select / Approve means an analytical path or design has been accepted, not that the system has acquired real-world execution authority.
 
 ### Design Transparency
 
-当前 Source Repository 保持私有。
+The Source Repository remains private.
 
-本 Public Showcase Repo 公开：
+This Public Showcase Repo exposes:
 
-- Domain / Method；
-- Human–AI Governance；
-- Architecture；
-- Implementation Status；
-- Engineering Evidence；
-- Demo artifacts；
-- Known Limitations；
-- Architecture RFC。
+- Domain / Method;
+- Human–AI Governance;
+- Architecture;
+- Implementation Status;
+- Engineering Evidence;
+- Demo artifacts;
+- Known Limitations;
+- Architecture RFC.
 
 **Open Design / Closed Source**
 
-本仓库强调：
+The repository is designed for:
 
 > **Design Reviewability ≠ Source-level Auditability**
 
 ---
 
-## 2. METHOD · 核心模型与递归诊断
+## 2. METHOD · Core Model and Recursive Diagnosis
 
-知几的底层分析框架来自一个基本判断：
+Zhiji's analytical framework begins from one basic idea:
 
-> **业务问题可以被理解为：某个 Object 为什么在当前 System 中处于当前位置，以及如何在现实约束下推动它向目标位置迁移。**
+> **A business problem can be understood as: why an Object is at its current Position within a System, and how it can be moved toward a target Position under real-world constraints.**
 
 ### Core Model
 
@@ -124,30 +125,30 @@ Intervention
 New Position / Projection
 ```
 
-其中：
+Where:
 
-- **R — Objectives / References**：目标与评价参照；
-- **θ — Constraints**：边界与约束；
-- **D — Capabilities**：当前能力与资源；
-- **Ω — Feasible Option Space**：当前现实可行的选择空间。
+- **R — Objectives / References**: objectives and evaluation references;
+- **θ — Constraints**: boundaries and constraints;
+- **D — Capabilities**: currently available capabilities and resources;
+- **Ω — Feasible Option Space**: the set of options that are realistically feasible now.
 
-知几不是先寻找“可以用什么 AI 技术”，再倒推业务场景，而是先回答：
+Zhiji does not begin by asking “which AI technology can we use?” and then work backward toward a business scenario. It begins with:
 
 ```text
-什么机制影响业务结果
+What mechanism affects the business outcome?
         ↓
-哪些变量可以被改变
+Which variables can actually be changed?
         ↓
-什么 Intervention 在现实中可行
+Which Intervention is feasible in reality?
         ↓
-AI 是否适合成为实现这种干预的能力
+Is AI an appropriate capability for implementing that Intervention?
 ```
 
 ### Recursive Diagnosis
 
-现实企业不是一个单层系统。
+A real enterprise is not a single-layer system.
 
-知几在五个连续尺度上复用同一套 Core Model：
+Zhiji reuses the same Core Model across five connected scales:
 
 ```text
 Industry
@@ -161,53 +162,53 @@ Scenario
 Solution Capability
 ```
 
-递归关系的核心是：
+The core recursive relationship is:
 
 ```text
 Layer(n).Object = Layer(n+1).System
 ```
 
-即：
+That is:
 
-> **上一层需要继续深入的 Object，在下一层打开内部结构后，成为新的 System。**
+> **When an Object at the current layer requires deeper analysis, its internal structure is opened at the next layer and becomes the next System.**
 
-每深入一层，分析边界进一步缩小：
+At each deeper layer the analytical boundary becomes narrower:
 
-> **上一层确定方向，下一层打开内部结构。**
+> **The upper layer determines direction; the lower layer opens internal structure.**
 
-向下通过 Confirmed `StatePackage` 继承已经确认的目标、约束、状态与 Evidence；向上传递的是 Candidate Impact，而不是直接覆盖上层已确认状态。
+Downward progression inherits confirmed objectives, constraints, state, and Evidence through a confirmed `StatePackage`. Upward progression carries Candidate Impact rather than directly overwriting confirmed upper-layer state.
 
 ![Recursive diagnosis loop](assets/recursive-loop.svg)
 
-### Three Agents · 三个 Agent
+### Three Agents
 
-五层业务尺度没有被拆成五个独立 Agent。
+The five business scales are not implemented as five independent Agents.
 
-知几使用三个职责稳定的 Agent：
+Zhiji uses three stable cognitive roles:
 
-| Agent | 覆盖层级 | 核心任务 |
+| Agent | Layers | Core responsibility |
 |---|---|---|
-| **Business Diagnosis Agent** | Industry → Enterprise → Business | 定位业务问题、逐层收敛、形成 Candidate Scenarios |
-| **Scenario Diagnosis Agent** | Scenario | 因果定位、价值验证、识别关键变量与 ChangeLaw |
-| **Solution Design Agent** | Solution Capability | 将已确认干预方向转化为能力组合、Solution、Projection 与 Measurement Plan |
+| **Business Diagnosis Agent** | Industry → Enterprise → Business | Locate the business problem, recursively narrow it, and form Candidate Scenarios |
+| **Scenario Diagnosis Agent** | Scenario | Locate causal structure, validate value, and identify critical variables and ChangeLaw |
+| **Solution Design Agent** | Solution Capability | Turn confirmed intervention direction into capability combinations, Solution, Projection, and Measurement Plan |
 
-这里区分两个维度：
+This separates two dimensions:
 
-> **五层结构解决“问题分析到什么业务尺度”；三个 Agent 解决“哪一类认知任务由什么稳定角色负责”。**
+> **The five-layer structure answers “at what business scale is the problem being analyzed?” The three Agents answer “which stable cognitive role performs each type of reasoning task?”**
 
-三个 Agent 组成的是一条连续认知链，而不是三个彼此独立的聊天机器人。
+The three Agents form one continuous reasoning chain, not three unrelated chatbots.
 
 [Read METHOD →](docs/METHOD.md)
 
 ---
 
-## 3. GOVERNANCE · Agent 如何获得有限而明确的权威
+## 3. GOVERNANCE · How Agent Authority Is Bounded
 
-知几并不把 Agent 输出直接当作业务事实或最终决策。
+Zhiji does not treat Agent output as business fact or final decision.
 
-复杂业务分析链条长、层级多，而 LLM 本质上仍是概率性系统。单步误差如果未经治理进入下一阶段，可能在长链分析中持续放大。
+Enterprise analysis is long-chain and multi-layered, while an LLM remains probabilistic. If an error is allowed to enter the next stage without governance, it can compound through the rest of the chain.
 
-因此，知几把 **Agent、Human、Workflow** 分成三个不同责任主体：
+Zhiji therefore separates **Agent, Human, and Workflow** into distinct authority roles:
 
 ```text
 Agent
@@ -220,7 +221,7 @@ Workflow
 → Legal State Transition / Gate / Recovery
 ```
 
-### Core Boundaries · 核心边界
+### Core Boundaries
 
 ```text
 Evidence ≠ Hypothesis
@@ -234,7 +235,7 @@ Projection ≠ Actual Outcome
 Selection ≠ Execution Authorization
 ```
 
-一个 Agent 判断要成为后续分析允许依赖的状态，需要经过治理边界：
+For an Agent judgment to become a state that downstream analysis is allowed to depend on, it must cross an explicit governance boundary:
 
 ```text
 Evidence / Confirmed State
@@ -247,18 +248,18 @@ Structural Validation
 + Evidence Binding
 + Rule Validation
           ↓
-Human Gate（如需要）
+Human Gate (when required)
           ↓
 Accepted Domain State
           ↓
 Deterministic Workflow
 ```
 
-![Proposal to accepted state](assets/human-gated-state-transition.svg)
+![Human-gated state transition](assets/human-gated-state-transition.svg)
 
-### Real Semantic Proposal · 当前真实模型路径
+### Real Semantic Proposal Path
 
-当前真实语义生成路径已经进入正式代码：
+A real semantic-generation path now exists in the production code:
 
 ```text
 Confirmed Context / Evidence
@@ -274,7 +275,7 @@ HYPOTHESIS / AGENT Proposal
 USER Gate
 ```
 
-Agent 当前可生成五类受限 Semantic Proposal：
+The Agent can currently generate five bounded Semantic Proposal families:
 
 ```text
 CURRENT_POSITION
@@ -284,26 +285,26 @@ INTERVENTIONS
 PROJECTION
 ```
 
-这些 Proposal 不会因为来自真实模型就自动变成 Accepted State。
+These Proposals do not become Accepted State merely because they came from a real model.
 
-同时：
+At the same time:
 
-- `R / θ / D / Ω` 保持 USER-owned；
-- Agent 不允许静默改写 USER-owned InternalState；
-- 不合法、悬空、过期或不符合 Contract 的输出 fail closed；
-- Scenario / Solution Candidate 的 Agent authorship 仍未开放。
+- `R / θ / D / Ω` remain USER-owned;
+- the Agent cannot silently rewrite USER-owned InternalState;
+- invalid, dangling, stale, or contract-violating output fails closed;
+- Agent authorship for Scenario / Solution Candidates is still deferred.
 
 [Read GOVERNANCE →](docs/GOVERNANCE.md)
 
 ---
 
-## 4. ARCHITECTURE · METHOD + GOVERNANCE 如何被软件保证
+## 4. ARCHITECTURE · How METHOD + GOVERNANCE Are Enforced in Software
 
-知几不是把一组 Prompt 串成一段长对话，而是把**业务状态、语义推理、确定性计算和流程控制拆成不同软件层**。
+Zhiji is not a chain of prompts inside one long conversation. It separates **business state, semantic reasoning, deterministic computation, and process control into different software layers**.
 
-核心原则是：
+The core rule is:
 
-> **概率性的语义判断交给 Agent，确定性的状态、计算与流程交给软件系统。**
+> **Probabilistic semantic judgment belongs to the Agent; deterministic state, computation, and process control belong to the software system.**
 
 ```text
 Interaction
@@ -317,30 +318,30 @@ Diagnosis Engine
 Domain
 
 Infrastructure
-通过 Ports / Adapters 接入
+connected through Ports / Adapters
 ```
 
 ### Architecture Responsibilities
 
 **Interaction**<br>
-REST API、CLI 与结构化结果输出。
+REST API, CLI, and structured result presentation.
 
 **Application**<br>
-组织 Case Intake、Journey progression、三个 Agent、Semantic Generation、Confirm / Select 与 Product Output。
+Coordinates Case Intake, Journey progression, the three Agents, Semantic Generation, Confirm / Select, and Product Output.
 
 **Workflow**<br>
-管理 Layer、State、合法 Action、Human Gate、异常状态、暂停 / 恢复；不依赖 LLM 记忆“当前走到哪里”。
+Controls Layer, State, legal Actions, Human Gates, exceptional states, pause / resume, and does not depend on the LLM remembering “where we are.”
 
 **Diagnosis Engine**<br>
-承载 Evidence Coverage、Diagnosis / Execution Readiness、Intervention Feasibility、Business Gap、Outcome Delta、Scenario Constraint Evaluation 等确定性算子。
+Hosts deterministic operators such as Evidence Coverage, Diagnosis / Execution Readiness, Intervention Feasibility, Business Gap, Outcome Delta, and Scenario Constraint Evaluation.
 
 **Domain**<br>
-定义 `System / Object / Position / InternalState / ChangeLaw / Intervention / Projection / Evidence` 等核心业务语义与生命周期。
+Defines the core business semantics and lifecycle for `System / Object / Position / InternalState / ChangeLaw / Intervention / Projection / Evidence`.
 
 **Infrastructure**<br>
-通过 Ports / Adapters 接入 PostgreSQL、迁移、Repository / UoW、真实 / Fake LLM Provider、trace 与 recovery。
+Connects PostgreSQL, migrations, Repository / UoW, real / Fake LLM Providers, trace, and recovery through Ports / Adapters.
 
-当前真实模型只能通过受控接口进入系统：
+A real model can enter the system only through controlled interfaces:
 
 ```text
 Context + Evidence
@@ -356,9 +357,9 @@ Human Gate
 Accepted State
 ```
 
-因此：
+Therefore:
 
-> **Conversation Context 不是系统状态本身。**
+> **Conversation Context is not system state.**
 
 ![System architecture](assets/system-architecture.svg)
 
@@ -366,14 +367,14 @@ Accepted State
 
 ---
 
-## 5. STATUS · 当前真实做到哪里
+## 5. STATUS · What Actually Exists Today
 
-项目使用四种实现状态：
+The project uses four implementation states:
 
-- **implemented**：存在正式 production-path typed code；
-- **fake-only**：该具体能力仍只有 Fake / deterministic seam；
-- **contract-only**：已有正式 Contract / tests / boundary，但尚未进入 runtime；
-- **deferred**：明确不属于当前已实现范围。
+- **implemented** — production-path typed code exists;
+- **fake-only** — that specific capability still exists only behind a Fake / deterministic seam;
+- **contract-only** — a formal Contract / tests / boundary exists, but no production runtime implementation exists yet;
+- **deferred** — explicitly outside the currently implemented scope.
 
 > **Implemented does not mean production-ready.**
 
@@ -400,7 +401,7 @@ Accepted State
 | Autonomous external execution | ⚪ deferred |
 | Production deployment / observability | ⚪ deferred |
 
-当前最重要的变化是：
+The most important recent change is that:
 
 ```text
 Real LLM Provider
@@ -412,9 +413,9 @@ Strict Validation
 Human Gate
 ```
 
-已经不再只是规划中的能力，而是真实存在的受治理运行路径。
+is no longer only a planned capability. It is now a real, governed runtime path.
 
-但：
+But:
 
 ```text
 Real Semantic Proposal
@@ -424,7 +425,7 @@ Autonomous Enterprise Diagnosis
 
 ### Current Known Limitation
 
-Current Position 仍存在一个明确交互边界：
+Current Position still has one explicit interaction boundary:
 
 ```text
 Agent drafts Position
@@ -434,17 +435,17 @@ USER supplies / corrects InternalState
 Merged confirmation
 ```
 
-这条合并确认路径尚未完成，因此当前公开 Demo 的 Current Position 仍由 USER 完整输入。
+This merged-confirmation path is not yet implemented, so the Current Position in the public Demo is still entered fully by the USER.
 
 [Read detailed STATUS →](docs/STATUS.md)
 
 ---
 
-## 6. DEMO · 真实模型如何进入 Product Loop
+## 6. DEMO · How a Real Model Enters the Product Loop
 
-当前 Public Demo 已经不只是 deterministic Engineering Demo。
+The current Public Demo is no longer only a deterministic Engineering Demo.
 
-它使用虚构公司案例，通过真实模型生成受限 Semantic Proposal，并走完整个受控 Product Loop：
+It uses a fictional enterprise case, generates bounded Semantic Proposals with a real model, and proceeds through the complete governed Product Loop:
 
 ```text
 Case Intake
@@ -470,7 +471,7 @@ Case Completion
 PRODUCT_OUTPUT_READY
 ```
 
-最终 Output 明确保留：
+The final Output explicitly preserves:
 
 ```text
 No execution: true
@@ -479,60 +480,60 @@ No authorization: true
 
 ### Recommended Viewing
 
-- **Public Cut**：约 2 分 53 秒，用于快速理解真实模型 Proposal → Human Gate → 跨层诊断 → Solution → `PRODUCT_OUTPUT_READY`；
-- **Engineering Demo**：4 分 40 秒，保留更完整的运行过程；
-- **Raw `.cast` + Prompt / Response trace**：用于核验原始运行与人机交互事实。
+- **Public Cut** — ~2:53, for a quick view of real-model Proposal → Human Gate → cross-layer diagnosis → Solution → `PRODUCT_OUTPUT_READY`;
+- **Engineering Demo** — 4:40, preserving more of the complete execution flow;
+- **Raw `.cast` + Prompt / Response trace** — for verifying the underlying runtime and human–AI interaction facts.
 
 [Watch / inspect the Demo →](demo/README.md)
 
 ### What the Demo Proves
 
-当前 Demo 支持以下工程结论：
+The current Demo supports these engineering-level conclusions:
 
-- 一个 Business Case 可以进入正式 Product Loop；
-- Business Diagnosis → Scenario Diagnosis → Solution Design 可以连续衔接；
-- Human Gate 可以控制关键状态迁移；
-- Evidence 与 lineage 可以跨阶段保留；
-- Journey 可以持久化并恢复；
-- Product Output 可以从持久化状态重新生成；
-- 真实 Provider 可以生成受限、schema-valid 的 Semantic Proposal；
-- Agent Proposal 可以以 `HYPOTHESIS` 身份停在 USER Gate 等待确认；
-- Solution Selection 不会自动获得现实执行权限。
+- a Business Case can enter the formal Product Loop;
+- Business Diagnosis → Scenario Diagnosis → Solution Design can proceed continuously;
+- Human Gates can control critical state transitions;
+- Evidence and lineage can survive across stages;
+- a Journey can be persisted and recovered;
+- Product Output can be regenerated from persisted state;
+- a real Provider can generate bounded, schema-valid Semantic Proposals;
+- Agent Proposals can stop at the USER Gate as `HYPOTHESIS` and wait for confirmation;
+- Solution Selection does not automatically acquire real-world execution authority.
 
 ### What the Demo Does Not Prove
 
-它不证明：
+It does not prove that:
 
-- Agent 已能自主完成高质量企业诊断；
-- 真实企业诊断质量已经验证；
-- 不同行业已经具有稳定泛化能力；
-- ChangeLaw 已被因果证明；
-- Projection 等于 Actual Outcome；
-- 推荐方案一定产生预期 ROI；
-- 系统已经 production-ready。
+- the Agent can autonomously perform high-quality enterprise diagnosis;
+- real-enterprise diagnosis quality has been validated;
+- stable cross-industry generalization has been demonstrated;
+- a ChangeLaw has been causally proven;
+- Projection equals Actual Outcome;
+- a recommended solution will produce expected ROI;
+- the system is production-ready.
 
-> 当前 Demo 证明的是：**真实模型可以进入治理骨架并产生受限、可审查的非权威 Proposal。**
+> What the Demo proves is narrower: **a real model can enter the governance skeleton and produce bounded, reviewable, non-authoritative Proposals.**
 
 ### Demo Snapshot vs. Source Main
 
-Public Demo 为了可读性包含 Layer / Step / Actor 等展示信息。
+For readability, the Public Demo contains presentation information such as Layer / Step / Actor labels.
 
-当前 Source Repository 的正式状态分类仍以 `main` 为准；未合并的纯展示层改动不改变 Domain、Workflow、Authority 或能力状态判断。
+Formal Source Repository capability classification remains anchored to `main`; unmerged display-only changes do not alter Domain, Workflow, Authority, or capability-status conclusions.
 
 ---
 
-## 7. EVIDENCE · 有什么工程事实支持这些主张
+## 7. EVIDENCE · What Engineering Facts Support These Claims
 
-当前 Public Evidence Snapshot 的 Source Repository 主线锚点是：
+The current Public Evidence Snapshot is anchored to the Source Repository at:
 
 ```text
 main commit: 49ec33c
 date: 2026-09-24
 ```
 
-该提交为 PR #58 合并后的 `main`。
+That commit is `main` after PR #58 was merged.
 
-对应相同 Git tree 的 GitHub Actions 验证结果：
+GitHub Actions results for the corresponding identical Git tree:
 
 | Verification | Result |
 |---|---|
@@ -544,18 +545,18 @@ date: 2026-09-24
 | PostgreSQL gate | `83 passed` × 2 |
 | Python test files | `426` |
 
-GitHub Actions 两个主要 Job：
+Two main GitHub Actions jobs:
 
 ```text
 deterministic   PASS
 postgres        PASS
 ```
 
-这些证据用于证明：
+These artifacts support one specific claim:
 
-> **当前公开描述的工程闭环来自实际运行，而不是纯架构设想。**
+> **The engineering loop described publicly comes from actual execution rather than architecture diagrams alone.**
 
-但由于 Source Repository 仍然保持私有：
+But because the Source Repository remains private:
 
 > **Engineering Evidence ≠ Source-level Audit**
 
@@ -563,61 +564,61 @@ postgres        PASS
 
 ---
 
-## 8. Open Questions · 希望被挑战的问题
+## 8. Open Questions · What We Want Reviewers to Challenge
 
-知几目前最希望获得的外部反馈，不是：
+The external feedback Zhiji most needs is not:
 
-> “这个架构看起来不错。”
+> “This architecture looks reasonable.”
 
-而是：
+It is:
 
-> **它在真实 Agent 和真实企业进入以后，最可能在哪个核心假设上失败？**
+> **Once real Agents and real enterprises enter the system, which core assumption is most likely to fail first?**
 
-当前最值得挑战的六类问题：
+Six questions are especially worth challenging:
 
 1. **Semantic Authority**<br>
-   Agent 应拥有多大的语义生成权？哪些信息可以推断，哪些必须由 Human 提供或确认？
+   How much semantic-generation authority should the Agent have? Which information may be inferred, and which must be supplied or confirmed by a Human?
 
 2. **Human Gate Policy**<br>
-   Gate 应主要按照 Workflow State 设置，还是应逐步引入 Semantic Risk、Evidence Strength、Reversibility 与 Business Impact？
+   Should Gates primarily follow Workflow State, or should they gradually incorporate Semantic Risk, Evidence Strength, Reversibility, and Business Impact?
 
 3. **Recursive Abstraction**<br>
-   `Layer(n).Object = Layer(n+1).System` 是否真正具有跨业务通用性，还是存在 over-abstraction？
+   Is `Layer(n).Object = Layer(n+1).System` genuinely reusable across business structures, or is it an over-abstraction?
 
 4. **Epistemic State**<br>
-   Evidence、Hypothesis、Human Acceptance、Measurement 和 Actual Outcome 之间，是否需要更完整的可信状态模型？
+   Do Evidence, Hypothesis, Human Acceptance, Measurement, and Actual Outcome require a richer trust / epistemic-state model?
 
 5. **Model Context vs. Audit Trace**<br>
-   如何让模型获得足够丰富的企业上下文，同时避免把敏感原文永久写入 Trace，又保持分析过程可审计？
+   How can the model receive rich enough enterprise context without permanently persisting sensitive raw material in the trace, while still keeping the process auditable?
 
 6. **Impact Propagation**<br>
-   局部 Intervention 的影响应该如何向 Business / Enterprise 层传播？什么时候局部改善足以被认为产生更高层业务价值？
+   How should the effects of a local Intervention propagate toward Business / Enterprise levels? When is local improvement sufficient evidence of higher-level business value?
 
 [Join the architecture review →](rfcs/RFC-001-ARCHITECTURE-REVIEW.md)
 
 ---
 
-## 9. Next Validation · 下一步验证什么
+## 9. Next Validation
 
-项目当前已经不再处于：
+The project is no longer at:
 
 ```text
 Engineering Loop
         ↓
-等待 Real Semantic Intelligence 接入
+waiting for Real Semantic Intelligence integration
 ```
 
-而更接近：
+It is closer to:
 
 ```text
 Governed Engineering System
         +
 Real Semantic Proposal Path
         ↓
-等待真实业务质量验证
+waiting for real-business quality validation
 ```
 
-下一阶段建议沿下面顺序推进：
+The next validation sequence is:
 
 ```text
 Semantic Quality & Interaction Hardening
@@ -631,27 +632,27 @@ Measurement & Feedback
 
 ### Semantic Quality & Interaction Hardening
 
-重点验证：
+Focus on:
 
-- Agent Proposal 在真实业务材料下是否稳定、准确、有信息增量；
-- Current Position 的 Agent Position + USER InternalState 如何合并确认；
-- 哪些 Human Gate 真正带来修正，哪些开始形成 Approval Fatigue；
-- Scenario / Solution Candidate 是否应该开放受限 Agent authorship；
-- Authority 是否应根据 Evidence Strength / Reversibility / Business Impact 动态调整。
+- whether Agent Proposals remain stable, accurate, and information-adding on real business materials;
+- how Agent Position + USER InternalState should be merged for Current Position confirmation;
+- which Human Gates create real corrections and which begin to create Approval Fatigue;
+- whether bounded Agent authorship should be opened for Scenario / Solution Candidates;
+- whether Authority should vary with Evidence Strength / Reversibility / Business Impact.
 
 ### External Architecture Review
 
-主动挑战 Recursive Diagnosis、Authority、Human Gate、Epistemic State 与 Impact Propagation。
+Actively challenge Recursive Diagnosis, Authority, Human Gates, Epistemic State, and Impact Propagation.
 
 ### Real Enterprise Case
 
-第一次真正回答：
+For the first time, answer:
 
-> **知几是否不仅是一套成立的软件架构，也是一套有现实价值的企业决策工具？**
+> **Is Zhiji not only a coherent software architecture, but also a useful enterprise decision tool?**
 
 ### Measurement & Feedback
 
-如果方案进入真实实施，再建立：
+If a solution enters real implementation, build the closed loop:
 
 ```text
 Projection
@@ -669,41 +670,41 @@ Method / Knowledge Update
 
 ---
 
-## 10. DevFlow · 知几又是怎样被 AI Native 地开发出来的
+## 10. DevFlow · How Zhiji Was Developed AI-Natively
 
-DevFlow 不是知几的业务功能，也不是已经产品化的通用研发平台。
+DevFlow is not a Zhiji business feature and is not presented as a productized general-purpose development platform.
 
-它是一套实际支撑知几长期开发的个人 AI 软件工程控制系统，目标是把：
+It is a personal AI software-engineering control system developed and used during Zhiji's long-running development. Its purpose is to convert:
 
-> **依赖聊天上下文的连续协作**
+> **continuous collaboration that depends on chat context**
 
-转化为：
+into:
 
-> **由显式任务、状态、合同与工程证据约束的执行系统。**
+> **an execution system constrained by explicit tasks, state, contracts, and engineering evidence.**
 
-角色分工：
+Role separation:
 
 ```text
 Human
-→ 目标 / 边界 / 风险 / 最终验收
+→ goals / boundaries / risk / final acceptance
 
 ChatGPT
-→ 分析 / 规划 / 审查 / 问题诊断
+→ analysis / planning / review / problem diagnosis
 
 Codex
-→ 代码实现 / 测试 / 修复
+→ code implementation / tests / repair
 
 DevFlow
-→ 任务编排 / 状态控制 / 证据归档
+→ task orchestration / state control / evidence archiving
 
 Terminal / CI
-→ 本地执行 / 自动验证
+→ local execution / automated verification
 
 Git / GitHub
-→ Branch / Commit / PR / Merge 等版本事实
+→ version facts such as Branch / Commit / PR / Merge
 ```
 
-核心控制对象：
+Core control objects:
 
 ```text
 Planning Artifact
@@ -713,23 +714,23 @@ Task Contract
 Artifact
 ```
 
-DevFlow 的关键原则是：
+The key DevFlow principle is:
 
-> **方向由 Human 给出，分析与执行由 AI 承担，过程由 DevFlow 控制，结果由工程证据与 Human 共同确认。**
+> **Human sets direction; AI performs analysis and execution; DevFlow controls the process; engineering evidence and Human acceptance confirm the result.**
 
 [Read DEVFLOW →](docs/DEVFLOW.md)
 
 ---
 
-## 11. Explore · 深入阅读
+## 11. Explore
 
 ### Project Documents
 
-- [METHOD · 方法与递归诊断](docs/METHOD.md)
-- [GOVERNANCE · Human–AI 权威边界](docs/GOVERNANCE.md)
-- [ARCHITECTURE · 软件实现](docs/ARCHITECTURE.md)
-- [STATUS · 当前实现状态与验证边界](docs/STATUS.md)
-- [DEVFLOW · AI Native 软件工程控制](docs/DEVFLOW.md)
+- [METHOD · Method and Recursive Diagnosis](docs/METHOD.md)
+- [GOVERNANCE · Human–AI Authority Boundaries](docs/GOVERNANCE.md)
+- [ARCHITECTURE · Software Architecture](docs/ARCHITECTURE.md)
+- [STATUS · Current Implementation and Validation Boundary](docs/STATUS.md)
+- [DEVFLOW · AI-Native Software Engineering Control](docs/DEVFLOW.md)
 
 ### Architecture Review
 
@@ -744,61 +745,61 @@ DevFlow 的关键原则是：
 
 ```text
 README
-这是什么，为什么值得继续看
+What is this, and why keep reading?
         ↓
 METHOD
-它到底怎么分析业务问题
+How does it actually analyze a business problem?
         ↓
 GOVERNANCE
-AI 为什么不会直接成为“真理”
+Why does AI output not directly become “truth”?
         ↓
 ARCHITECTURE
-这些原则怎么被软件保证
+How are those principles enforced in software?
         ↓
 STATUS
-现在真实做到哪里
+What actually exists today?
         ↓
 DEMO
-真实模型实际怎么运行
+How does a real model run inside the system?
         ↓
 EVIDENCE
-有什么工程事实支持
+What engineering facts support the claims?
         ↓
 RFC
-哪些核心假设最值得被挑战
+Which core assumptions are most worth challenging?
 ```
 
 ---
 
 ## Reproducibility
 
-当前 Source Repository 保持私有，因此 Public Showcase Repo 暂不提供源码级 Quick Start。
+The Source Repository remains private, so the Public Showcase Repo does not currently provide a source-level Quick Start.
 
-本仓库提供：
+It provides:
 
-- Open Design；
-- 脱敏 Engineering Evidence；
-- Public / Engineering Demo；
-- Raw terminal / Prompt audit artifacts；
-- Known Limitations；
-- Architecture RFC。
+- Open Design;
+- sanitized Engineering Evidence;
+- Public / Engineering Demo;
+- raw terminal / Prompt audit artifacts;
+- Known Limitations;
+- Architecture RFC.
 
-代码或可运行 Package 对外开放后，再提供真正的外部 Reproducible Run。
+A genuinely external Reproducible Run should be added if and when code or a runnable package is released.
 
 ---
 
 ## License
 
-Public Showcase Repo 的许可证在正式发布前确定。
+The license for the Public Showcase Repo should be finalized before formal publication.
 
-除明确授权内容外，不应将本仓库的公开设计文档理解为对 Private Source Repository 源代码的开放授权。
+Unless explicitly authorized, public design documents in this repository should not be interpreted as an open-source license for the Private Source Repository.
 
 ---
 
-> **Zhiji Agent 仍然是一个持续验证中的系统。**
+> **Zhiji Agent is still a system under active validation.**
 >
-> 它不预设当前架构就是最终答案。
+> It does not assume the current architecture is the final answer.
 >
-> 这个项目真正想验证的是：
+> The real question this project is trying to test is:
 >
-> **能否把复杂企业决策中原本依赖经验、讨论和隐性认知的部分，逐步变成可以表达、推演、确认、验证和演化的软件系统。**
+> **Can the parts of complex enterprise decision-making that currently depend on experience, discussion, and tacit cognition be gradually turned into a software system that can express, simulate, confirm, validate, and evolve those decisions?**

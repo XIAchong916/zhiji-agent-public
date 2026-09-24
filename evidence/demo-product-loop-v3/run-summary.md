@@ -1,19 +1,21 @@
 # Demo Product Loop v3 · Run Summary
 
-> 本文件记录一次**真实模型参与、PostgreSQL 持久化、Human Gate 受控推进**的知几 Product Loop 运行。<br>
-> 它回答的是：**这一次 Demo 实际运行了什么、哪些内容由 Agent 生成、哪些由 Human 决定、最终产出了什么，以及这次运行能够证明什么。**
+[English](run-summary.md) | [中文](run-summary.zh-CN.md)
+
+> This file records one Zhiji Product Loop run with a **real model, PostgreSQL persistence, and Human-Gate-controlled progression**.<br>
+> It answers: **what actually ran, what the Agent generated, what the Human decided, what the system produced, and what this run can and cannot prove.**
 
 ---
 
-## 1. Run Identity · 运行身份
+## 1. Run Identity
 
 ```text
 Demo: Product Loop v3
 Date: 2026-09-24
 Runtime: local CLI
 Case key: demo-vid-real3
-Case: fictional · 启元科技
-Business scenario: B2B 线索转化效率诊断
+Case: fictional · Qiyuan Technology
+Business scenario: B2B lead-conversion efficiency diagnosis
 Semantic provider: real model · TokenHub hy3
 Persistence: PostgreSQL
 Migration: Alembic head
@@ -21,9 +23,9 @@ Prompt / answer entries used: 242
 Process exit code: 0
 ```
 
-这次运行不是内存模拟，也不是预置一整套确定性答案后播放结果。
+This was neither an in-memory simulation nor a playback of a fully pre-scripted set of deterministic answers.
 
-它使用：
+The run combined:
 
 ```text
 Human business input
@@ -37,31 +39,31 @@ PostgreSQL persistence
 Human Gate
 ```
 
-共同完成一次完整受控诊断 Product Loop。
+to complete one full governed diagnosis Product Loop.
 
 ---
 
-## 2. Case Boundary · 案例边界
+## 2. Case Boundary
 
-本次案例使用一家**虚构公司：启元科技**。
+The Demo uses a **fictional company: Qiyuan Technology**.
 
-诊断主题：
+Diagnosis topic:
 
 ```text
-B2B 线索转化效率诊断
+B2B lead-conversion efficiency diagnosis
 ```
 
-案例描述围绕：
+The case focuses on:
 
-- 线索量增长；
-- MQL → SQL 转化；
-- 资质审核耗时；
-- 人工资格审核成本；
-- 在既有 CRM 与人工复核约束下寻找可行干预路径。
+- lead-volume growth;
+- MQL → SQL conversion;
+- qualification-review latency;
+- manual qualification-review cost;
+- finding a feasible intervention path under existing CRM and human-review constraints.
 
-本案例中的企业、指标、Evidence 与经营背景均用于 Demo。
+The company, metrics, Evidence, and operating context in this case are Demo inputs.
 
-因此：
+Therefore:
 
 ```text
 Fictional Case
@@ -69,13 +71,13 @@ Fictional Case
 Real Customer Case
 ```
 
-也不能用本次结果证明真实企业经营改善。
+The result cannot be used as proof of real enterprise performance improvement.
 
 ---
 
-## 3. Recording Provenance · 运行来源
+## 3. Recording Provenance
 
-本次公开证据包含：
+The public evidence set includes:
 
 ```text
 Raw terminal trace
@@ -84,30 +86,30 @@ Engineering Demo
 Public Cut
 ```
 
-对应关系：
+Relationship:
 
 ```text
 Public Cut
-快速理解运行机制
+quick understanding of the runtime mechanism
         ↓
 Engineering Demo
-观察完整运行过程
+complete observation of the run
         ↓
 .cast + prompts
-核验原始运行事实
+verification of raw runtime facts
 ```
 
-Public Cut 与完整 Engineering Demo 来自同一次 v3 运行；Public Cut 只进行时间压缩与展示剪辑，不改变底层运行事实。
+The Public Cut and full Engineering Demo come from the same v3 run. The Public Cut only compresses time and edits presentation; it does not alter the underlying run facts.
 
 ---
 
-## 4. Run Flow · 本次运行的主要阶段
+## 4. Run Flow
 
 ### 4.1 Case Intake
 
-本次运行首先完成 Case 与诊断上下文录入。
+The run begins by entering the Case and diagnosis context.
 
-共包含：
+Inputs include:
 
 ```text
 Case key
@@ -115,15 +117,15 @@ Phase16 diagnosis inputs · 12
 Module17 business-case inputs · 11
 ```
 
-加上 Case key，共 24 项人工输入。
+Together with the Case key, this is 24 human inputs.
 
-这些输入构成后续 Journey 的 Human-provided business context。
+These inputs form the Human-provided business context for the later Journey.
 
 ---
 
 ### 4.2 Controlled Entry
 
-进入正式 Journey 前，先经过两道独立 Human Decision：
+Before entering the formal Journey, the run passes two independent Human Decisions:
 
 ```text
 Decision Proposal
@@ -133,34 +135,34 @@ Independent Review
 APPROVED
 ```
 
-这一步用于证明：
+This demonstrates that:
 
-> **“建议继续分析”与“正式允许进入 Journey”不是同一个动作。**
+> **“Recommend continuing analysis” and “formally authorize entry into the Journey” are not the same action.**
 
-Agent 没有自行完成这两个 Gate。
+The Agent does not perform either gate by itself.
 
 ---
 
 ### 4.3 Object Confirmation
 
-OBJECT family 由 Human 提供并确认。
+The OBJECT family is provided and confirmed by the Human.
 
-本次输入包括：
+Inputs include:
 
-- Object；
-- Object type；
-- Business identity；
-- Object objective summary。
+- Object;
+- Object type;
+- Business identity;
+- Object objective summary.
 
-这一部分属于明确的 Human Authority，而不是由模型自行创造业务身份。
+This belongs to explicit Human Authority rather than allowing the model to invent the business identity.
 
 ---
 
 ### 4.4 Current Position
 
-本次 Demo 的 Current Position **最终由 USER 完整输入**。
+The Current Position in this Demo is **fully entered by the USER**.
 
-包括：
+It includes:
 
 ```text
 Structural Position
@@ -176,7 +178,7 @@ D · Capabilities
 Ω · Feasible Options
 ```
 
-原因不是“模型一定无法描述 Current Position”，而是当前 Authority / Interaction Contract 要求：
+The reason is not that a model is inherently unable to describe Current Position. The current Authority / Interaction Contract requires:
 
 ```text
 InternalState {R, θ, D, Ω}
@@ -184,7 +186,7 @@ InternalState {R, θ, D, Ω}
 USER-owned
 ```
 
-当前产品路径尚不能在同一次确认流程中完成：
+The current product path cannot yet complete the following within one confirmation flow:
 
 ```text
 Agent drafts Position
@@ -194,15 +196,15 @@ USER supplies / corrects InternalState
 Merged confirmation
 ```
 
-因此，本次 Demo 没有把 Agent 起草的 Position 与 USER-owned InternalState 合并为一个正式 Current Position。
+Therefore this Demo does not merge an Agent-drafted Position with USER-owned InternalState into one authoritative Current Position.
 
 ---
 
 ### 4.5 Target Position
 
-Target Position 使用真实模型起草。
+Target Position is drafted by the real model.
 
-运行路径：
+Runtime path:
 
 ```text
 Confirmed Context / Evidence
@@ -218,15 +220,15 @@ USER Gate
 Human Confirm
 ```
 
-Agent 提供的是 Proposal，而不是 Accepted State。
+The Agent provides a Proposal, not an Accepted State.
 
 ---
 
 ### 4.6 ChangeLaw
 
-ChangeLaw 由真实模型起草，再由 Human 确认。
+ChangeLaw is drafted by the real model and then confirmed by a Human.
 
-其治理关系是：
+Governance relationship:
 
 ```text
 Evidence
@@ -238,11 +240,11 @@ ChangeLaw Proposal
 Human Gate
 ```
 
-Human Confirm 只代表：
+Human Confirm means only that:
 
-> 当前 Journey 允许把该 ChangeLaw 作为后续分析假设继续使用。
+> the current Journey may continue using this ChangeLaw as an analysis hypothesis.
 
-它不代表：
+It does not mean:
 
 ```text
 ChangeLaw
@@ -254,13 +256,13 @@ Causally Proven Law
 
 ### 4.7 Intervention
 
-InterventionOption 同样由真实模型起草，并通过 Human Gate。
+`InterventionOption` is also drafted by the real model and passes through a Human Gate.
 
-本次 Intervention 引用当前 Journey 中已经确认的 `ChangeLaw` ID。
+The Intervention references a confirmed `ChangeLaw` ID from the current Journey.
 
-因此模型不能任意编造一个无法落到现有 Journey 的目标机制。
+This prevents the model from freely inventing a target mechanism that cannot be grounded in the existing Journey.
 
-关系为：
+Relationship:
 
 ```text
 Confirmed ChangeLaw
@@ -278,9 +280,9 @@ USER Gate
 
 ### 4.8 Solution Selection
 
-Solution 阶段呈现两个候选方案。
+The Solution stage presents two candidate solutions.
 
-Human 执行：
+The Human performs:
 
 ```text
 SELECT
@@ -290,11 +292,11 @@ Candidate #1
 Selection rationale
 ```
 
-需要特别说明：
+An important boundary:
 
-> **本次 Solution candidates 由确定性装配路径产生，不是 RealLLMProposalAdapter 生成。**
+> **The Solution candidates in this run are produced by deterministic assembly, not by `RealLLMProposalAdapter`.**
 
-因此，本次 Demo 不支持：
+Therefore this Demo does not support the claim that:
 
 ```text
 Agent-authored Solution Candidate
@@ -302,15 +304,15 @@ Agent-authored Solution Candidate
 implemented
 ```
 
-Human 还填写了明确的 Selection rationale。
+The Human also records an explicit Selection rationale.
 
 ---
 
 ### 4.9 Constraint Review
 
-选择 Solution 后，对两条 Hard Constraint 分别进行了确认。
+After selecting the Solution, two Hard Constraints are confirmed individually.
 
-每条约束都包含：
+Each constraint includes:
 
 ```text
 constraint-satisfied
@@ -318,25 +320,25 @@ constraint-satisfied
 constraint-rationale
 ```
 
-这保证 Solution 被选择前，不只是“看起来不错”，而是显式回到已确认约束进行核对。
+This ensures that before a Solution is accepted, it is explicitly checked against confirmed constraints rather than merely judged to “look good.”
 
 ---
 
 ### 4.10 Final Output
 
-本次运行最终正常结束：
+The run exits normally:
 
 ```text
 exit code: 0
 ```
 
-最终进入：
+It reaches:
 
 ```text
 PRODUCT_OUTPUT_READY
 ```
 
-并形成：
+and produces:
 
 ```text
 Business Diagnosis Package
@@ -345,75 +347,75 @@ Solution Package
 Complete lineage
 ```
 
-最终 Output 同时明确保留：
+The final Output explicitly preserves:
 
 ```text
 No execution: true
 No authorization: true
 ```
 
-因此：
+Therefore:
 
-> **完成诊断、方案设计与 Solution Selection，不等于系统获得现实业务执行权限。**
+> **Completing diagnosis, solution design, and Solution Selection does not grant the system real-world execution authority.**
 
 ---
 
-## 5. Human / Agent / System Attribution · 本次运行中谁负责什么
+## 5. Human / Agent / System Attribution
 
 ### Human
 
-本次 Human 负责：
+The Human is responsible for:
 
-- Case / business context；
-- Object identity；
-- Current Position 与 `R / θ / D / Ω`；
-- `PROCEED`；
-- Independent `APPROVED` review；
-- 所有关键 Semantic Gate 的 Confirm；
-- Solution `SELECT`；
-- Selection rationale；
-- Hard Constraint review。
+- Case / business context;
+- Object identity;
+- Current Position and `R / θ / D / Ω`;
+- `PROCEED`;
+- independent `APPROVED` review;
+- Confirm actions at all critical Semantic Gates;
+- Solution `SELECT`;
+- Selection rationale;
+- Hard Constraint review.
 
 ### Agent / Real Model
 
-本次真实模型明确参与：
+The real model explicitly participates in:
 
-- Target Position drafting；
-- ChangeLaw drafting；
-- Intervention drafting；
-- 受控 Semantic Proposal Generation。
+- Target Position drafting;
+- ChangeLaw drafting;
+- Intervention drafting;
+- governed Semantic Proposal Generation.
 
-这些内容都以 Proposal / HYPOTHESIS 身份进入系统。
+All of these enter the system as Proposal / HYPOTHESIS content.
 
 ### Deterministic System
 
-Workflow / Application / Engine / Persistence 负责：
+Workflow / Application / Engine / Persistence are responsible for:
 
-- 当前 Stage；
-- 合法 Action；
-- Proposal staging；
-- Human Gate enforcement；
-- identifier / schema boundary；
-- Layer / Journey progression；
-- persistence；
-- lineage；
-- recovery；
-- final Product Output assembly。
+- current Stage;
+- legal Actions;
+- Proposal staging;
+- Human Gate enforcement;
+- identifier / schema boundaries;
+- Layer / Journey progression;
+- persistence;
+- lineage;
+- recovery;
+- final Product Output assembly.
 
-因此本次运行体现的是：
+The run therefore implements:
 
 ```text
 Agent
-负责提出候选认知
+proposes candidate understanding
 
 Human
-负责现实权威与关键选择
+provides real-world authority and key choices
 
 System
-负责确定性治理与状态推进
+provides deterministic governance and state progression
 ```
 
-而不是：
+not:
 
 ```text
 LLM
@@ -423,25 +425,25 @@ System Controller
 
 ---
 
-## 6. What This Run Proves · 本次运行能够证明什么
+## 6. What This Run Proves
 
-本次 Demo 可以作为证据支持：
+This Demo can support the following claims:
 
-- 一个 Case 可以进入完整 Product Loop；
-- Business Diagnosis → Scenario Diagnosis → Solution Design 能够连续推进；
-- PostgreSQL 可以承载本次运行状态，而非依赖一次对话上下文；
-- Human Gate 可以实际阻止 Agent Proposal 自动成为正式状态；
-- 真实模型可以在既定治理边界内产生 Semantic Proposal；
-- Target Position / ChangeLaw / Intervention 可以走 `Agent Draft → USER Gate → Confirm` 路径；
-- USER-owned InternalState 没有被 Agent 静默覆盖；
-- Solution Candidate 可以被显式 Select，并保留 Selection rationale；
-- Hard Constraint 可以在方案确认前被逐项复核；
-- 最终可以得到 `PRODUCT_OUTPUT_READY`；
-- 最终结果保留 Business / Scenario / Solution Package 与 lineage；
-- 本次 Process 正常退出：`exit code 0`；
-- Solution Selection 没有被解释成 Execution Authorization。
+- a Case can enter the full Product Loop;
+- Business Diagnosis → Scenario Diagnosis → Solution Design can progress continuously;
+- PostgreSQL can carry the run state rather than relying on one conversation context;
+- a Human Gate can actually prevent an Agent Proposal from automatically becoming authoritative state;
+- a real model can produce Semantic Proposals within the defined governance boundary;
+- Target Position / ChangeLaw / Intervention can follow `Agent Draft → USER Gate → Confirm`;
+- USER-owned InternalState is not silently overwritten by the Agent;
+- a Solution Candidate can be explicitly selected with a preserved Selection rationale;
+- Hard Constraints can be reviewed individually before solution confirmation;
+- the run reaches `PRODUCT_OUTPUT_READY`;
+- the final result preserves Business / Scenario / Solution Packages and lineage;
+- the process exits normally with `exit code 0`;
+- Solution Selection is not interpreted as Execution Authorization.
 
-最重要的证据增量是：
+The most important evidence increment is that the following sequence occurs within one actual run:
 
 ```text
 Real Model
@@ -455,13 +457,11 @@ Human Gate
 Product Loop
 ```
 
-已经出现在同一次实际运行中。
-
 ---
 
-## 7. What This Run Does Not Prove · 本次运行不能证明什么
+## 7. What This Run Does Not Prove
 
-本次 Demo **不能**证明：
+This Demo does **not** prove:
 
 ```text
 Agent can autonomously diagnose enterprises             ✗
@@ -476,7 +476,7 @@ System is production-ready                              ✗
 System has autonomous execution authority               ✗
 ```
 
-尤其应保持：
+The following boundaries must remain explicit:
 
 ```text
 Real Semantic Proposal
@@ -498,11 +498,11 @@ Execution Authorization
 
 ---
 
-## 8. Known Limitation · 本次 Demo 暴露出的明确限制
+## 8. Known Limitation
 
-当前最清晰的交互限制是 Current Position。
+The clearest interaction limitation exposed by this Demo is Current Position.
 
-理想路径应为：
+The desired flow is:
 
 ```text
 Agent drafts Position
@@ -516,9 +516,9 @@ Merged Current Position
 Confirm
 ```
 
-当前路径尚不能完成这一合并。
+The current path cannot yet complete this merge.
 
-因此本次运行采用：
+Therefore this run uses:
 
 ```text
 USER provides Current Position
@@ -526,67 +526,67 @@ USER provides Current Position
 USER provides InternalState
 ```
 
-完整进入后续流程。
+before continuing through the rest of the flow.
 
-这不是一个应该被隐藏的 Demo 瑕疵，而是当前 Product Interaction / Authority Contract 的真实边界。
+This is not a Demo flaw to hide. It is a real boundary of the current Product Interaction / Authority Contract.
 
 ---
 
-## 9. Raw Evidence · 原始证据
+## 9. Raw Evidence
 
 ### Terminal Trace
 
 [zhiji_demo_product_loop_v3.cast](zhiji_demo_product_loop_v3.cast)
 
-用于核验：
+Use it to verify:
 
-- 实际 CLI 运行顺序；
-- Human 输入；
-- Gate；
-- Layer / Journey progression；
-- 终态。
+- the actual CLI execution order;
+- Human input;
+- Gates;
+- Layer / Journey progression;
+- terminal state.
 
 ### Prompt / Response Audit Trace
 
 [zhiji_demo_product_loop_v3.prompts.txt](zhiji_demo_product_loop_v3.prompts.txt)
 
-用于核验：
+Use it to verify:
 
-- Prompt / answer sequence；
-- Agent draft accept / decline path；
-- Human Confirm / Select；
-- Current Position manual input；
-- Solution selection rationale；
-- Constraint review；
-- `exit code: 0`。
+- Prompt / answer sequence;
+- Agent draft accept / decline paths;
+- Human Confirm / Select;
+- manual Current Position input;
+- Solution selection rationale;
+- Constraint review;
+- `exit code: 0`.
 
 ---
 
-## 10. Relationship to Other Public Evidence · 与其他公开材料的关系
+## 10. Relationship to Other Public Evidence
 
 ```text
 run-summary.md
-解释本次实际运行
+explains this actual run
         ↓
 .cast / prompts
-提供原始运行证据
+provide raw runtime evidence
 
 verification-snapshot.md
-证明代码树的确定性工程门
+proves deterministic engineering gates for the code tree
 
 docs/STATUS.md
-判断这些事实对应什么能力状态
+maps these facts to capability status
 
 demo/README.md
-面向第一次观看者解释如何看 Demo
+explains how a first-time viewer should watch the Demo
 ```
 
-因此：
+Therefore:
 
-- 想**快速理解** → 看 `demo/README.md` + Public Cut；
-- 想**完整观察** → 看 Engineering Demo；
-- 想**核验这一次运行** → 看本文件 + `.cast` + `.prompts.txt`；
-- 想**判断项目整体做到哪里** → 看 `docs/STATUS.md`。
+- for a **quick understanding** → read `demo/README.md` + watch the Public Cut;
+- for a **complete observation** → watch the Engineering Demo;
+- to **verify this run** → read this file + `.cast` + `.prompts.txt`;
+- to **understand overall project maturity** → read `docs/STATUS.md`.
 
 [Back to Evidence Index →](../README.md)
 
@@ -596,4 +596,4 @@ demo/README.md
 
 ---
 
-> **这次运行的价值，不是证明 AI 已经可以替代企业决策者，而是证明真实模型已经能够进入一套受治理、可持久化、可审查的决策软件系统，并在明确的人机权限边界内参与实际 Product Loop。**
+> **The value of this run is not that it proves AI can replace enterprise decision-makers. It proves that a real model can participate in an actual Product Loop inside a governed, persistent, reviewable decision-software system with explicit Human–AI authority boundaries.**
