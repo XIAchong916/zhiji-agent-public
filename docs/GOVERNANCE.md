@@ -43,7 +43,7 @@ Deterministic Workflow
 
 ## Governance at a Glance · 治理总览
 
-![Proposal to accepted state](../assets/proposal-to-accepted-state.svg)
+![Proposal to accepted state](../assets/human-gated-state-transition.svg)
 
 > Human Gate 只负责需要现实权威的确认；Agent 负责产生候选判断，Workflow 负责合法状态迁移，Accepted Domain State 才是后续流程允许依赖的系统权威状态。
 

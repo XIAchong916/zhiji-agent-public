@@ -254,7 +254,7 @@ Accepted Domain State
 Deterministic Workflow
 ```
 
-![Proposal to accepted state](assets/proposal-to-accepted-state.svg)
+![Proposal to accepted state](assets/human-gated-state-transition.svg)
 
 ### Real Semantic Proposal · 当前真实模型路径
 
